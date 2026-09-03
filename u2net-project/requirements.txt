@@ -1,0 +1,16 @@
+torch
+torchvision
+pillow
+numpy
+fastapi
+uvicorn
+python-multipart
+typing-extensions
+beautifulsoup4
+yt_dlp
+ffmpeg
+pytube
+opencv-python
+pytubefix
+
+uvicorn main:app --host 0.0.0.0 --port 8000
