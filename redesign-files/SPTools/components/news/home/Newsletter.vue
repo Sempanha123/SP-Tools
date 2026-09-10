@@ -2,18 +2,10 @@
 const email = ref('')
 const message = ref('')
 const isSuccess = ref(false)
-
 const subscribe = () => {
   message.value = ''
   isSuccess.value = false
-
-  const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)
-
-  if (!validEmail) {
-    message.value = 'Please enter a valid email address.'
-    return
-  }
-
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) { message.value = 'Please enter a valid email address.'; return }
   isSuccess.value = true
   message.value = 'Thank you. You have joined the SP-Tools news briefing.'
   email.value = ''
@@ -21,54 +13,33 @@ const subscribe = () => {
 </script>
 
 <template>
-  <section id="newsletter" class="scroll-mt-28 border-t border-line bg-surface py-14 sm:py-16">
-    <div class="sp-container">
-      <div class="relative overflow-hidden rounded-[18px] border border-line bg-elevated p-6 shadow-soft sm:p-8 lg:grid lg:grid-cols-[1fr_1fr] lg:items-center lg:gap-10">
-        <div class="sp-quiet-grid pointer-events-none absolute inset-0 opacity-30" />
-        <div class="pointer-events-none absolute -left-20 -top-28 h-52 w-72 rounded-full bg-accent/10 blur-[90px]" />
+  <section id="newsletter" class="scroll-mt-28 bg-surface py-16 sm:py-20">
+    <div class="sp-container-wide">
+      <div class="sp-reveal relative overflow-hidden rounded-[26px] border border-white/10 bg-[#11151f] p-6 text-white shadow-pop sm:p-8 lg:grid lg:grid-cols-[1.05fr_.95fr] lg:items-center lg:gap-12 lg:p-10">
+        <div class="sp-dot-grid pointer-events-none absolute inset-0 opacity-[0.08]" />
+        <div class="pointer-events-none absolute -left-20 -top-36 h-72 w-72 rounded-full bg-violet-500/25 blur-[95px]" />
+        <div class="pointer-events-none absolute -right-16 -bottom-36 h-72 w-72 rounded-full bg-cyan-500/16 blur-[95px]" />
 
         <div class="relative">
-          <div class="sp-kicker">The Daily Brief</div>
-          <h2 class="mt-3 max-w-xl font-display text-[2rem] font-[650] leading-[1.03] tracking-[-0.04em] text-fg sm:text-[2.6rem]">
-            The day's important stories, without the clutter.
-          </h2>
-          <p class="mt-4 max-w-xl text-[14px] leading-7 text-fg-muted">
-            Selected world news, business, technology, science and regional coverage in one useful briefing.
-          </p>
+          <p class="text-[9px] font-bold uppercase tracking-[.16em] text-violet-300">The Daily Brief</p>
+          <h2 class="mt-4 max-w-2xl font-display text-[clamp(2.4rem,5vw,4.1rem)] font-[650] leading-[.93] tracking-[-.055em] text-white">One useful briefing. Then get on with your day.</h2>
+          <p class="mt-5 max-w-xl text-[13px] leading-6 text-white/58">Selected world news, business, technology and science—curated into a calmer reading rhythm.</p>
         </div>
 
-        <div class="relative mt-7 lg:mt-0">
-          <form class="rounded-[16px] border border-line bg-surface-2 p-2 shadow-xs sm:flex sm:items-center sm:gap-2" @submit.prevent="subscribe">
-            <label for="news-email" class="sr-only">Email address</label>
-
-            <input
-              id="news-email"
-              v-model="email"
-              type="email"
-              placeholder="Enter your email address"
-              class="h-12 w-full min-w-0 flex-1 rounded-xl bg-transparent px-3 text-sm text-fg outline-none placeholder:text-fg-subtle"
-            />
-
-            <button
-              type="submit"
-              class="mt-2 inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-accent px-5 text-sm font-semibold text-accent-fg transition hover:bg-accent-hover sm:mt-0 sm:w-auto"
-            >
-              Subscribe
-              <span aria-hidden="true">→</span>
-            </button>
-          </form>
-
-          <p
-            v-if="message"
-            class="mt-3 text-xs"
-            :class="isSuccess ? 'text-positive' : 'text-danger'"
-          >
-            {{ message }}
-          </p>
-
-          <p class="mt-3 text-[10px] text-fg-subtle">
-            One useful briefing. No unnecessary messages.
-          </p>
+        <div class="relative mt-8 lg:mt-0">
+          <div class="rounded-[18px] border border-white/10 bg-white/[0.055] p-3 backdrop-blur-xl">
+            <div class="flex items-center justify-between border-b border-white/8 pb-3">
+              <span class="text-[9px] font-bold uppercase tracking-[.12em] text-white/42">Briefing access</span>
+              <span class="inline-flex items-center gap-1.5 text-[9px] font-semibold text-emerald-300"><span class="h-1.5 w-1.5 rounded-full bg-emerald-300 sp-pulse-soft" /> open</span>
+            </div>
+            <form class="mt-3 sm:flex sm:gap-2" @submit.prevent="subscribe">
+              <label for="news-email" class="sr-only">Email address</label>
+              <input id="news-email" v-model="email" type="email" placeholder="Enter your email address" class="h-12 w-full min-w-0 flex-1 rounded-[12px] border border-white/10 bg-black/15 px-4 text-[12px] text-white outline-none placeholder:text-white/32 focus:border-violet-400/55 focus:ring-4 focus:ring-violet-500/10" />
+              <button type="submit" class="sp-shimmer mt-2 inline-flex h-12 w-full items-center justify-center gap-2 rounded-[12px] bg-white px-5 text-[12px] font-bold text-[#11151f] transition hover:-translate-y-0.5 sm:mt-0 sm:w-auto">Subscribe <span>→</span></button>
+            </form>
+            <p v-if="message" class="mt-3 text-[10px]" :class="isSuccess ? 'text-emerald-300' : 'text-red-300'">{{ message }}</p>
+            <div class="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-[9px] text-white/36"><span>Selected stories</span><span>Clear timestamps</span><span>No feed clutter</span></div>
+          </div>
         </div>
       </div>
     </div>

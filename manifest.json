@@ -1,93 +1,103 @@
 [
   {
     "path": "SPTools/assets/css/main.css",
-    "sha256": "0a9ac451d90d01e3f853ab51142764dc3c7f6b94fd23233c77a9dc539cb223b7",
-    "bytes": 7859
+    "sha256": "c64f995b1b840311717f686d9767dc6455a2b23fe2ed1252bec64d72c38851ab",
+    "bytes": 14217
   },
   {
     "path": "SPTools/components/download/Steps.vue",
-    "sha256": "f69ceef43c9ba292b2dd9a1237a1e5d23ee593c2cf33634ce91a2a4e334e6e5f",
-    "bytes": 1737
+    "sha256": "f086e84f847d7056f0e8bb06a4e34e24d84fc0880ce815dca60c6e05424f0a48",
+    "bytes": 3136
   },
   {
     "path": "SPTools/components/download/UrlInput.vue",
-    "sha256": "bec47b4132b3e1b094ef2fe512d15fbb3d5213eed99af4fd2f5de78bfa5909ab",
-    "bytes": 5141
+    "sha256": "80dd901389b120657c888553c09b00c7ebac39e58c6499c28d2a63387b6a58e9",
+    "bytes": 4898
   },
   {
     "path": "SPTools/components/news/home/BreakingTicker.vue",
-    "sha256": "68a32ac701d105dd50881cd447e995a6456d0c31ce4f858721313b1b732f1b73",
-    "bytes": 2040
+    "sha256": "98fbca8763b17b5b12da4d99f7eb59689231ce89c9d85099a0cb61f7957143a3",
+    "bytes": 1699
   },
   {
     "path": "SPTools/components/news/home/CategoryNav.vue",
-    "sha256": "34e4eb6228e569f7f82ec96ab9af1dc4ea772debbac42ef945d0be79ab8ed048",
-    "bytes": 3436
+    "sha256": "8bf1c36ba4ab3b7293f594ae365c7832a8461c8b4cc7c79c48f080102a7f01b2",
+    "bytes": 3064
   },
   {
     "path": "SPTools/components/news/home/FeaturedNews.vue",
-    "sha256": "69b42559b2ff50b8d482132d93d00048691a749ad87f2a300a5b4fa75d8cc0cd",
-    "bytes": 5664
+    "sha256": "88df5d9c4f3b74b5d48492d0cb8d357262521e738277138df822bac76e57e8ee",
+    "bytes": 5188
   },
   {
     "path": "SPTools/components/news/home/Hero.vue",
-    "sha256": "34f81b4cd7964332a5c844ea25cca7e536ba2965a139ecf9cd8b9cfe956e3ced",
-    "bytes": 4076
+    "sha256": "83f9f9601db8107385a776a00f655978401dc05d5f113f23502b48539dd04495",
+    "bytes": 6253
   },
   {
     "path": "SPTools/components/news/home/LatestNews.vue",
-    "sha256": "4ea15c835eaaa1534670f1f9075a3b07af882033634103930618501b22c1c5e2",
-    "bytes": 4925
+    "sha256": "d61417196ee03f72477991cbdc7235cfb8fcb569f806ba40ffddb69af1d93608",
+    "bytes": 4820
   },
   {
     "path": "SPTools/components/news/home/Newsletter.vue",
-    "sha256": "6a8cf9f5b602ba4d7032ede8e54eaec3176d3233ff9e808bfe7588b89bc3b1b0",
-    "bytes": 2829
+    "sha256": "a5626dce60bdea2f78a0fb13b1bfce9f2250586d6e864c5e7f9523e53343bb68",
+    "bytes": 3314
+  },
+  {
+    "path": "SPTools/components/news/home/Topics.vue",
+    "sha256": "4c459a1b50415531cbbbd960e7115e51f5d43f9bf47073221ee86b766fcb046e",
+    "bytes": 2350
   },
   {
     "path": "SPTools/components/news/home/TrendingSidebar.vue",
-    "sha256": "0c97790e265f4b497b5ccda2e2b5a4975cf543d925e3750bd6b6e47dca6080b6",
-    "bytes": 6146
+    "sha256": "c353459aff7a9f8628e77fcdf4f25033db5e12fbdbfa77b3b8fdc0af1eb90ac8",
+    "bytes": 7011
+  },
+  {
+    "path": "SPTools/components/news/home/WorldRegions.vue",
+    "sha256": "bbc3421d07f119695cc8e8b0de1b826ca96fbc4e51b50ba4487af87946706f98",
+    "bytes": 4127
   },
   {
     "path": "SPTools/components/news/shared/ArticleCard.vue",
-    "sha256": "5fc46103e09359af781e954c3e6bb146d37107c2e27df15e3d6b846329c03064",
-    "bytes": 4919
+    "sha256": "3d15f32b0f50a1a3423cb8ac392af1955bdf947f092e807f0dec44caeb299e55",
+    "bytes": 4399
   },
   {
     "path": "SPTools/components/site/Footer.vue",
-    "sha256": "eb42a4cdd9365da2de4be893e25c3d998f896ba24bf91641dcf286ebdb0af90d",
-    "bytes": 4692
+    "sha256": "d7d128388dbe0bd146e30141fbd81d310a19cdb5f3c62cf71f154e525d553d26",
+    "bytes": 4703
   },
   {
     "path": "SPTools/components/site/Header.vue",
-    "sha256": "a5fab85ce721effcfceca76b38f6c3333d5b5aa996a25089aa58e680ded83b3f",
-    "bytes": 15113
+    "sha256": "dc94a676e5c3c9b7f1e1789d9e80e3f8d24fb0388f9d7370549a9a514d8cdd65",
+    "bytes": 15482
   },
   {
     "path": "SPTools/components/tool/Dropzone.vue",
-    "sha256": "8de041043774813e9d99ccc4d6fde5c4b452fd64668ab21fda2ccc9d3ad58e9d",
-    "bytes": 4236
+    "sha256": "e429d43aaa89a35177cbe8d733b21f787e1b760a5fa95946136c84d10678db0a",
+    "bytes": 5101
   },
   {
     "path": "SPTools/components/tool/Faq.vue",
-    "sha256": "1ead0d3e3b903698292ed799aa55a02b440838c510ebe397e706b0e29e5b7d24",
-    "bytes": 2127
+    "sha256": "82fb8b0a16c8605dcd1818dd39782d64b5197ef0f3215919e929c034d722e675",
+    "bytes": 2251
   },
   {
     "path": "SPTools/components/tool/Hero.vue",
-    "sha256": "f8cb93256d184d5a8c5bfb4f3d1dd4bdb9cb736e8f7cc66d08383c3f4da2bf8c",
-    "bytes": 1933
+    "sha256": "d27ce35e2b471c6218baa4a73fd56c0dfd39fb785f6575b9f5686191ea46615c",
+    "bytes": 3887
   },
   {
     "path": "SPTools/components/tool/RelatedTools.vue",
-    "sha256": "2383286d84b51e2d0c76479683a53e350aa5081b7284fad4a6e16b2c8b705b05",
-    "bytes": 2945
+    "sha256": "9bf2b205f91978ed289b29528d4eeae1cc3771844b3fedc65369f8560142ce4b",
+    "bytes": 2794
   },
   {
     "path": "SPTools/components/ui/SectionHeading.vue",
-    "sha256": "aa87f2be64a40ae25e33f1578259a4c1f8be114f573b5de4d45628684fecc7cb",
-    "bytes": 836
+    "sha256": "a120e07b3b6665543624ef3d3a003b4dead92f5ccd1ae82b8c99c20c93ae80ce",
+    "bytes": 673
   },
   {
     "path": "SPTools/nuxt.config.ts",
@@ -96,17 +106,17 @@
   },
   {
     "path": "SPTools/pages/index.vue",
-    "sha256": "5860a2c01e0cacdf53bf1516856b25bd8bec1adbdcefb6fd0ea323925dc5f2a1",
-    "bytes": 13109
+    "sha256": "f9352c55de2b7350335fece9a48b70cf30528ad17fb3cb83fbbc0f3b8cc59da0",
+    "bytes": 17175
   },
   {
     "path": "SPTools/pages/news/index.vue",
-    "sha256": "461ffac1f8a7ffeadc451ba871ddb5bab42ea0e9864e69f640e3b1a7f873f82a",
-    "bytes": 2632
+    "sha256": "29cea32d0464ef249e2db82d1c2d1babb539e1cc619134bf42d6c5aabca60843",
+    "bytes": 2614
   },
   {
     "path": "SPTools/pages/tools/index.vue",
-    "sha256": "a209aa33d3173dcb34dfd9db69b24d58e1c60907fe065c006d537535ce1d2dc3",
-    "bytes": 5426
+    "sha256": "6cdc5072e8f7d7b488f73c3f1c86919b7d9f494583d1d3f4e54ca4cbd882a800",
+    "bytes": 7490
   }
 ]

@@ -1,39 +1,12 @@
 <script setup lang="ts">
-withDefaults(
-  defineProps<{
-    eyebrow?: string
-    title: string
-    description?: string
-    align?: 'left' | 'center'
-  }>(),
-  {
-    align: 'left',
-  },
-)
+defineProps<{ eyebrow?: string; title: string; description?: string; align?: 'left' | 'center' }>()
 </script>
 
 <template>
   <div :class="align === 'center' ? 'text-center' : ''">
-    <span v-if="eyebrow" class="sp-kicker">
-      <span class="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true" />
-      {{ eyebrow }}
-    </span>
-
-    <h2
-      class="text-[1.75rem] font-[700] leading-[1.08] tracking-[-0.035em] text-fg sm:text-[2.15rem]"
-      :class="eyebrow ? 'mt-3.5' : ''"
-    >
-      {{ title }}
-    </h2>
-
-    <p
-      v-if="description"
-      class="mt-3.5 text-[15px] leading-7 text-fg-muted"
-      :class="align === 'center' ? 'mx-auto max-w-2xl' : 'max-w-2xl'"
-    >
-      {{ description }}
-    </p>
-
+    <div v-if="eyebrow" class="sp-kicker" :class="align === 'center' ? 'justify-center' : ''">{{ eyebrow }}</div>
+    <h2 class="text-[clamp(2rem,4vw,3.1rem)] font-[720] leading-[1] tracking-[-0.052em] text-fg" :class="eyebrow ? 'mt-3' : ''">{{ title }}</h2>
+    <p v-if="description" class="mt-3 text-[13px] leading-6 text-fg-muted sm:text-[14px]" :class="align === 'center' ? 'mx-auto max-w-2xl' : 'max-w-2xl'">{{ description }}</p>
     <slot />
   </div>
 </template>

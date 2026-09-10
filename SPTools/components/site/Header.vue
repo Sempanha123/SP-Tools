@@ -90,19 +90,20 @@ watch(isMobileMenuOpen, (open) => {
 <template>
   <header
     ref="headerRef"
-    class="sticky top-0 z-50 border-b transition-all duration-200"
+    class="sticky top-0 z-50 border-b transition-all duration-300"
     :class="isScrolled
       ? 'border-line bg-surface/[0.92] shadow-xs backdrop-blur-xl'
       : 'border-line/70 bg-surface/[0.88] backdrop-blur-lg'"
   >
-    <div class="sp-container">
+    <div class="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent/35 to-transparent" />
+    <div class="sp-container-wide">
       <div class="flex h-[68px] items-center justify-between gap-6">
         <NuxtLink
           to="/"
           class="group flex shrink-0 items-center gap-2.5 rounded-xl focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/10"
           @click="closeMobileMenu"
         >
-          <span class="relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-[11px] bg-fg text-surface-2 shadow-xs">
+          <span class="relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-[11px] bg-fg text-surface-2 shadow-xs transition duration-300 group-hover:-rotate-3 group-hover:scale-105">
             <span class="absolute inset-x-0 bottom-0 h-[3px] bg-accent" />
             <svg class="h-[17px] w-[17px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="M13 3 5 13h6l-1 8 9-12h-6V3Z" />
@@ -121,7 +122,7 @@ watch(isMobileMenuOpen, (open) => {
           >
             <button
               type="button"
-              class="flex h-full items-center gap-1.5 border-b-2 px-3 text-[13px] font-semibold transition-colors"
+              class="relative flex h-full items-center gap-1.5 border-b-2 px-3 text-[13px] font-semibold transition-all duration-200"
               :class="isSectionActive('/tools')
                 ? 'border-accent text-fg'
                 : 'border-transparent text-fg-muted hover:text-fg'"
@@ -150,7 +151,7 @@ watch(isMobileMenuOpen, (open) => {
               leave-to-class="opacity-0 translate-y-1"
             >
               <div v-if="openDesktopMenu === 'tools'" class="absolute left-0 top-full w-[390px] pt-2.5">
-                <div class="overflow-hidden rounded-[16px] border border-line bg-elevated p-2.5 shadow-pop">
+                <div class="sp-gradient-ring overflow-hidden rounded-[18px] border border-line bg-elevated p-2.5 shadow-pop">
                   <div class="px-3 pb-2 pt-1.5">
                     <p class="text-[10px] font-bold uppercase tracking-[0.14em] text-fg-subtle">Image workspace</p>
                     <p class="mt-1 text-xs text-fg-muted">Fast browser-based image utilities.</p>
@@ -185,7 +186,7 @@ watch(isMobileMenuOpen, (open) => {
           >
             <button
               type="button"
-              class="flex h-full items-center gap-1.5 border-b-2 px-3 text-[13px] font-semibold transition-colors"
+              class="relative flex h-full items-center gap-1.5 border-b-2 px-3 text-[13px] font-semibold transition-all duration-200"
               :class="isSectionActive('/download')
                 ? 'border-accent text-fg'
                 : 'border-transparent text-fg-muted hover:text-fg'"
@@ -214,7 +215,7 @@ watch(isMobileMenuOpen, (open) => {
               leave-to-class="opacity-0 translate-y-1"
             >
               <div v-if="openDesktopMenu === 'downloads'" class="absolute left-0 top-full w-[390px] pt-2.5">
-                <div class="overflow-hidden rounded-[16px] border border-line bg-elevated p-2.5 shadow-pop">
+                <div class="sp-gradient-ring overflow-hidden rounded-[18px] border border-line bg-elevated p-2.5 shadow-pop">
                   <div class="px-3 pb-2 pt-1.5">
                     <p class="text-[10px] font-bold uppercase tracking-[0.14em] text-fg-subtle">Media downloaders</p>
                     <p class="mt-1 text-xs text-fg-muted">Save supported public media in a few clicks.</p>
@@ -233,7 +234,7 @@ watch(isMobileMenuOpen, (open) => {
 
           <NuxtLink
             to="/news"
-            class="flex h-full items-center border-b-2 px-3 text-[13px] font-semibold transition-colors"
+            class="relative flex h-full items-center border-b-2 px-3 text-[13px] font-semibold transition-all duration-200"
             :class="isSectionActive('/news')
               ? 'border-accent text-fg'
               : 'border-transparent text-fg-muted hover:text-fg'"
@@ -263,7 +264,7 @@ watch(isMobileMenuOpen, (open) => {
 
           <NuxtLink
             to="/tools"
-            class="ml-1 inline-flex h-9 items-center justify-center gap-2 rounded-[11px] bg-accent px-4 text-[12px] font-semibold text-accent-fg shadow-xs transition hover:bg-accent-hover"
+            class="sp-shimmer ml-1 inline-flex h-9 items-center justify-center gap-2 rounded-[11px] bg-gradient-to-r from-accent to-accent-2 px-4 text-[12px] font-semibold text-white shadow-soft transition duration-200 hover:-translate-y-0.5 hover:shadow-soft"
           >
             Explore tools
             <span aria-hidden="true">→</span>
