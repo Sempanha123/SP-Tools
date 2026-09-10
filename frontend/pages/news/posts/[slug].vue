@@ -1,762 +1,219 @@
 <script setup lang="ts">
-type ArticleTextSize =
-    | 'small'
-    | 'normal'
-    | 'large'
+type ArticleTextSize = 'small' | 'normal' | 'large'
 
 const {
-    article,
-    relatedArticles,
-    mostReadArticles,
-    pending,
-    error,
-    refresh,
+  article,
+  relatedArticles,
+  mostReadArticles,
+  pending,
+  error,
+  refresh,
 } = await useNewsPostPage()
-
-/*
-|--------------------------------------------------------------------------
-| Reader state
-|--------------------------------------------------------------------------
-*/
 
 const isSaved = ref(false)
 const toastMessage = ref('')
 const readingProgress = ref(0)
+const textSize = ref<ArticleTextSize>('normal')
+const articleContainer = ref<HTMLElement | null>(null)
+let toastTimer: ReturnType<typeof setTimeout> | undefined
 
-const textSize =
-    ref<ArticleTextSize>('normal')
-
-const articleContainer =
-    ref<HTMLElement | null>(null)
-
-let toastTimer:
-    | ReturnType<typeof setTimeout>
-    | undefined
-
-const articleTextClass = computed(() => {
-    return `article-text-${textSize.value}`
-})
-
-const continueReadingArticles = computed(() => {
-    return relatedArticles.value.slice(0, 3)
-})
-
-/*
-|--------------------------------------------------------------------------
-| SEO
-|--------------------------------------------------------------------------
-*/
-
-const pageTitle = computed(() => {
-    return (
-        article.value?.metaTitle
-        || article.value?.title
-        || 'News Article'
-    )
-})
-
-const pageDescription = computed(() => {
-    return (
-        article.value?.metaDescription
-        || article.value?.excerpt
-        || 'Read the latest news article.'
-    )
-})
-
-const pageImage = computed(() => {
-    return article.value?.image
-        || undefined
-})
+const articleTextClass = computed(() => `sp-editorial-text-${textSize.value}`)
+const continueReadingArticles = computed(() => relatedArticles.value.slice(0, 3))
+const pageTitle = computed(() => article.value?.metaTitle || article.value?.title || 'News Article')
+const pageDescription = computed(() => article.value?.metaDescription || article.value?.excerpt || 'Read the latest SP-Tools news article.')
+const pageImage = computed(() => article.value?.image || undefined)
 
 useSeoMeta({
-    title: () => pageTitle.value,
-
-    description: () =>
-        pageDescription.value,
-
-    ogTitle: () =>
-        pageTitle.value,
-
-    ogDescription: () =>
-        pageDescription.value,
-
-    ogImage: () =>
-        pageImage.value,
-
-    ogType: 'article',
-
-    twitterCard:
-        'summary_large_image',
-
-    twitterTitle: () =>
-        pageTitle.value,
-
-    twitterDescription: () =>
-        pageDescription.value,
-
-    twitterImage: () =>
-        pageImage.value,
+  title: () => pageTitle.value,
+  description: () => pageDescription.value,
+  ogTitle: () => pageTitle.value,
+  ogDescription: () => pageDescription.value,
+  ogImage: () => pageImage.value,
+  ogType: 'article',
+  twitterCard: 'summary_large_image',
+  twitterTitle: () => pageTitle.value,
+  twitterDescription: () => pageDescription.value,
+  twitterImage: () => pageImage.value,
 })
 
-/*
-|--------------------------------------------------------------------------
-| Structured data
-|--------------------------------------------------------------------------
-*/
-
 const structuredData = computed(() => {
-    const currentArticle =
-        article.value
+  const current = article.value
+  if (!current) return null
 
-    if (!currentArticle) {
-        return null
-    }
-
-    return {
-        '@context':
-            'https://schema.org',
-
-        '@type':
-            'NewsArticle',
-
-        headline:
-            currentArticle.title,
-
-        description:
-            currentArticle.excerpt,
-
-        image:
-            currentArticle.image
-                ? [currentArticle.image]
-                : undefined,
-
-        datePublished:
-            currentArticle.publishedAt,
-
-        dateModified:
-            currentArticle.updatedAt
-            || currentArticle.publishedAt,
-
-        author: {
-            '@type': 'Person',
-            name: currentArticle.author,
-        },
-
-        publisher: {
-            '@type': 'Organization',
-
-            name:
-                currentArticle.source
-                || 'SP-Tools News',
-        },
-
-        articleSection:
-            currentArticle.categoryName,
-
-        keywords:
-            currentArticle.tags.join(', '),
-    }
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'NewsArticle',
+    headline: current.title,
+    description: current.excerpt,
+    image: current.image ? [current.image] : undefined,
+    datePublished: current.publishedAt,
+    dateModified: current.updatedAt || current.publishedAt,
+    author: { '@type': 'Person', name: current.author },
+    publisher: { '@type': 'Organization', name: current.source || 'SP-Tools News' },
+    articleSection: current.categoryName,
+    keywords: current.tags.join(', '),
+  }
 })
 
 useHead(() => ({
-    script: structuredData.value
-        ? [
-            {
-                key:
-                    'news-article-schema',
-
-                type:
-                    'application/ld+json',
-
-                innerHTML:
-                    JSON.stringify(
-                        structuredData.value,
-                    ),
-            },
-        ]
-        : [],
+  link: article.value ? [{ rel: 'canonical', href: article.value.canonicalUrl || `/news/posts/${article.value.slug}` }] : [],
+  script: structuredData.value ? [{ key: 'news-article-schema', type: 'application/ld+json', innerHTML: JSON.stringify(structuredData.value) }] : [],
 }))
 
-/*
-|--------------------------------------------------------------------------
-| Toast
-|--------------------------------------------------------------------------
-*/
-
-const displayToast = (
-    message: string,
-): void => {
-    toastMessage.value = message
-
-    if (toastTimer) {
-        clearTimeout(toastTimer)
-    }
-
-    toastTimer = setTimeout(() => {
-        toastMessage.value = ''
-    }, 2500)
+const displayToast = (message: string) => {
+  toastMessage.value = message
+  if (toastTimer) clearTimeout(toastTimer)
+  toastTimer = setTimeout(() => { toastMessage.value = '' }, 2400)
 }
 
-/*
-|--------------------------------------------------------------------------
-| Save article
-|--------------------------------------------------------------------------
-*/
+const storageKey = computed(() => article.value ? `saved-news-${article.value.id}` : '')
 
-const storageKey = computed(() => {
-    if (!article.value) {
-        return ''
-    }
-
-    return `saved-news-${article.value.id}`
-})
-
-const loadSavedStatus = (): void => {
-    if (
-        !import.meta.client
-        || !storageKey.value
-    ) {
-        return
-    }
-
-    isSaved.value =
-        localStorage.getItem(
-            storageKey.value,
-        ) === '1'
+const loadSavedStatus = () => {
+  if (!import.meta.client || !storageKey.value) return
+  isSaved.value = localStorage.getItem(storageKey.value) === '1'
 }
 
-const toggleSavedArticle = (): void => {
-    if (
-        !import.meta.client
-        || !storageKey.value
-    ) {
-        return
-    }
-
-    isSaved.value = !isSaved.value
-
-    if (isSaved.value) {
-        localStorage.setItem(
-            storageKey.value,
-            '1',
-        )
-
-        displayToast('Article saved')
-        return
-    }
-
-    localStorage.removeItem(
-        storageKey.value,
-    )
-
-    displayToast(
-        'Article removed from saved',
-    )
+const toggleSavedArticle = () => {
+  if (!import.meta.client || !storageKey.value) return
+  isSaved.value = !isSaved.value
+  if (isSaved.value) {
+    localStorage.setItem(storageKey.value, '1')
+    displayToast('Article saved')
+  } else {
+    localStorage.removeItem(storageKey.value)
+    displayToast('Removed from saved')
+  }
 }
 
-/*
-|--------------------------------------------------------------------------
-| Copy, share and print
-|--------------------------------------------------------------------------
-*/
-
-const copyArticleLink =
-    async (): Promise<void> => {
-        if (!import.meta.client) {
-            return
-        }
-
-        try {
-            await navigator.clipboard.writeText(
-                window.location.href,
-            )
-
-            displayToast(
-                'Article link copied',
-            )
-        } catch {
-            displayToast(
-                'Unable to copy article link',
-            )
-        }
-    }
-
-const shareArticle =
-    async (): Promise<void> => {
-        if (
-            !import.meta.client
-            || !article.value
-        ) {
-            return
-        }
-
-        if (navigator.share) {
-            try {
-                await navigator.share({
-                    title:
-                        article.value.title,
-
-                    text:
-                        article.value.excerpt,
-
-                    url:
-                        window.location.href,
-                })
-
-                return
-            } catch {
-                return
-            }
-        }
-
-        await copyArticleLink()
-    }
-
-const printArticle = (): void => {
-    if (!import.meta.client) {
-        return
-    }
-
-    window.print()
+const copyArticleLink = async () => {
+  if (!import.meta.client) return
+  try {
+    await navigator.clipboard.writeText(window.location.href)
+    displayToast('Article link copied')
+  } catch {
+    displayToast('Unable to copy article link')
+  }
 }
 
-/*
-|--------------------------------------------------------------------------
-| Reading progress
-|--------------------------------------------------------------------------
-*/
+const shareArticle = async () => {
+  if (!import.meta.client || !article.value) return
+  if (navigator.share) {
+    try {
+      await navigator.share({ title: article.value.title, text: article.value.excerpt, url: window.location.href })
+      return
+    } catch { return }
+  }
+  await copyArticleLink()
+}
 
-const updateReadingProgress =
-    (): void => {
-        if (
-            !import.meta.client
-            || !articleContainer.value
-        ) {
-            readingProgress.value = 0
-            return
-        }
+const printArticle = () => {
+  if (import.meta.client) window.print()
+}
 
-        const element =
-            articleContainer.value
+const updateReadingProgress = () => {
+  if (!import.meta.client || !articleContainer.value) {
+    readingProgress.value = 0
+    return
+  }
 
-        const elementTop =
-            window.scrollY
-            + element
-                .getBoundingClientRect()
-                .top
+  const element = articleContainer.value
+  const top = window.scrollY + element.getBoundingClientRect().top
+  const readableDistance = element.offsetHeight - window.innerHeight
+  if (readableDistance <= 0) {
+    readingProgress.value = 100
+    return
+  }
 
-        const readableDistance =
-            element.offsetHeight
-            - window.innerHeight
+  const progress = ((window.scrollY - top) / readableDistance) * 100
+  readingProgress.value = Math.min(100, Math.max(0, progress))
+}
 
-        if (readableDistance <= 0) {
-            readingProgress.value = 100
-            return
-        }
-
-        const progress =
-            (
-                (
-                    window.scrollY
-                    - elementTop
-                )
-                / readableDistance
-            )
-            * 100
-
-        readingProgress.value =
-            Math.min(
-                100,
-                Math.max(0, progress),
-            )
-    }
-
-watch(
-    article,
-    async () => {
-        loadSavedStatus()
-
-        await nextTick()
-
-        updateReadingProgress()
-    },
-    {
-        immediate: true,
-    },
-)
+watch(article, async () => {
+  loadSavedStatus()
+  await nextTick()
+  updateReadingProgress()
+}, { immediate: true })
 
 onMounted(() => {
-    window.addEventListener(
-        'scroll',
-        updateReadingProgress,
-        {
-            passive: true,
-        },
-    )
-
-    window.addEventListener(
-        'resize',
-        updateReadingProgress,
-    )
-
-    updateReadingProgress()
+  window.addEventListener('scroll', updateReadingProgress, { passive: true })
+  window.addEventListener('resize', updateReadingProgress)
+  updateReadingProgress()
 })
 
 onBeforeUnmount(() => {
-    window.removeEventListener(
-        'scroll',
-        updateReadingProgress,
-    )
-
-    window.removeEventListener(
-        'resize',
-        updateReadingProgress,
-    )
-
-    if (toastTimer) {
-        clearTimeout(toastTimer)
-    }
+  window.removeEventListener('scroll', updateReadingProgress)
+  window.removeEventListener('resize', updateReadingProgress)
+  if (toastTimer) clearTimeout(toastTimer)
 })
-
-const retryLoad = async (): Promise<void> => {
-    await refresh()
-}
 </script>
 
 <template>
-    <main class="sp-news-post min-h-screen overflow-x-hidden bg-surface text-fg">
-        <!-- Reading progress -->
+  <main class="sp-editorial-post min-h-screen bg-surface text-fg">
+    <div class="fixed inset-x-0 top-0 z-[90] h-[3px] bg-surface-3/70 print:hidden">
+      <div class="h-full bg-accent transition-[width] duration-150" :style="{ width: `${readingProgress}%` }" />
+    </div>
 
-        <div class="fixed inset-x-0 top-0
-      z-[90] h-1 bg-surface-3/60
-      print:hidden">
-            <div class="sp-news-reading-progress h-full transition-[width]
-        duration-150 ease-out" :style="{
-            width: `${readingProgress}%`,
-        }" />
+    <section v-if="pending" class="sp-editorial-shell py-16">
+      <div class="animate-pulse">
+        <div class="h-3 w-40 rounded-full bg-surface-3" />
+        <div class="mt-6 h-16 max-w-4xl rounded-2xl bg-surface-3" />
+        <div class="mt-4 h-6 max-w-2xl rounded-xl bg-surface-2" />
+        <div class="mt-10 aspect-[16/8] rounded-[24px] bg-surface-3" />
+      </div>
+    </section>
+
+    <section v-else-if="error" class="sp-editorial-shell flex min-h-[70vh] items-center justify-center py-20">
+      <div class="w-full max-w-xl rounded-[24px] border border-danger/20 bg-danger-soft p-8 text-center">
+        <p class="text-[10px] font-bold uppercase tracking-[.16em] text-danger">News unavailable</p>
+        <h1 class="mt-4 text-3xl font-[780] tracking-[-.04em] text-fg">Article could not be loaded</h1>
+        <p class="mt-3 text-sm leading-7 text-fg-muted">The article may be unavailable or the News API may not be running.</p>
+        <div class="mt-6 flex justify-center gap-3">
+          <button type="button" class="sp-btn sp-btn-primary px-5 py-3 text-xs" @click="refresh">Try again</button>
+          <NuxtLink to="/news" class="sp-btn sp-btn-secondary px-5 py-3 text-xs">Back to news</NuxtLink>
         </div>
+      </div>
+    </section>
 
-        <!-- Loading state -->
+    <template v-else-if="article">
+      <NewsPostHeader :article="article" />
 
-        <section v-if="pending" class="mx-auto min-h-[75vh]
-      max-w-[1120px] px-6 py-20">
-            <div class="animate-pulse">
-                <div class="h-4 w-36 rounded-full
-          bg-surface-3" />
+      <section class="sp-editorial-toolbar sticky z-40 border-y border-line bg-surface/94 backdrop-blur-xl print:hidden">
+        <div class="sp-editorial-shell flex min-h-[64px] items-center justify-between gap-4 py-2">
+          <NewsPostReaderProgressMeta :article="article" :progress="readingProgress" />
 
-                <div class="mt-7 h-14 max-w-4xl
-          rounded-2xl bg-surface-3" />
-
-                <div class="mt-4 h-7 max-w-2xl
-          rounded-xl bg-surface-2" />
-
-                <div class="mt-10 aspect-[16/8]
-          rounded-[32px] bg-surface-3" />
-
-                <div class="mt-12 grid gap-12
-          lg:grid-cols-[minmax(0,1fr)_340px]">
-                    <div class="space-y-4">
-                        <div v-for="index in 7" :key="index" class="h-5 rounded
-              bg-surface-2" :class="index % 3 === 0
-                ? 'w-4/5'
-                : 'w-full'
-                " />
-                    </div>
-
-                    <div class="hidden h-96 rounded-3xl
-            bg-surface-2 lg:block" />
-                </div>
+          <div class="flex items-center gap-2">
+            <div class="hidden items-center rounded-[12px] border border-line bg-surface-2 p-1 sm:flex">
+              <button v-for="size in (['small','normal','large'] as ArticleTextSize[])" :key="size" type="button" class="flex h-8 w-8 items-center justify-center rounded-[9px] font-bold transition" :class="[size === 'small' ? 'text-[10px]' : size === 'large' ? 'text-base' : 'text-xs', textSize === size ? 'bg-elevated text-accent shadow-xs' : 'text-fg-subtle hover:text-fg']" @click="textSize = size">A</button>
             </div>
-        </section>
 
-        <!-- Error state -->
+            <button type="button" class="inline-flex h-10 items-center gap-2 rounded-[11px] border border-line bg-surface px-3 text-[11px] font-bold text-fg-muted transition hover:text-accent" :class="isSaved ? '!border-accent/25 !bg-accent-soft !text-accent' : ''" @click="toggleSavedArticle">
+              <span aria-hidden="true">♡</span><span class="hidden sm:inline">{{ isSaved ? 'Saved' : 'Save' }}</span>
+            </button>
+            <button type="button" aria-label="Copy article link" class="sp-editorial-icon-button" @click="copyArticleLink">↗</button>
+            <button type="button" aria-label="Share article" class="sp-editorial-icon-button" @click="shareArticle">⤴</button>
+            <button type="button" aria-label="Print article" class="sp-editorial-icon-button hidden md:flex" @click="printArticle">⎙</button>
+          </div>
+        </div>
+      </section>
 
-        <section v-else-if="error" class="mx-auto flex min-h-[70vh]
-      max-w-3xl items-center
-      justify-center px-6 py-20">
-            <div class="sp-news-error-panel w-full rounded-[28px] border border-danger/20 bg-danger-soft
-        p-8 text-center shadow-sm
-        sm:p-12">
-                <div class="mx-auto flex h-16 w-16
-          items-center justify-center
-          rounded-2xl bg-surface
-          text-3xl shadow-md">
-                    📰
-                </div>
+      <section ref="articleContainer" class="sp-editorial-content-section">
+        <div class="sp-editorial-reader-grid">
+          <div class="min-w-0">
+            <NewsPostArticleBody :article="article" :class="articleTextClass" />
+          </div>
+          <div class="hidden min-w-0 xl:block print:hidden">
+            <NewsPostSidebar :article="article" :most-read="mostReadArticles" />
+          </div>
+        </div>
+      </section>
 
-                <h1 class="mt-6 text-2xl font-black
-          tracking-tight text-fg
-          sm:text-3xl">
-                    Article could not be loaded
-                </h1>
+      <NewsPostContinueReading v-if="continueReadingArticles.length" :articles="continueReadingArticles" :category-slug="article.category" />
+    </template>
 
-                <p class="mx-auto mt-4 max-w-xl
-          leading-7 text-danger">
-                    The article may be unavailable,
-                    unpublished, archived, or the news
-                    server may not be running.
-                </p>
-
-                <div class="mt-8 flex flex-wrap
-          justify-center gap-3">
-                    <button type="button" class="rounded-xl bg-danger
-  px-5 py-3 text-sm font-bold
-  text-white transition
-  hover:brightness-95
-  disabled:cursor-not-allowed
-  disabled:opacity-60" :disabled="pending" @click="retryLoad">
-                        {{ pending ? 'Loading...' : 'Try again' }}
-                    </button>
-
-                    <NuxtLink to="/news" class="rounded-xl border
-            border-danger/20 bg-surface
-            px-5 py-3 text-sm font-bold
-            text-danger transition
-            hover:bg-danger-soft">
-                        Back to news
-                    </NuxtLink>
-                </div>
-            </div>
-        </section>
-
-        <!-- Loaded article -->
-
-        <template v-else-if="article">
-            <!-- Article header -->
-
-            <NewsPostHeader :article="article" />
-
-            <!-- Reader toolbar -->
-
-            <section class="sp-news-reader-toolbar sticky z-40 border-y border-line/80 bg-surface/90 shadow-sm backdrop-blur-xl print:hidden">
-                <div class="mx-auto flex max-w-[1120px]
-          items-center justify-between
-          gap-3 px-4 py-3 sm:px-6">
-                    <!-- Progress -->
-
-                    <NewsPostReaderProgressMeta
-                      :article="article"
-                      :progress="readingProgress"
-                    />
-
-                    <!-- Actions -->
-
-                    <div class="flex w-full items-center
-            justify-between gap-2 md:w-auto
-            md:justify-end">
-                        <!-- Text size -->
-
-                        <div class="flex items-center
-              rounded-xl border
-              border-line
-              bg-surface-2 p-1">
-                            <button type="button" aria-label="Use smaller article text" class="flex h-8 w-8
-                items-center justify-center
-                rounded-lg text-[10px]
-                font-bold transition" :class="textSize === 'small'
-                    ? 'bg-surface text-accent shadow-sm'
-                    : 'text-fg-subtle hover:text-fg'
-                    " @click="textSize = 'small'">
-                                A
-                            </button>
-
-                            <button type="button" aria-label="Use normal article text" class="flex h-8 w-8
-                items-center justify-center
-                rounded-lg text-xs
-                font-bold transition" :class="textSize === 'normal'
-                    ? 'bg-surface text-accent shadow-sm'
-                    : 'text-fg-subtle hover:text-fg'
-                    " @click="textSize = 'normal'">
-                                A
-                            </button>
-
-                            <button type="button" aria-label="Use larger article text" class="flex h-8 w-8
-                items-center justify-center
-                rounded-lg text-base
-                font-bold transition" :class="textSize === 'large'
-                    ? 'bg-surface text-accent shadow-sm'
-                    : 'text-fg-subtle hover:text-fg'
-                    " @click="textSize = 'large'">
-                                A
-                            </button>
-                        </div>
-
-                        <!-- Save -->
-
-                        <button type="button" class="inline-flex h-10
-              items-center gap-2 rounded-xl
-              border px-3 text-xs font-bold
-              transition sm:px-4" :class="isSaved
-                ? 'border-accent/20 bg-accent-soft text-accent'
-                : 'border-line bg-surface text-fg-muted hover:border-accent/20 hover:text-accent'
-                " @click="toggleSavedArticle">
-                            <svg class="h-4 w-4" :fill="isSaved
-                                ? 'currentColor'
-                                : 'none'
-                                " viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-                                <path
-                                    d="M6 4.75A1.75 1.75 0 0 1 7.75 3h8.5A1.75 1.75 0 0 1 18 4.75V21l-6-3.75L6 21V4.75Z" />
-                            </svg>
-
-                            <span class="hidden sm:inline">
-                                {{
-                                    isSaved
-                                        ? 'Saved'
-                                        : 'Save'
-                                }}
-                            </span>
-                        </button>
-
-                        <!-- Copy -->
-
-                        <button type="button" aria-label="Copy article link" class="flex h-10 w-10
-              items-center justify-center
-              rounded-xl border
-              border-line bg-surface
-              text-fg-muted transition
-              hover:border-accent/20
-              hover:text-accent" @click="copyArticleLink">
-                            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                                stroke-width="1.8" aria-hidden="true">
-                                <path d="M10 13a5 5 0 0 0 7.54.54l2-2a5 5 0 0 0-7.07-7.07l-1.15 1.15" />
-
-                                <path d="M14 11a5 5 0 0 0-7.54-.54l-2 2a5 5 0 0 0 7.07 7.07l1.15-1.15" />
-                            </svg>
-                        </button>
-
-                        <!-- Share -->
-
-                        <button type="button" aria-label="Share article" class="flex h-10 w-10
-              items-center justify-center
-              rounded-xl border
-              border-line bg-surface
-              text-fg-muted transition
-              hover:border-accent/20
-              hover:text-accent" @click="shareArticle">
-                            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                                stroke-width="1.8" aria-hidden="true">
-                                <circle cx="18" cy="5" r="2.5" />
-
-                                <circle cx="6" cy="12" r="2.5" />
-
-                                <circle cx="18" cy="19" r="2.5" />
-
-                                <path d="m8.2 10.8 7.6-4.5" />
-
-                                <path d="m8.2 13.2 7.6 4.5" />
-                            </svg>
-                        </button>
-
-                        <!-- Print -->
-
-                        <button type="button" aria-label="Print article" class="hidden h-10 w-10
-              items-center justify-center
-              rounded-xl border
-              border-line bg-surface
-              text-fg-muted transition
-              hover:border-accent/20
-              hover:text-accent sm:flex" @click="printArticle">
-                            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                                stroke-width="1.8" aria-hidden="true">
-                                <path d="M7 8V3h10v5" />
-
-                                <path d="M7 17H5a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2" />
-
-                                <path d="M7 14h10v7H7z" />
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Article content -->
-
-            <section id="article-content" ref="articleContainer" class="sp-news-reading-section bg-surface py-10 sm:py-12 lg:py-14">
-                <div class="sp-news-reader-grid mx-auto grid w-full max-w-[1380px] items-start gap-[52px] px-0 xl:grid-cols-[minmax(0,800px)_minmax(460px,1fr)]">
-                    <div class="sp-news-reader-main min-w-0 w-full max-w-[800px]" :class="articleTextClass">
-                        <NewsPostArticleBody :article="article" />
-                    </div>
-
-                    <aside class="sp-news-reader-sidebar hidden min-w-0 w-full print:hidden xl:block">
-                        <NewsPostSidebar :article="article" :most-read="mostReadArticles.slice(0, 6)
-                            " />
-                    </aside>
-                </div>
-            </section>
-            <!-- Continue reading -->
-
-            <NewsPostContinueReading
-              v-if="continueReadingArticles.length"
-              :articles="continueReadingArticles"
-              :category-slug="article.category"
-            />
-
-            <!-- Related articles -->
-<!-- Newsletter -->
-
-        </template>
-
-        <!-- Toast -->
-
-        <Transition enter-active-class="
-        transition duration-200
-      " enter-from-class="
-        translate-y-4 opacity-0
-      " enter-to-class="
-        translate-y-0 opacity-100
-      " leave-active-class="
-        transition duration-200
-      " leave-from-class="
-        translate-y-0 opacity-100
-      " leave-to-class="
-        translate-y-4 opacity-0
-      ">
-            <div v-if="toastMessage" role="status" aria-live="polite" class="fixed bottom-6 left-1/2
-        z-[100] -translate-x-1/2
-        whitespace-nowrap rounded-2xl
-        bg-accent text-accent-fg px-5 py-3
-        text-xs font-semibold
-        text-white shadow-2xl
-        print:hidden">
-                {{ toastMessage }}
-            </div>
-        </Transition>
-    </main>
+    <Transition name="fade">
+      <div v-if="toastMessage" class="fixed bottom-6 left-1/2 z-[100] -translate-x-1/2 rounded-full border border-line bg-elevated px-4 py-2.5 text-[11px] font-semibold text-fg shadow-pop print:hidden">
+        {{ toastMessage }}
+      </div>
+    </Transition>
+  </main>
 </template>
-
-<style>
-.article-text-small {
-    --article-body-size: 15px;
-    --article-body-line-height: 1.8;
-}
-
-.article-text-normal {
-    --article-body-size: 17px;
-    --article-body-line-height: 1.9;
-}
-
-.article-text-large {
-    --article-body-size: 19px;
-    --article-body-line-height: 2;
-}
-
-@media print {
-
-    header,
-    footer,
-    nav,
-    button {
-        display: none !important;
-    }
-
-    main {
-        background: white !important;
-    }
-
-    article {
-        width: 100% !important;
-        max-width: none !important;
-    }
-}
-</style>
-
