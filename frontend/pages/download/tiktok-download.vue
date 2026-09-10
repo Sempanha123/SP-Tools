@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { TikTokResult } from '~/composables/useMediaApi'
+import type { TikTokNuxtResult } from '~/composables/useTikTokDownload'
 
 const { findTool } = useTools()
-const { fetchTikTok, proxyUrl } = useMediaApi()
+const { fetchTikTok } = useTikTokDownload()
 const tool = findTool('tiktok-download')!
 
 useSeoMeta({
@@ -15,7 +15,7 @@ useSeoMeta({
 const url = ref('')
 const loading = ref(false)
 const errorMessage = ref('')
-const result = ref<TikTokResult | null>(null)
+const result = ref<TikTokNuxtResult | null>(null)
 let controller: AbortController | null = null
 
 const reset = () => {
@@ -92,13 +92,13 @@ const steps = [
   { title: 'Copy the link', description: 'Tap Share on the TikTok post and choose Copy link. Works from the app or the web.' },
   { title: 'Paste it here', description: 'Drop the URL into the real downloader workspace above. The Paste button can read your clipboard.' },
   { title: 'Review the post', description: 'The workspace changes to the actual creator, thumbnail and streams returned by TikTok.' },
-  { title: 'Save your version', description: 'Choose HD, standard, or original where available and save the MP4 through our proxy.' },
+  { title: 'Save your version', description: 'Choose HD, standard, or original where available and open the returned media link.' },
 ]
 
 const faqs = [
   { question: 'Why do some videos only offer one quality?', answer: 'TikTok does not publish the same renditions for every post. If only a watermarked file is returned, that is the only stream available for that video.' },
   { question: 'Does this work with private videos?', answer: 'No. Only publicly viewable posts can be resolved. Private, friends-only, and deleted posts will return an error.' },
-  { question: 'Why does the download go through a proxy?', answer: 'TikTok CDN links block direct saving and expire quickly. Streaming through our own endpoint sets the right headers so the browser saves a real MP4 file with a sensible name.' },
+  { question: 'Where does the download link open?', answer: 'SP-Tools resolves the available media options and then uses the returned media link. Availability and link lifetime depend on the source.' },
   { question: 'Am I allowed to download these videos?', answer: 'Use the downloader only for content you own or have permission to reuse, and follow the platform rules and applicable copyright law.' },
 ]
 </script>
@@ -160,7 +160,7 @@ const faqs = [
                 :tag="rendition.tag"
                 :tone="rendition.tone"
                 :recommended="rendition.recommended"
-                :href="proxyUrl(rendition.url, rendition.filename)"
+                :href="rendition.url"
                 :download="rendition.filename"
               />
             </div>

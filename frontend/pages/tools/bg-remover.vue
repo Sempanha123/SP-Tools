@@ -11,11 +11,11 @@ useSeoMeta({
   title:
     'AI Background Remover — Free Browser Background Removal | SP-Tools',
   description:
-    'Remove image backgrounds directly in your browser. No upload to the SP-Tools server, no account, no watermark, and no Python processing server required.',
+    'Remove image backgrounds quickly and download a clean transparent PNG. No account and no watermark.',
   ogTitle:
     'AI Background Remover | SP-Tools',
   ogDescription:
-    'Free browser-side background removal with transparent PNG output.',
+    'Fast background removal with transparent PNG output.',
 })
 
 type Stage =
@@ -33,7 +33,6 @@ const originalUrl = ref('')
 const resultUrl = ref('')
 const originalName = ref('')
 const elapsedMs = ref(0)
-const backendLabel = ref('')
 
 let controller:
   AbortController | null = null
@@ -79,7 +78,6 @@ const reset = () => {
   resultUrl.value = ''
   originalName.value = ''
   elapsedMs.value = 0
-  backendLabel.value = ''
 }
 
 onUnmounted(() => {
@@ -108,7 +106,6 @@ const process = async (
     'Preparing browser AI…'
   errorMessage.value = ''
   resultUrl.value = ''
-  backendLabel.value = ''
 
   originalName.value =
     file.name.replace(
@@ -161,10 +158,6 @@ const process = async (
         result.blob,
       )
 
-    backendLabel.value =
-      result.backend === 'webgpu'
-        ? 'WebGPU'
-        : 'WASM'
 
     stage.value = 'done'
   } catch (error) {
@@ -271,41 +264,31 @@ const elapsedLabel =
       ).toFixed(1)}s`,
   )
 
-const runtimeLabel =
-  computed(() => {
-    if (backendLabel.value) {
-      return backendLabel.value
-    }
-
-    return capabilities.value.webgpu
-      ? 'WebGPU available'
-      : 'WASM fallback'
-  })
 
 const faqs = [
   {
     question:
-      'Does this use my SP-Tools VPS CPU?',
+      'Is the background remover free?',
     answer:
-      'No. The AI runs inside the visitor’s browser. Your VPS only serves the Nuxt page and JavaScript files.',
+      'Yes. You can remove backgrounds and download the result without a watermark.',
   },
   {
     question:
-      'Is my image uploaded to SP-Tools?',
+      'What image formats are supported?',
     answer:
-      'No. The selected image stays on the device for AI processing. The browser downloads the AI model separately and caches it for later visits.',
+      'JPG, PNG and WEBP images are supported. The final result is downloaded as a transparent PNG.',
   },
   {
     question:
-      'Why can the first run take longer?',
+      'Will the result keep transparency?',
     answer:
-      'The browser has to download and prepare the AI model the first time. Later runs are usually faster because browser caching can reuse those model files.',
+      'Yes. The output includes an alpha channel so you can place the subject on another background.',
   },
   {
     question:
-      'What output format do I get?',
+      'Why can the first result take a little longer?',
     answer:
-      'A PNG with an alpha channel so the background stays transparent.',
+      'The first run may need a little extra preparation. Later runs are usually faster.',
   },
 ]
 </script>
@@ -321,58 +304,6 @@ const faqs = [
     />
 
     <section class="sp-container py-12 sm:py-16">
-      <div
-        class="mb-6 grid gap-3 sm:grid-cols-3"
-      >
-        <div
-          class="rounded-[16px] border border-line bg-surface-2 px-4 py-3"
-        >
-          <p
-            class="text-[8px] font-bold uppercase tracking-[.14em] text-fg-subtle"
-          >
-            Processing
-          </p>
-
-          <p
-            class="mt-1.5 text-[11px] font-bold text-fg"
-          >
-            Your browser
-          </p>
-        </div>
-
-        <div
-          class="rounded-[16px] border border-line bg-surface-2 px-4 py-3"
-        >
-          <p
-            class="text-[8px] font-bold uppercase tracking-[.14em] text-fg-subtle"
-          >
-            VPS AI load
-          </p>
-
-          <p
-            class="mt-1.5 text-[11px] font-bold text-positive"
-          >
-            None
-          </p>
-        </div>
-
-        <div
-          class="rounded-[16px] border border-line bg-surface-2 px-4 py-3"
-        >
-          <p
-            class="text-[8px] font-bold uppercase tracking-[.14em] text-fg-subtle"
-          >
-            Runtime
-          </p>
-
-          <p
-            class="mt-1.5 text-[11px] font-bold text-accent"
-          >
-            {{ runtimeLabel }}
-          </p>
-        </div>
-      </div>
-
       <UiAlert
         v-if="errorMessage"
         tone="danger"
@@ -406,12 +337,10 @@ const faqs = [
         />
 
         <div
-          class="mx-auto mt-5 max-w-2xl rounded-[14px] border border-positive/15 bg-positive-soft px-4 py-3 text-center"
+          class="mx-auto mt-5 max-w-2xl rounded-[14px] border border-line bg-surface-2 px-4 py-3 text-center"
         >
-          <p
-            class="text-[10px] font-semibold leading-5 text-positive"
-          >
-            Private processing: the selected photo is not sent to the SP-Tools Python/FastAPI server.
+          <p class="text-[10px] font-semibold leading-5 text-fg-muted">
+            Fast, simple background removal with transparent PNG output.
           </p>
         </div>
 
@@ -456,7 +385,7 @@ const faqs = [
         >
           {{
             stage === 'loading-model'
-              ? 'Preparing AI in your browser…'
+              ? 'Preparing background remover…'
               : 'Removing the background…'
           }}
         </p>
@@ -484,7 +413,7 @@ const faqs = [
         <p
           class="mt-4 text-[10px] text-fg-subtle"
         >
-          Your VPS is not doing this AI work.
+          Please keep this tab open while your image is processed.
         </p>
 
         <UiButton
@@ -528,7 +457,7 @@ const faqs = [
           <p
             class="mt-2 text-sm leading-6 text-fg-muted"
           >
-            The image was processed locally in this browser. No image-processing request was sent to your VPS.
+            Your transparent image is ready to download.
           </p>
 
           <div class="mt-6 space-y-2.5">
@@ -551,60 +480,19 @@ const faqs = [
           <dl
             class="mt-6 space-y-2 border-t border-line pt-5 text-xs"
           >
-            <div
-              class="flex justify-between gap-4"
-            >
-              <dt class="text-fg-subtle">
-                AI location
-              </dt>
-
-              <dd
-                class="font-semibold text-positive"
-              >
-                Visitor device
-              </dd>
+            <div class="flex justify-between gap-4">
+              <dt class="text-fg-subtle">Format</dt>
+              <dd class="font-semibold text-fg">PNG with alpha</dd>
             </div>
 
-            <div
-              class="flex justify-between gap-4"
-            >
-              <dt class="text-fg-subtle">
-                Runtime
-              </dt>
-
-              <dd
-                class="font-semibold text-fg"
-              >
-                {{ backendLabel }}
-              </dd>
+            <div class="flex justify-between gap-4">
+              <dt class="text-fg-subtle">Processing time</dt>
+              <dd class="font-semibold text-fg">{{ elapsedLabel }}</dd>
             </div>
 
-            <div
-              class="flex justify-between gap-4"
-            >
-              <dt class="text-fg-subtle">
-                Format
-              </dt>
-
-              <dd
-                class="font-semibold text-fg"
-              >
-                PNG with alpha
-              </dd>
-            </div>
-
-            <div
-              class="flex justify-between gap-4"
-            >
-              <dt class="text-fg-subtle">
-                Watermark
-              </dt>
-
-              <dd
-                class="font-semibold text-positive"
-              >
-                None
-              </dd>
+            <div class="flex justify-between gap-4">
+              <dt class="text-fg-subtle">Watermark</dt>
+              <dd class="font-semibold text-positive">None</dd>
             </div>
           </dl>
         </div>

@@ -12,11 +12,11 @@ useSeoMeta({
   title:
     'AI Image Upscaler — Free Browser 2× / 4× Upscaling | SP-Tools',
   description:
-    'Upscale images 2× or 4× directly in your browser with ESRGAN. No Python image server and no per-image API charge.',
+    'Upscale images 2× or 4× with AI and download a sharper, larger result.',
   ogTitle:
     'AI Image Upscaler | SP-Tools',
   ogDescription:
-    'Increase image resolution locally in the browser with 2× or 4× AI upscaling.',
+    'Increase image resolution with 2× or 4× AI upscaling.',
 })
 
 type Stage =
@@ -434,27 +434,27 @@ const inputMegapixels =
 const faqs = [
   {
     question:
-      'Does this use my VPS CPU or RAM?',
+      'How much can I enlarge an image?',
     answer:
-      'The AI upscaler runs in the visitor’s browser. Your VPS is not performing ESRGAN inference.',
+      'Choose 2× or 4×. 2× is the best default for most images, while 4× produces a larger result and takes longer.',
   },
   {
     question:
-      'Why is 4× limited more than 2×?',
+      'Why can 4× take longer?',
     answer:
-      '4× creates many more output pixels and can use a lot of browser memory. SP-Tools applies a conservative input-size limit to reduce browser crashes on phones and lower-memory computers.',
+      '4× creates many more pixels than 2×, so larger images need more processing time.',
   },
   {
     question:
-      'Is it completely free per image?',
+      'What image formats are supported?',
     answer:
-      'There is no per-image API charge in this V27 implementation because processing is local. Normal website hosting and bandwidth costs still apply.',
+      'JPG, PNG and WEBP inputs are supported.',
   },
   {
     question:
-      'Why is the first upscale slower?',
+      'What format do I download?',
     answer:
-      'The browser has to load the JavaScript AI runtime and model the first time. Later processing can benefit from browser caching.',
+      'The processed result is downloaded as a high-quality image.',
   },
 ]
 </script>
@@ -470,58 +470,6 @@ const faqs = [
     />
 
     <section class="sp-container py-12 sm:py-16">
-      <div
-        class="mb-6 grid gap-3 sm:grid-cols-3"
-      >
-        <div
-          class="rounded-[16px] border border-line bg-surface-2 px-4 py-3"
-        >
-          <p
-            class="text-[8px] font-bold uppercase tracking-[.14em] text-fg-subtle"
-          >
-            Processing
-          </p>
-
-          <p
-            class="mt-1.5 text-[11px] font-bold text-fg"
-          >
-            Visitor device
-          </p>
-        </div>
-
-        <div
-          class="rounded-[16px] border border-line bg-surface-2 px-4 py-3"
-        >
-          <p
-            class="text-[8px] font-bold uppercase tracking-[.14em] text-fg-subtle"
-          >
-            VPS AI load
-          </p>
-
-          <p
-            class="mt-1.5 text-[11px] font-bold text-positive"
-          >
-            None
-          </p>
-        </div>
-
-        <div
-          class="rounded-[16px] border border-line bg-surface-2 px-4 py-3"
-        >
-          <p
-            class="text-[8px] font-bold uppercase tracking-[.14em] text-fg-subtle"
-          >
-            Model
-          </p>
-
-          <p
-            class="mt-1.5 text-[11px] font-bold text-accent"
-          >
-            ESRGAN Slim
-          </p>
-        </div>
-      </div>
-
       <UiAlert
         v-if="errorMessage"
         tone="danger"
@@ -591,40 +539,10 @@ const faqs = [
           @error="onDropzoneError"
         />
 
-        <div
-          class="mx-auto mt-5 grid max-w-2xl gap-3 sm:grid-cols-2"
-        >
-          <div
-            class="rounded-[14px] border border-positive/15 bg-positive-soft px-4 py-3"
-          >
-            <p
-              class="text-[9px] font-bold uppercase tracking-[.12em] text-positive"
-            >
-              2× recommended
-            </p>
-
-            <p
-              class="mt-1 text-[10px] leading-5 text-fg-muted"
-            >
-              Best default for phones and normal laptops. Input safety limit: about 4.5 MP.
-            </p>
-          </div>
-
-          <div
-            class="rounded-[14px] border border-warning/15 bg-warning-soft px-4 py-3"
-          >
-            <p
-              class="text-[9px] font-bold uppercase tracking-[.12em] text-warning"
-            >
-              4× heavier
-            </p>
-
-            <p
-              class="mt-1 text-[10px] leading-5 text-fg-muted"
-            >
-              More browser memory and processing time. Input safety limit: about 1.5 MP.
-            </p>
-          </div>
+        <div class="mx-auto mt-5 max-w-2xl rounded-[14px] border border-line bg-surface-2 px-4 py-3 text-center">
+          <p class="text-[10px] font-semibold leading-5 text-fg-muted">
+            2× is recommended for most images. 4× works best with smaller source images.
+          </p>
         </div>
       </div>
 
@@ -641,7 +559,7 @@ const faqs = [
         >
           {{
             stage === 'loading-model'
-              ? `Loading ${scale}× browser AI…`
+              ? `Preparing ${scale}× upscaler…`
               : `Upscaling to ${scale}×…`
           }}
         </p>
@@ -671,8 +589,8 @@ const faqs = [
         >
           {{
             scale === 4
-              ? '4× can be demanding on the visitor’s CPU/GPU and memory, but not on your VPS.'
-              : 'All ESRGAN inference is happening on the visitor’s device.'
+              ? '4× can take longer on larger images.'
+              : 'Please keep this tab open while your image is processed.'
           }}
         </p>
 
@@ -716,7 +634,7 @@ const faqs = [
           <p
             class="mt-2 text-sm leading-6 text-fg-muted"
           >
-            The result was produced by ESRGAN in this browser, with no image-processing request to your VPS.
+            Your upscaled image is ready to compare and download.
           </p>
 
           <div class="mt-6 space-y-2.5">
@@ -818,19 +736,6 @@ const faqs = [
               </dd>
             </div>
 
-            <div
-              class="flex justify-between gap-4"
-            >
-              <dt class="text-fg-subtle">
-                AI location
-              </dt>
-
-              <dd
-                class="font-semibold text-positive"
-              >
-                Visitor device
-              </dd>
-            </div>
           </dl>
         </div>
       </div>

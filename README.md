@@ -1,95 +1,53 @@
-# SP-Tools V27 — Browser AI Image Tools
+# SP-Tools V35 — YouTube Stay-On-Site Download
 
-V27 removes the Python/FastAPI requirement from **Background Remover** and **Image Upscaler**.
+V34 fixed the YouTube resolver: video formats now appear.
 
-Your existing TikTok, Facebook and YouTube downloader code is intentionally left alone because those tools still use `useMediaApi()`.
-
-## Architecture
+The remaining problem in local development was the download manager / socket error when clicking a row such as:
 
 ```text
-Background Remover
-User browser
-   ↓
-Transformers.js
-   ↓
-onnx-community/ormbg-ONNX
-   ↓
-transparent PNG
-
-Image Upscaler
-User browser
-   ↓
-UpscalerJS
-   ↓
-ESRGAN Slim 2× / 4×
-   ↓
-upscaled image
+http://localhost:3001/api/youtube-download/file?...
 ```
 
-There is no `/remove-bg/` or `/upscale` request from these two Nuxt pages.
+V35 changes the browser behavior.
 
-## VPS impact
-
-The expensive AI inference runs on the visitor's device.
-
-Your VPS still serves the normal Nuxt application. It does **not** run the background-removal model or ESRGAN.
-
-Background-removal model files are downloaded by the browser from the model host and cached by the browser. The app prefers WebGPU when it is available in a secure browser context and falls back to quantized WASM processing.
-
-The upscaler is dynamically loaded only after the user chooses an image.
-
-## Packages
-
-V27 adds:
+## New flow
 
 ```text
-@huggingface/transformers ^3.8.1
-upscaler                 ^1.0.0
-@upscalerjs/esrgan-slim  ^1.0.0
+Click Video or Audio
+→ page uses fetch() to call the Nuxt file endpoint
+→ Nuxt streams the selected YouTube media
+→ browser receives the result as a Blob
+→ a temporary blob: URL is created
+→ browser save begins
+→ SP-Tools stays open
 ```
 
-## Background model
+The page no longer navigates to the localhost media endpoint.
 
-V27 uses:
+This is the same strategy used to stabilize the Facebook download flow.
 
-`onnx-community/ormbg-ONNX`
+## Why this helps
 
-The model is listed with an Apache-2.0 license. V27 uses fp16 with WebGPU when possible and q8 for the fallback.
+Desktop download managers often intercept navigations to downloadable URLs, including localhost URLs, and may start segmented/range requests.
 
-## Upscaling model
+V35 keeps the API call inside JavaScript `fetch()` and saves from a `blob:` URL instead.
 
-V27 uses ESRGAN Slim because it is designed to reduce latency compared with heavier ESRGAN variants. UpscalerJS and ESRGAN Slim are MIT licensed.
+## Memory / size limit
 
-## Browser safety limits
+The selected media file is temporarily held as a browser Blob before saving.
 
-Browser-side super-resolution can consume a lot of client memory, especially 4×.
+For safety, the V35 YouTube file route caps a reported stream at about 220 MB.
 
-V27 applies conservative limits:
-
-- 2×: about 4.5 MP input
-- 4×: about 1.5 MP input
-
-These limits protect phones and low-memory laptops. They do not reflect VPS limits.
+There is still no FFmpeg, transcoding, or audio/video merge.
 
 ## Apply
-
-Extract the ZIP into the SP-Tools repository root and run:
 
 ```powershell
 Ctrl + C
 
 Set-ExecutionPolicy -Scope Process Bypass
-.\APPLY_V27.ps1
+.\APPLY_V35.ps1
 ```
-
-`APPLY_V27.ps1` will:
-
-1. back up your current image-tool files
-2. replace the two image pages
-3. add `useBrowserImageAI.ts`
-4. add the npm dependencies to `frontend/package.json`
-5. run `npm install`
-6. clear the Nuxt cache
 
 Then:
 
@@ -98,31 +56,12 @@ cd frontend
 npm run dev -- --port 3001
 ```
 
-Open:
-
-```text
-http://localhost:3001/tools/bg-remover
-http://localhost:3001/tools/image-upscaler
-```
-
 Hard refresh with `Ctrl + Shift + R`.
 
 ## Verify
 
-From the repository root:
-
 ```powershell
-.\VERIFY_V27.ps1
+.\VERIFY_V35.ps1
 ```
 
-The verifier confirms the two image pages no longer reference the old FastAPI image methods and then runs a Nuxt production build.
-
-## Important production note
-
-WebGPU normally requires HTTPS (localhost is also treated as a secure development context). Your production SP-Tools site should remain on HTTPS. Browsers without WebGPU can use the fallback for background removal.
-
-## What V27 does not remove
-
-V27 does **not** delete the Python media service because your TikTok/Facebook/YouTube downloader features may still depend on it.
-
-Once you later migrate those downloaders too, the entire FastAPI media service can be reviewed separately.
+Only save content you own or have permission to use.
