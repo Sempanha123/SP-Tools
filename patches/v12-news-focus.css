@@ -1,0 +1,273 @@
+/* ==========================================================================
+   SP-Tools V12 — News focus, larger read-next rail, compact overview,
+   Daily Brief contrast, denser Continue Reading + Latest.
+   ========================================================================== */
+
+.sp-news-post {
+  --sp-reader-width: 735px;
+}
+
+.sp-news-reader-grid {
+  width: min(100% - 2.5rem, 1180px) !important;
+  max-width: 1180px !important;
+  margin-inline: auto;
+  align-items: start;
+  gap: 34px !important;
+}
+
+.sp-news-reader-main {
+  max-width: 735px !important;
+}
+
+.sp-news-reader-sidebar {
+  width: 330px !important;
+  max-width: 330px !important;
+}
+
+.sp-reader-rail {
+  width: 100%;
+}
+
+.sp-reader-rail-card {
+  background: var(--sp-surface-raised, var(--sp-surface)) !important;
+  border-color: var(--sp-border) !important;
+}
+
+.sp-reader-rail-card h2,
+.sp-reader-rail-card h3 {
+  color: var(--sp-text) !important;
+}
+
+/* Compact Story Overview rail */
+.sp-article-overview {
+  width: fit-content !important;
+  max-width: 100%;
+  margin-bottom: 1.8rem !important;
+  padding: .72rem .82rem !important;
+  border-radius: 16px !important;
+  background: var(--sp-surface-soft) !important;
+}
+
+.sp-article-overview > div {
+  display: flex !important;
+  align-items: center !important;
+  gap: .8rem !important;
+}
+
+.sp-article-overview > div > div:first-child {
+  flex: 0 0 auto !important;
+}
+
+.sp-article-overview > div > div:first-child > p:first-child {
+  margin: 0 !important;
+  white-space: nowrap;
+  font-size: 8px !important;
+}
+
+.sp-article-overview > div > div:last-child {
+  display: flex !important;
+  gap: .5rem !important;
+  margin: 0 !important;
+}
+
+.sp-article-overview > div > div:last-child > div {
+  min-width: 104px !important;
+  padding: .58rem .68rem !important;
+  border-radius: 12px !important;
+}
+
+.sp-article-overview > div > div:last-child > div p:first-child {
+  font-size: 7px !important;
+}
+
+.sp-article-overview > div > div:last-child > div p:last-child {
+  margin-top: .12rem !important;
+  font-size: 1rem !important;
+}
+
+/* Daily Brief: guarantee contrast in BOTH themes. */
+.sp-daily-brief {
+  border-color: rgb(255 255 255 / .10) !important;
+  background:
+    radial-gradient(circle at 88% 0%, rgb(32 201 214 / .13), transparent 28rem),
+    radial-gradient(circle at 8% 20%, rgb(117 91 246 / .18), transparent 30rem),
+    linear-gradient(135deg, #0b1018, #0a1119 58%, #0b1820) !important;
+  color: #f7f9fc !important;
+  box-shadow: 0 28px 78px rgb(8 15 28 / .18) !important;
+}
+
+.sp-daily-brief-glow {
+  background:
+    linear-gradient(120deg, transparent 18%, rgb(255 255 255 / .025), transparent 46%);
+}
+
+.sp-daily-brief-kicker {
+  color: #a99cff !important;
+}
+
+.sp-daily-brief-title {
+  color: #f7f9fc !important;
+  text-shadow: 0 2px 24px rgb(0 0 0 / .16);
+}
+
+.sp-daily-brief-title-muted {
+  color: #aeb8c8 !important;
+}
+
+.sp-daily-brief-copy {
+  color: #aab4c4 !important;
+}
+
+.sp-daily-brief-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  border: 1px solid rgb(255 255 255 / .10);
+  border-radius: 999px;
+  background: rgb(255 255 255 / .055);
+  padding-inline: 11px;
+  color: #c7cfdb;
+  font-size: 9px;
+  font-weight: 650;
+}
+
+.sp-daily-brief-terminal {
+  border-color: rgb(255 255 255 / .10) !important;
+  background: rgb(255 255 255 / .06) !important;
+  color: #f7f9fc !important;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / .04),
+    0 20px 55px rgb(0 0 0 / .18);
+}
+
+.sp-daily-brief-terminal-label {
+  color: #7f8ca0 !important;
+}
+
+.sp-daily-brief-terminal-title {
+  color: #eef2f8 !important;
+}
+
+.sp-daily-brief-stat {
+  border-color: rgb(255 255 255 / .08) !important;
+  background: rgb(0 0 0 / .14) !important;
+  color: #7f8ca0 !important;
+}
+
+.sp-daily-brief-stat strong {
+  color: #dce4ef !important;
+}
+
+.sp-daily-brief-input {
+  border-color: rgb(255 255 255 / .10) !important;
+  background: rgb(0 0 0 / .18) !important;
+  color: #f7f9fc !important;
+}
+
+.sp-daily-brief-input::placeholder {
+  color: #738095 !important;
+}
+
+.sp-daily-brief-input:focus {
+  border-color: #8f7cff !important;
+  box-shadow: 0 0 0 4px rgb(117 91 246 / .10);
+}
+
+.sp-daily-brief-submit {
+  background: #f7f9fc !important;
+  color: #0b1018 !important;
+  box-shadow: 0 8px 24px rgb(0 0 0 / .16);
+}
+
+.sp-daily-brief-progress {
+  background: rgb(255 255 255 / .07);
+}
+
+/* In dark theme, separate the card from the page instead of letting it disappear. */
+.dark .sp-daily-brief {
+  border-color: rgb(255 255 255 / .12) !important;
+  background:
+    radial-gradient(circle at 88% 0%, rgb(32 201 214 / .12), transparent 28rem),
+    radial-gradient(circle at 8% 20%, rgb(117 91 246 / .18), transparent 30rem),
+    linear-gradient(135deg, #121925, #0e1621 58%, #0d1b24) !important;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / .035),
+    0 32px 86px rgb(0 0 0 / .30) !important;
+}
+
+/* Continue Reading / latest density */
+.sp-news-related .sp-news-reader-width {
+  width: min(100% - 2rem, 76rem);
+}
+
+.sp-news-related article,
+.sp-news-latest-grid article {
+  min-width: 0;
+}
+
+.sp-news-latest-grid > :not(:first-child) {
+  height: 100%;
+}
+
+/* Reader typography: content remains first priority. */
+.sp-article-body .article-copy {
+  color: var(--sp-text-secondary) !important;
+  font-size: 1.075rem !important;
+  line-height: 1.9 !important;
+}
+
+.sp-article-body .article-section {
+  margin-block: 3rem !important;
+}
+
+/* Dark mode reader cards */
+.dark .sp-reader-rail-card {
+  background: #0d141f !important;
+  border-color: rgb(255 255 255 / .08) !important;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / .025),
+    0 18px 45px rgb(0 0 0 / .22) !important;
+}
+
+/* Show the larger reading rail on standard large desktops. */
+@media (min-width: 1280px) {
+  .sp-news-reader-grid {
+    display: grid !important;
+    grid-template-columns: minmax(0, 735px) 330px !important;
+  }
+
+  .sp-news-reader-sidebar {
+    display: block !important;
+  }
+}
+
+@media (max-width: 1279px) {
+  .sp-news-reader-grid {
+    display: block !important;
+    width: min(100% - 2rem, 820px) !important;
+  }
+
+  .sp-news-reader-sidebar {
+    display: none !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .sp-article-overview {
+    width: 100% !important;
+  }
+
+  .sp-article-overview > div {
+    align-items: flex-start !important;
+    flex-direction: column !important;
+  }
+
+  .sp-article-overview > div > div:last-child {
+    width: 100%;
+  }
+
+  .sp-article-overview > div > div:last-child > div {
+    flex: 1 1 0;
+    min-width: 0 !important;
+  }
+}

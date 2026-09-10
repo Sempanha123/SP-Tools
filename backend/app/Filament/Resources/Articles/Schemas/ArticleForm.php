@@ -358,6 +358,48 @@ class ArticleForm
                                     ->default('after')
                                     ->native(false),
 
+                                FileUpload::make('gallery')
+                                    ->label('Additional images')
+                                    ->image()
+                                    ->multiple()
+                                    ->reorderable()
+                                    ->appendFiles()
+                                    ->disk('public')
+                                    ->directory('news/sections/gallery')
+                                    ->visibility('public')
+                                    ->preventFilePathTampering(false)
+                                    ->acceptedFileTypes([
+                                        'image/jpeg',
+                                        'image/png',
+                                        'image/webp',
+                                    ])
+                                    ->maxFiles(8)
+                                    ->maxSize(5120)
+                                    ->helperText(
+                                        'Optional gallery for this section. Up to 8 images, 5 MB each.',
+                                    )
+                                    ->columnSpanFull(),
+
+                                TextInput::make('youtubeUrl')
+                                    ->label('YouTube video URL')
+                                    ->url()
+                                    ->placeholder(
+                                        'https://www.youtube.com/watch?v=...',
+                                    )
+                                    ->helperText(
+                                        'Optional. Supports YouTube watch, youtu.be, Shorts, Live, and embed URLs.',
+                                    )
+                                    ->maxLength(500)
+                                    ->columnSpanFull(),
+
+                                TextInput::make('youtubeCaption')
+                                    ->label('YouTube caption')
+                                    ->placeholder(
+                                        'Short context for the embedded video',
+                                    )
+                                    ->maxLength(500)
+                                    ->columnSpanFull(),
+
                                 TagsInput::make('bullets')
                                     ->label('Bullet points')
                                     ->placeholder(

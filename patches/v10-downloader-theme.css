@@ -1,0 +1,427 @@
+/* ==========================================================================
+   SP-Tools V10 — Downloader input + page polish
+   Semantic light/dark URL workspace for TikTok, Facebook and YouTube.
+   ========================================================================== */
+
+/* ---------- URL resolver: shared structure ---------- */
+.sp-url-form {
+  position: relative;
+}
+
+.sp-url-shell {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--sp-border);
+  border-radius: 20px;
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--sp-platform-a) 5%, var(--sp-surface-raised)),
+      var(--sp-surface-raised) 38%,
+      color-mix(in srgb, var(--sp-platform-b) 4%, var(--sp-surface-raised))
+    );
+  padding: 8px;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / .72),
+    0 16px 44px rgb(var(--sp-shadow-rgb) / .075);
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease,
+    background-color 180ms ease;
+}
+
+.sp-url-shell:focus-within {
+  border-color: color-mix(in srgb, var(--sp-platform-a) 34%, var(--sp-border));
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / .8),
+    0 0 0 4px color-mix(in srgb, var(--sp-platform-a) 8%, transparent),
+    0 20px 52px rgb(var(--sp-shadow-rgb) / .09);
+}
+
+.sp-url-accent-line {
+  position: absolute;
+  inset-inline: 12%;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--sp-platform-a) 66%, transparent),
+    color-mix(in srgb, var(--sp-platform-b) 50%, transparent),
+    transparent
+  );
+  opacity: .75;
+}
+
+.sp-url-inner {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+}
+
+.sp-url-field {
+  display: flex;
+  min-width: 0;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: 10px;
+  min-height: 58px;
+  border: 1px solid var(--sp-border);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--sp-surface-soft) 54%, var(--sp-surface-raised));
+  padding: 7px 9px 7px 8px;
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.sp-url-field:focus-within {
+  border-color: color-mix(in srgb, var(--sp-platform-a) 32%, var(--sp-border));
+  background: var(--sp-surface-raised);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--sp-platform-a) 7%, transparent);
+}
+
+.sp-url-platform-icon {
+  display: inline-flex;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.sp-url-label {
+  margin: 0 0 2px;
+  padding-inline: 2px;
+  color: var(--sp-text-muted);
+  font-size: 8px;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.sp-url-input {
+  width: 100%;
+  min-width: 0;
+  height: 30px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  padding: 0 2px;
+  color: var(--sp-text);
+  font-size: 13px;
+  font-weight: 540;
+}
+
+.sp-url-input::placeholder {
+  color: color-mix(in srgb, var(--sp-text-muted) 82%, transparent);
+}
+
+.sp-url-input:disabled {
+  cursor: wait;
+  opacity: .62;
+}
+
+.sp-url-clear {
+  display: inline-flex;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--sp-text-muted);
+  transition: background-color 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.sp-url-clear:hover:not(:disabled) {
+  background: var(--sp-surface-soft);
+  color: var(--sp-text);
+  transform: rotate(4deg);
+}
+
+.sp-url-actions {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 8px;
+}
+
+.sp-url-paste,
+.sp-url-submit {
+  display: inline-flex;
+  min-height: 58px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 14px;
+  padding-inline: 18px;
+  font-size: 12px;
+  font-weight: 720;
+  transition:
+    transform 170ms ease,
+    border-color 170ms ease,
+    background-color 170ms ease,
+    color 170ms ease,
+    box-shadow 170ms ease,
+    filter 170ms ease;
+}
+
+.sp-url-paste {
+  min-width: 96px;
+  border: 1px solid var(--sp-border);
+  background: var(--sp-surface-raised);
+  color: var(--sp-text-secondary);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .58);
+}
+
+.sp-url-paste:hover:not(:disabled) {
+  border-color: color-mix(in srgb, var(--sp-platform-a) 18%, var(--sp-border));
+  background: color-mix(in srgb, var(--sp-platform-a) 3%, var(--sp-surface-raised));
+  color: var(--sp-text);
+  transform: translateY(-1px);
+}
+
+.sp-url-submit {
+  min-width: 138px;
+  border: 1px solid transparent;
+  color: #fff;
+}
+
+.sp-url-submit:disabled,
+.sp-url-paste:disabled,
+.sp-url-clear:disabled {
+  cursor: not-allowed;
+  opacity: .48;
+}
+
+.sp-url-submit:not(:disabled):hover {
+  transform: translateY(-1px);
+}
+
+.sp-url-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 9px 4px 0;
+  font-size: 9px;
+  font-weight: 560;
+}
+
+.sp-url-help {
+  color: var(--sp-text-muted);
+}
+
+.sp-url-error {
+  color: var(--sp-danger);
+}
+
+.sp-url-ready {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 7px;
+  color: var(--sp-positive);
+  font-weight: 700;
+}
+
+.sp-url-ready-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--sp-positive);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--sp-positive) 10%, transparent);
+}
+
+.sp-url-form.is-invalid .sp-url-shell {
+  border-color: color-mix(in srgb, var(--sp-danger) 34%, var(--sp-border));
+}
+
+.sp-url-form.is-invalid .sp-url-field {
+  border-color: color-mix(in srgb, var(--sp-danger) 28%, var(--sp-border));
+}
+
+/* TikTok cyan/pink gradients need dark ink in light mode for contrast. */
+.sp-platform-tiktok .sp-url-submit {
+  color: #071015;
+}
+
+/* ---------- Light downloader page refinement ---------- */
+.sp-download-page:not(.dark *) .sp-download-start-full {
+  border-block-color: var(--sp-border) !important;
+}
+
+.sp-download-page .sp-download-start-full {
+  border-radius: 22px !important;
+}
+
+.sp-download-page .sp-download-state {
+  border-radius: 24px;
+}
+
+.sp-download-page .sp-download-state[class*="border-y"] {
+  border: 1px solid var(--sp-border) !important;
+}
+
+.sp-download-page .sp-platform-step {
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / .6),
+    0 10px 26px rgb(var(--sp-shadow-rgb) / .06);
+}
+
+.sp-download-page dl {
+  border-radius: 24px !important;
+}
+
+.sp-download-page .sp-lens-card {
+  min-height: 240px;
+  transition:
+    transform 280ms cubic-bezier(.2,.8,.2,1),
+    border-color 220ms ease,
+    box-shadow 280ms ease,
+    background 280ms ease;
+}
+
+.sp-download-page .sp-lens-card:hover {
+  transform: translateY(-5px);
+}
+
+.sp-download-page .sp-kicker {
+  letter-spacing: .17em;
+}
+
+/* ---------- DARK MODE ---------- */
+.dark .sp-url-shell {
+  border-color: rgb(255 255 255 / .09);
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--sp-platform-a) 7%, #111925),
+      #0e1621 42%,
+      color-mix(in srgb, var(--sp-platform-b) 5%, #111925)
+    );
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / .035),
+    0 20px 55px rgb(0 0 0 / .24);
+}
+
+.dark .sp-url-shell:focus-within {
+  border-color: color-mix(in srgb, var(--sp-platform-a) 34%, rgb(255 255 255 / .1));
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / .04),
+    0 0 0 4px color-mix(in srgb, var(--sp-platform-a) 9%, transparent),
+    0 24px 65px rgb(0 0 0 / .30);
+}
+
+.dark .sp-url-field {
+  border-color: rgb(255 255 255 / .085);
+  background: rgb(255 255 255 / .035);
+}
+
+.dark .sp-url-field:focus-within {
+  border-color: color-mix(in srgb, var(--sp-platform-a) 30%, rgb(255 255 255 / .1));
+  background: rgb(255 255 255 / .05);
+}
+
+.dark .sp-url-label {
+  color: rgb(255 255 255 / .34);
+}
+
+.dark .sp-url-input {
+  color: #f5f7fb;
+}
+
+.dark .sp-url-input::placeholder {
+  color: rgb(255 255 255 / .26);
+}
+
+.dark .sp-url-clear {
+  color: rgb(255 255 255 / .36);
+}
+
+.dark .sp-url-clear:hover:not(:disabled) {
+  background: rgb(255 255 255 / .07);
+  color: #fff;
+}
+
+.dark .sp-url-paste {
+  border-color: rgb(255 255 255 / .09);
+  background: rgb(255 255 255 / .045);
+  color: rgb(255 255 255 / .72);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .025);
+}
+
+.dark .sp-url-paste:hover:not(:disabled) {
+  border-color: rgb(255 255 255 / .15);
+  background: rgb(255 255 255 / .075);
+  color: #fff;
+}
+
+.dark .sp-url-help {
+  color: rgb(255 255 255 / .38);
+}
+
+.dark .sp-url-ready {
+  color: #69ddb3;
+}
+
+.dark .sp-url-ready-dot {
+  background: #69ddb3;
+  box-shadow: 0 0 0 4px rgb(105 221 179 / .08), 0 0 16px rgb(105 221 179 / .24);
+}
+
+.dark .sp-download-page .sp-platform-step {
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / .035),
+    0 12px 30px rgb(0 0 0 / .20);
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 767px) {
+  .sp-url-inner {
+    flex-direction: column;
+  }
+
+  .sp-url-actions {
+    display: grid;
+    grid-template-columns: minmax(0, .72fr) minmax(0, 1fr);
+  }
+
+  .sp-url-paste,
+  .sp-url-submit {
+    width: 100%;
+    min-width: 0;
+    min-height: 52px;
+  }
+
+  .sp-url-field {
+    min-height: 56px;
+  }
+
+  .sp-url-meta {
+    align-items: flex-start;
+  }
+
+  .sp-url-ready {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sp-url-shell,
+  .sp-url-field,
+  .sp-url-paste,
+  .sp-url-submit,
+  .sp-url-clear,
+  .sp-download-page .sp-lens-card {
+    transition: none !important;
+  }
+}

@@ -51,6 +51,6 @@ useHead({
 
     <NewsHomeWorldRegions />
     <NewsHomeTopics />
-    <NewsHomeNewsletter />
+
   </main>
 </template>

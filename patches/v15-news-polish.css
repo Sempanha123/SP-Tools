@@ -1,0 +1,81 @@
+/* ==========================================================================
+   SP-Tools V15 — Bigger recommendation titles + richer Food Logistics demo.
+   ========================================================================== */
+
+.sp-news-reader-grid {
+  width: min(100% - 2.5rem, 1320px) !important;
+  max-width: 1320px !important;
+  grid-template-columns: minmax(0, 760px) 440px !important;
+  gap: 44px !important;
+}
+
+.sp-news-reader-sidebar {
+  width: 440px !important;
+  max-width: 440px !important;
+}
+
+.sp-read-next-title {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+}
+
+.sp-read-next-item:hover .sp-read-next-title {
+  color: var(--sp-accent);
+}
+
+.sp-continue-reading-width {
+  width: min(100% - 2rem, 1220px);
+  margin-inline: auto;
+}
+
+.sp-continue-title {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+}
+
+/* Reporting transparency is useful, but it should not visually outweigh the story. */
+#reporting-transparency {
+  margin-block: 2.4rem !important;
+}
+
+#reporting-transparency > div {
+  border-radius: 20px !important;
+}
+
+#reporting-transparency > div > div {
+  padding: 1.15rem !important;
+}
+
+/* Give article media a stronger editorial rhythm. */
+.sp-post-rich-media {
+  margin-block: 2rem 2.6rem;
+}
+
+.sp-post-gallery > div > a {
+  border-radius: 22px;
+}
+
+.sp-post-youtube {
+  border-radius: 24px !important;
+}
+
+.dark .sp-read-next,
+.dark .sp-reader-rail-card {
+  background: #0d141f !important;
+  border-color: rgb(255 255 255 / .08) !important;
+}
+
+@media (max-width: 1279px) {
+  .sp-news-reader-grid {
+    display: block !important;
+    width: min(100% - 2rem, 820px) !important;
+  }
+
+  .sp-news-reader-sidebar {
+    display: none !important;
+  }
+}

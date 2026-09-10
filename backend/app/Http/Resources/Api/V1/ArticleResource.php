@@ -75,6 +75,25 @@ class ArticleResource extends JsonResource
             ->map(function (array $section): array {
                 $image = $section['image'] ?? null;
                 $section['image'] = $this->publicAssetUrl(is_string($image) ? $image : null);
+                $gallery = $section['gallery'] ?? [];
+                $section['gallery'] = is_array($gallery)
+                    ? collect($gallery)
+                        ->filter(fn ($item): bool => is_string($item) && filled($item))
+                        ->map(fn (string $item): ?string => $this->publicAssetUrl($item))
+                        ->filter()
+                        ->values()
+                        ->all()
+                    : [];
+
+                $youtubeUrl = $section['youtubeUrl'] ?? null;
+                $section['youtubeUrl'] = is_string($youtubeUrl) && filled($youtubeUrl)
+                    ? $youtubeUrl
+                    : null;
+
+                $youtubeCaption = $section['youtubeCaption'] ?? null;
+                $section['youtubeCaption'] = is_string($youtubeCaption) && filled($youtubeCaption)
+                    ? $youtubeCaption
+                    : null;
                 $section['imageAlt'] = $section['imageAlt'] ?? null;
                 $section['imageCaption'] = $section['imageCaption'] ?? null;
                 $section['imageCredit'] = $section['imageCredit'] ?? null;

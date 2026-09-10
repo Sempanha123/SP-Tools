@@ -13,6 +13,10 @@ export interface NewsArticleSection {
   imageCaption?: string | null
   imageCredit?: string | null
   imagePosition?: 'before' | 'after'
+
+  gallery?: string[]
+  youtubeUrl?: string | null
+  youtubeCaption?: string | null
 }
 
 export interface NewsArticleTimelineItem {

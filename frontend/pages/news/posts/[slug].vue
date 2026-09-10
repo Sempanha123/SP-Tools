@@ -38,7 +38,7 @@ const articleTextClass = computed(() => {
 })
 
 const continueReadingArticles = computed(() => {
-    return relatedArticles.value.slice(0, 2)
+    return relatedArticles.value.slice(0, 3)
 })
 
 /*
@@ -424,16 +424,13 @@ const retryLoad = async (): Promise<void> => {
 </script>
 
 <template>
-    <main class="min-h-screen overflow-x-hidden
-    bg-surface text-fg">
+    <main class="sp-news-post min-h-screen overflow-x-hidden bg-surface text-fg">
         <!-- Reading progress -->
 
         <div class="fixed inset-x-0 top-0
       z-[90] h-1 bg-surface-3/60
       print:hidden">
-            <div class="h-full bg-gradient-to-r
-        from-indigo-600 via-violet-500
-        to-cyan-400 transition-[width]
+            <div class="sp-news-reading-progress h-full transition-[width]
         duration-150 ease-out" :style="{
             width: `${readingProgress}%`,
         }" />
@@ -442,7 +439,7 @@ const retryLoad = async (): Promise<void> => {
         <!-- Loading state -->
 
         <section v-if="pending" class="mx-auto min-h-[75vh]
-      max-w-7xl px-6 py-20">
+      max-w-[1120px] px-6 py-20">
             <div class="animate-pulse">
                 <div class="h-4 w-36 rounded-full
           bg-surface-3" />
@@ -477,10 +474,7 @@ const retryLoad = async (): Promise<void> => {
         <section v-else-if="error" class="mx-auto flex min-h-[70vh]
       max-w-3xl items-center
       justify-center px-6 py-20">
-            <div class="w-full rounded-[32px]
-        border border-red-200
-        bg-gradient-to-br
-        from-red-50 to-white
+            <div class="sp-news-error-panel w-full rounded-[28px] border border-danger/20 bg-danger-soft
         p-8 text-center shadow-sm
         sm:p-12">
                 <div class="mx-auto flex h-16 w-16
@@ -491,13 +485,13 @@ const retryLoad = async (): Promise<void> => {
                 </div>
 
                 <h1 class="mt-6 text-2xl font-black
-          tracking-tight text-red-950
+          tracking-tight text-fg
           sm:text-3xl">
                     Article could not be loaded
                 </h1>
 
                 <p class="mx-auto mt-4 max-w-xl
-          leading-7 text-red-700">
+          leading-7 text-danger">
                     The article may be unavailable,
                     unpublished, archived, or the news
                     server may not be running.
@@ -505,20 +499,20 @@ const retryLoad = async (): Promise<void> => {
 
                 <div class="mt-8 flex flex-wrap
           justify-center gap-3">
-                    <button type="button" class="rounded-xl bg-red-700
+                    <button type="button" class="rounded-xl bg-danger
   px-5 py-3 text-sm font-bold
   text-white transition
-  hover:bg-red-800
+  hover:brightness-95
   disabled:cursor-not-allowed
   disabled:opacity-60" :disabled="pending" @click="retryLoad">
                         {{ pending ? 'Loading...' : 'Try again' }}
                     </button>
 
                     <NuxtLink to="/news" class="rounded-xl border
-            border-red-200 bg-surface
+            border-danger/20 bg-surface
             px-5 py-3 text-sm font-bold
-            text-red-800 transition
-            hover:bg-red-100">
+            text-danger transition
+            hover:bg-danger-soft">
                         Back to news
                     </NuxtLink>
                 </div>
@@ -534,39 +528,16 @@ const retryLoad = async (): Promise<void> => {
 
             <!-- Reader toolbar -->
 
-            <section class="sticky top-0 z-40
-        border-y border-line/80
-        bg-surface/90 shadow-sm
-        backdrop-blur-xl print:hidden">
-                <div class="mx-auto flex max-w-7xl
+            <section class="sp-news-reader-toolbar sticky z-40 border-y border-line/80 bg-surface/90 shadow-sm backdrop-blur-xl print:hidden">
+                <div class="mx-auto flex max-w-[1120px]
           items-center justify-between
           gap-3 px-4 py-3 sm:px-6">
                     <!-- Progress -->
 
-                    <div class="hidden min-w-0
-            items-center gap-3 md:flex">
-                        <div class="flex h-10 w-10 shrink-0
-              items-center justify-center
-              rounded-xl bg-indigo-50
-              text-xs font-black
-              text-indigo-600">
-                            {{ Math.round(readingProgress) }}%
-                        </div>
-
-                        <div class="min-w-0">
-                            <p class="text-[9px] font-bold
-                uppercase tracking-[0.16em]
-                text-fg-subtle">
-                                Reading progress
-                            </p>
-
-                            <p class="max-w-[320px] truncate
-                text-xs font-semibold
-                text-fg-muted">
-                                {{ article.title }}
-                            </p>
-                        </div>
-                    </div>
+                    <NewsPostReaderProgressMeta
+                      :article="article"
+                      :progress="readingProgress"
+                    />
 
                     <!-- Actions -->
 
@@ -583,7 +554,7 @@ const retryLoad = async (): Promise<void> => {
                 items-center justify-center
                 rounded-lg text-[10px]
                 font-bold transition" :class="textSize === 'small'
-                    ? 'bg-surface text-indigo-600 shadow-sm'
+                    ? 'bg-surface text-accent shadow-sm'
                     : 'text-fg-subtle hover:text-fg'
                     " @click="textSize = 'small'">
                                 A
@@ -593,7 +564,7 @@ const retryLoad = async (): Promise<void> => {
                 items-center justify-center
                 rounded-lg text-xs
                 font-bold transition" :class="textSize === 'normal'
-                    ? 'bg-surface text-indigo-600 shadow-sm'
+                    ? 'bg-surface text-accent shadow-sm'
                     : 'text-fg-subtle hover:text-fg'
                     " @click="textSize = 'normal'">
                                 A
@@ -603,7 +574,7 @@ const retryLoad = async (): Promise<void> => {
                 items-center justify-center
                 rounded-lg text-base
                 font-bold transition" :class="textSize === 'large'
-                    ? 'bg-surface text-indigo-600 shadow-sm'
+                    ? 'bg-surface text-accent shadow-sm'
                     : 'text-fg-subtle hover:text-fg'
                     " @click="textSize = 'large'">
                                 A
@@ -616,8 +587,8 @@ const retryLoad = async (): Promise<void> => {
               items-center gap-2 rounded-xl
               border px-3 text-xs font-bold
               transition sm:px-4" :class="isSaved
-                ? 'border-indigo-200 bg-indigo-50 text-indigo-600'
-                : 'border-line bg-surface text-fg-muted hover:border-indigo-200 hover:text-indigo-600'
+                ? 'border-accent/20 bg-accent-soft text-accent'
+                : 'border-line bg-surface text-fg-muted hover:border-accent/20 hover:text-accent'
                 " @click="toggleSavedArticle">
                             <svg class="h-4 w-4" :fill="isSaved
                                 ? 'currentColor'
@@ -643,8 +614,8 @@ const retryLoad = async (): Promise<void> => {
               rounded-xl border
               border-line bg-surface
               text-fg-muted transition
-              hover:border-indigo-200
-              hover:text-indigo-600" @click="copyArticleLink">
+              hover:border-accent/20
+              hover:text-accent" @click="copyArticleLink">
                             <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                                 stroke-width="1.8" aria-hidden="true">
                                 <path d="M10 13a5 5 0 0 0 7.54.54l2-2a5 5 0 0 0-7.07-7.07l-1.15 1.15" />
@@ -660,8 +631,8 @@ const retryLoad = async (): Promise<void> => {
               rounded-xl border
               border-line bg-surface
               text-fg-muted transition
-              hover:border-indigo-200
-              hover:text-indigo-600" @click="shareArticle">
+              hover:border-accent/20
+              hover:text-accent" @click="shareArticle">
                             <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                                 stroke-width="1.8" aria-hidden="true">
                                 <circle cx="18" cy="5" r="2.5" />
@@ -683,8 +654,8 @@ const retryLoad = async (): Promise<void> => {
               rounded-xl border
               border-line bg-surface
               text-fg-muted transition
-              hover:border-indigo-200
-              hover:text-indigo-600 sm:flex" @click="printArticle">
+              hover:border-accent/20
+              hover:text-accent sm:flex" @click="printArticle">
                             <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                                 stroke-width="1.8" aria-hidden="true">
                                 <path d="M7 8V3h10v5" />
@@ -700,117 +671,29 @@ const retryLoad = async (): Promise<void> => {
 
             <!-- Article content -->
 
-            <section id="article-content" ref="articleContainer" class="bg-surface py-12
-        sm:py-16 lg:py-20">
-                <div class="mx-auto grid max-w-7xl
-          items-start gap-10 px-6
-          lg:grid-cols-[minmax(0,1fr)_340px]
-          xl:gap-14">
-                    <div class="min-w-0" :class="articleTextClass">
+            <section id="article-content" ref="articleContainer" class="sp-news-reading-section bg-surface py-10 sm:py-12 lg:py-14">
+                <div class="sp-news-reader-grid mx-auto grid max-w-[1120px] items-start gap-8 px-5 sm:px-6 xl:grid-cols-[minmax(0,760px)_390px] xl:gap-[34px]">
+                    <div class="sp-news-reader-main min-w-0" :class="articleTextClass">
                         <NewsPostArticleBody :article="article" />
                     </div>
 
-                    <aside class="min-w-0 print:hidden">
+                    <aside class="sp-news-reader-sidebar hidden min-w-0 print:hidden xl:block">
                         <NewsPostSidebar :article="article" :most-read="mostReadArticles.slice(0, 6)
                             " />
                     </aside>
                 </div>
             </section>
-
             <!-- Continue reading -->
 
-            <section v-if="continueReadingArticles.length" class="border-y border-line
-        bg-surface-2 py-12 print:hidden">
-                <div class="mx-auto max-w-7xl px-6">
-                    <div class="mb-6 flex items-end
-            justify-between gap-4">
-                        <div>
-                            <p class="text-xs font-bold
-                uppercase tracking-[0.18em]
-                text-indigo-600">
-                                Continue reading
-                            </p>
-
-                            <h2 class="mt-2 text-2xl font-black
-                tracking-tight text-fg">
-                                More from this category
-                            </h2>
-                        </div>
-
-                        <NuxtLink :to="`/news/category/${article.category}`
-                            " class="hidden text-sm font-bold
-              text-indigo-700 transition
-              hover:text-indigo-900 sm:block">
-                            View category →
-                        </NuxtLink>
-                    </div>
-
-                    <div class="grid gap-5 md:grid-cols-2">
-                        <NuxtLink v-for="relatedArticle in continueReadingArticles" :key="relatedArticle.id" :to="`/news/posts/${relatedArticle.slug}`
-                            " class="group grid overflow-hidden
-              rounded-3xl border
-              border-line bg-surface
-              shadow-sm transition
-              hover:-translate-y-1
-              hover:border-indigo-200
-              hover:shadow-xl
-              sm:grid-cols-[150px_minmax(0,1fr)]">
-                            <div class="relative min-h-44
-                overflow-hidden bg-surface-3
-                sm:min-h-full">
-                                <img v-if="relatedArticle.image" :src="relatedArticle.image" :alt="relatedArticle.title"
-                                    loading="lazy" class="absolute inset-0
-                  h-full w-full object-cover
-                  transition-transform
-                  duration-500
-                  group-hover:scale-105">
-
-                                <div v-else class="absolute inset-0
-                  flex items-center
-                  justify-center
-                  bg-gradient-to-br
-                  from-slate-100
-                  to-slate-300 text-3xl">
-                                    📰
-                                </div>
-                            </div>
-
-                            <div class="p-5">
-                                <p class="text-xs font-bold
-                  uppercase tracking-wider
-                  text-indigo-600">
-                                    {{
-                                        relatedArticle.categoryName
-                                    }}
-                                </p>
-
-                                <h3 class="mt-3 line-clamp-2
-                  text-lg font-black
-                  leading-7 text-fg
-                  transition
-                  group-hover:text-indigo-700">
-                                    {{ relatedArticle.title }}
-                                </h3>
-
-                                <p class="mt-3 line-clamp-2
-                  text-sm leading-6
-                  text-fg-muted">
-                                    {{ relatedArticle.excerpt }}
-                                </p>
-                            </div>
-                        </NuxtLink>
-                    </div>
-                </div>
-            </section>
+            <NewsPostContinueReading
+              v-if="continueReadingArticles.length"
+              :articles="continueReadingArticles"
+              :category-slug="article.category"
+            />
 
             <!-- Related articles -->
+<!-- Newsletter -->
 
-            <NewsPostRelatedArticles v-if="relatedArticles.length" :articles="relatedArticles" :category-name="article.categoryName
-                " />
-
-            <!-- Newsletter -->
-
-            <NewsHomeNewsletter />
         </template>
 
         <!-- Toast -->
@@ -876,3 +759,4 @@ const retryLoad = async (): Promise<void> => {
     }
 }
 </style>
+

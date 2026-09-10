@@ -271,6 +271,23 @@ const contentSections = computed<
           || null,
 
         imagePosition,
+
+        gallery:
+          Array.isArray(section.gallery)
+            ? section.gallery.filter(
+              (value): value is string =>
+                typeof value === 'string'
+                && value.trim().length > 0,
+            )
+            : [],
+
+        youtubeUrl:
+          section.youtubeUrl?.trim()
+          || null,
+
+        youtubeCaption:
+          section.youtubeCaption?.trim()
+          || null,
       }
     },
   )
@@ -702,7 +719,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <article class="mx-auto min-w-0 max-w-4xl">
+  <article class="sp-article-body mx-auto min-w-0 max-w-[760px]">
     <!-- ===================================================== -->
     <!-- DEMO CONTENT WARNING -->
     <!-- ===================================================== -->
@@ -749,7 +766,7 @@ onBeforeUnmount(() => {
         <div>
           <p class="text-[9px] font-bold
             uppercase tracking-[0.17em]
-            text-indigo-600">
+            text-accent">
             In this story
           </p>
 
@@ -762,7 +779,7 @@ onBeforeUnmount(() => {
         <div class="flex h-10 w-10
           items-center justify-center
           rounded-xl bg-surface
-          text-indigo-600 shadow-sm">
+          text-accent shadow-sm">
           ≡
         </div>
       </div>
@@ -774,7 +791,7 @@ onBeforeUnmount(() => {
           rounded-xl border px-4 py-3
           text-left text-[10px]
           font-semibold transition-all" :class="activeSectionId === item.id
-            ? 'border-indigo-200 bg-indigo-50 text-indigo-600'
+            ? 'border-accent/20 bg-accent-soft text-accent'
             : 'border-line bg-surface text-fg-muted'
             " @click="scrollToSection(item.id)">
           <span>
@@ -790,63 +807,30 @@ onBeforeUnmount(() => {
     <!-- ARTICLE OVERVIEW -->
     <!-- ===================================================== -->
 
-    <section class="mb-10 rounded-[26px]
-      border border-line
-      bg-gradient-to-br
-      from-white to-slate-50 p-6
-      sm:p-7">
-      <div class="grid gap-6
-        sm:grid-cols-[minmax(0,1fr)_180px]
-        sm:items-center">
+    <section class="sp-article-overview mb-7 border border-line bg-surface-2">
+      <div>
         <div>
-          <p class="text-[9px] font-bold
-            uppercase tracking-[0.17em]
-            text-indigo-600">
+          <p class="text-[8px] font-bold uppercase tracking-[0.16em] text-accent">
             Story overview
-          </p>
-
-          <p v-if="
-            articleLead
-            && articleLead !== article.excerpt
-          " class="article-lead article-copy
-  mb-11 text-fg-muted">
-            {{ articleLead }}
           </p>
         </div>
 
-        <div class="grid grid-cols-2 gap-3
-          sm:grid-cols-1">
-          <div class="rounded-2xl
-            border border-line
-            bg-surface px-4 py-3">
-            <p class="text-[8px] font-bold
-              uppercase tracking-[0.14em]
-              text-fg-subtle">
-              Estimated words
+        <div>
+          <div class="border border-line bg-surface">
+            <p class="font-bold uppercase tracking-[0.12em] text-fg-subtle">
+              Words
             </p>
-
-            <p class="mt-1 text-lg
-              font-bold text-fg">
-              {{
-                estimatedWordCount
-                  .toLocaleString('en-US')
-              }}
+            <p class="font-bold text-fg">
+              {{ estimatedWordCount.toLocaleString('en-US') }}
             </p>
           </div>
 
-          <div class="rounded-2xl
-            border border-line
-            bg-surface px-4 py-3">
-            <p class="text-[8px] font-bold
-              uppercase tracking-[0.14em]
-              text-fg-subtle">
-              Reading estimate
+          <div class="border border-line bg-surface">
+            <p class="font-bold uppercase tracking-[0.12em] text-fg-subtle">
+              Read
             </p>
-
-            <p class="mt-1 text-lg
-              font-bold text-fg">
-              {{ estimatedReadingMinutes }}
-              min
+            <p class="font-bold text-fg">
+              {{ estimatedReadingMinutes }} min
             </p>
           </div>
         </div>
@@ -889,8 +873,8 @@ onBeforeUnmount(() => {
             border-line bg-surface
             text-fg-subtle opacity-0
             transition-all
-            hover:border-indigo-200
-            hover:text-indigo-600
+            hover:border-accent/20
+            hover:text-accent
             group-hover:opacity-100
             focus:opacity-100" @click="
               copySectionLink(section.id)
@@ -956,9 +940,9 @@ paragraph,
             <span class="mt-2 flex h-5 w-5
               shrink-0 items-center
               justify-center rounded-full
-              bg-indigo-50
+              bg-accent-soft
               text-[9px] font-bold
-              text-indigo-600">
+              text-accent">
               ✓
             </span>
 
@@ -972,19 +956,19 @@ paragraph,
         <!-- Section note -->
 
         <aside v-if="section.note" class="mt-7 rounded-[22px]
-          border border-indigo-100
-          bg-indigo-50/70 p-5">
+          border border-accent/15
+          bg-accent-soft p-5">
           <div class="flex items-start gap-3">
             <div class="flex h-9 w-9
               shrink-0 items-center
               justify-center rounded-xl
-              bg-surface text-indigo-600
+              bg-surface text-accent
               shadow-sm">
               i
             </div>
 
             <p class="text-sm leading-7
-              text-indigo-900">
+              text-fg">
               {{ section.note }}
             </p>
           </div>
@@ -1001,11 +985,11 @@ paragraph,
           <div class="pointer-events-none
             absolute -right-16 -top-16
             h-44 w-44 rounded-full
-            bg-indigo-500/25 blur-3xl" />
+            bg-accent-soft0/25 blur-3xl" />
 
           <div class="relative">
             <span class="text-4xl font-bold
-              leading-none text-indigo-400">
+              leading-none text-accent">
               “
             </span>
 
@@ -1018,7 +1002,7 @@ paragraph,
             <footer v-if="section.quoteAttribution" class="mt-5 text-[9px]
               font-bold uppercase
               tracking-[0.16em]
-              text-indigo-300">
+              text-accent-2">
               {{
                 section.quoteAttribution
               }}
@@ -1053,6 +1037,14 @@ paragraph,
             </span>
           </figcaption>
         </figure>
+
+        <!-- Additional gallery + YouTube media configured in the News admin -->
+        <NewsPostSectionMedia
+          :gallery="article.sections?.[sectionIndex]?.gallery ?? []"
+          :youtube-url="article.sections?.[sectionIndex]?.youtubeUrl ?? null"
+          :youtube-caption="article.sections?.[sectionIndex]?.youtubeCaption ?? null"
+        />
+
       </section>
 
       <!-- Insert key points after section 2 -->
@@ -1075,7 +1067,7 @@ paragraph,
               <p class="text-[9px]
                 font-bold uppercase
                 tracking-[0.17em]
-                text-indigo-600">
+                text-accent">
                 Quick summary
               </p>
 
@@ -1095,7 +1087,7 @@ paragraph,
             <div class="flex h-11 w-11
               shrink-0 items-center
               justify-center rounded-2xl
-              bg-indigo-600
+              bg-accent
               text-white shadow-lg">
               ✓
             </div>
@@ -1112,9 +1104,9 @@ point,
               p-4">
               <span class="flex h-7 min-w-7
                 items-center justify-center
-                rounded-xl bg-indigo-50
+                rounded-xl bg-accent-soft
                 text-[9px] font-bold
-                text-indigo-600">
+                text-accent">
                 {{
                   String(index + 1)
                     .padStart(2, '0')
@@ -1149,11 +1141,11 @@ point,
       <div class="pointer-events-none
         absolute -right-20 -top-20
         h-52 w-52 rounded-full
-        bg-indigo-500/30 blur-3xl" />
+        bg-accent-soft0/30 blur-3xl" />
 
       <div class="relative">
         <span class="text-5xl font-bold
-          leading-none text-indigo-400">
+          leading-none text-accent">
           “
         </span>
 
@@ -1165,7 +1157,7 @@ point,
         <footer class="mt-6 text-[9px]
           font-bold uppercase
           tracking-[0.16em]
-          text-indigo-300">
+          text-accent-2">
           {{ featuredQuote.attribution }}
         </footer>
       </div>
@@ -1182,7 +1174,7 @@ point,
         <div>
           <p class="text-[9px] font-bold
             uppercase tracking-[0.17em]
-            text-indigo-600">
+            text-accent">
             Developing story
           </p>
 
@@ -1194,9 +1186,9 @@ point,
         </div>
 
         <span class="rounded-full
-          bg-indigo-50 px-3 py-1.5
+          bg-accent-soft px-3 py-1.5
           text-[9px] font-bold
-          text-indigo-600">
+          text-accent">
           {{ articleTimeline.length }}
           updates
         </span>
@@ -1217,7 +1209,7 @@ item,
             h-8 min-w-8
             items-center justify-center
             rounded-xl border-4
-            border-white bg-indigo-600
+            border-surface bg-accent
             text-[8px] font-bold
             text-white shadow">
             {{
@@ -1233,7 +1225,7 @@ item,
             <time v-if="item.time" class="text-[9px]
               font-bold uppercase
               tracking-[0.14em]
-              text-indigo-600">
+              text-accent">
               {{ item.time }}
             </time>
 
@@ -1312,8 +1304,8 @@ item,
           bg-surface-2 p-4
           transition-all duration-200
           hover:-translate-y-0.5
-          hover:border-indigo-200
-          hover:bg-indigo-50
+          hover:border-accent/20
+          hover:bg-accent-soft
           hover:shadow-sm">
               <div class="flex min-w-0
             items-start gap-3">
@@ -1322,9 +1314,9 @@ item,
                 <div class="flex h-10 w-10
               shrink-0 items-center
               justify-center rounded-xl
-              bg-surface text-indigo-600
+              bg-surface text-accent
               shadow-sm transition
-              group-hover:bg-indigo-600
+              group-hover:bg-accent
               group-hover:text-white">
                   <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"
                     aria-hidden="true">
@@ -1345,7 +1337,7 @@ item,
                   text-sm font-bold
                   text-fg
                   transition-colors
-                  group-hover:text-indigo-600">
+                  group-hover:text-accent">
                       {{ source.name }}
                     </h3>
 
@@ -1379,7 +1371,7 @@ item,
             text-fg-subtle
             transition-all
             group-hover:translate-x-1
-            group-hover:text-indigo-600" aria-hidden="true">
+            group-hover:text-accent" aria-hidden="true">
                 →
               </span>
             </a>
@@ -1466,9 +1458,9 @@ item,
       text-[10px] font-bold
       text-fg-muted
       transition-all
-      hover:border-indigo-200
-      hover:bg-indigo-50
-      hover:text-indigo-600" @click="toggleSources">
+      hover:border-accent/20
+      hover:bg-accent-soft
+      hover:text-accent" @click="toggleSources">
           <span>
             {{
               showAllSources
@@ -1502,7 +1494,7 @@ item,
           <div class="flex h-14 w-14
             items-center justify-center
             rounded-2xl bg-surface
-            text-indigo-600 shadow-sm">
+            text-accent shadow-sm">
             <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
               <path d="M12 3 5 6v5c0 4.6 2.9 8 7 10 4.1-2 7-5.4 7-10V6l-7-3Z" />
 
@@ -1513,7 +1505,7 @@ item,
           <div>
             <p class="text-[9px] font-bold
               uppercase tracking-[0.17em]
-              text-indigo-600">
+              text-accent">
               Reporting transparency
             </p>
 
@@ -1625,9 +1617,9 @@ item,
               text-[10px] font-semibold
               text-fg-muted transition-all
               hover:-translate-y-0.5
-              hover:border-indigo-200
-              hover:bg-indigo-50
-              hover:text-indigo-600">
+              hover:border-accent/20
+              hover:bg-accent-soft
+              hover:text-accent">
               #{{ tag }}
             </NuxtLink>
           </div>
@@ -1639,7 +1631,7 @@ item,
           bg-accent text-accent-fg px-5 py-3
           text-[10px] font-bold
           text-white transition-all
-          hover:bg-indigo-600">
+          hover:bg-accent">
           More {{ article.categoryName }}
 
           <span class="transition-transform
@@ -1683,3 +1675,4 @@ item,
   }
 }
 </style>
+

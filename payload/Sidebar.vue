@@ -15,7 +15,10 @@ interface TocItem {
 }
 
 const slugify = (value: string) =>
-  value.trim().toLowerCase().normalize('NFKD')
+  value
+    .trim()
+    .toLowerCase()
+    .normalize('NFKD')
     .replace(/\p{Diacritic}/gu, '')
     .replace(/[^\p{L}\p{N}\s-]/gu, '')
     .replace(/\s+/g, '-')
@@ -24,12 +27,11 @@ const slugify = (value: string) =>
 
 const tableOfContents = computed<TocItem[]>(() => {
   const result: TocItem[] = []
-  const sections = props.article.sections ?? []
 
+  const sections = props.article.sections ?? []
   if (sections.length) {
     sections.forEach((section, index) => {
       const title = section.title?.trim() || `Section ${index + 1}`
-
       result.push({
         id: section.id?.trim() || slugify(title) || `article-section-${index + 1}`,
         title,
@@ -62,8 +64,8 @@ let observer: IntersectionObserver | null = null
 
 const initObserver = async () => {
   if (!import.meta.client) return
-
   await nextTick()
+
   observer?.disconnect()
   activeSectionId.value = tableOfContents.value[0]?.id ?? ''
 
@@ -84,57 +86,74 @@ const initObserver = async () => {
   )
 
   tableOfContents.value.forEach(item => {
-    const el = document.getElementById(item.id)
-    if (el) observer?.observe(el)
+    const element = document.getElementById(item.id)
+    if (element) observer?.observe(element)
   })
 }
 
 const scrollToSection = (id: string) => {
   if (!import.meta.client) return
+  const element = document.getElementById(id)
+  if (!element) return
 
-  const el = document.getElementById(id)
-  if (!el) return
+  element.scrollIntoView({
+    behavior: 'smooth',
+    block: 'start',
+  })
 
-  el.scrollIntoView({ behavior: 'smooth', block: 'start' })
   activeSectionId.value = id
 }
 
-const readNext = computed(() =>
+const readMore = computed(() =>
   props.mostRead
     .filter(item => item.id !== props.article.id)
-    .slice(0, 6),
+    .slice(0, 5),
 )
 
-watch(() => props.article.slug, () => initObserver())
-watch(tableOfContents, () => initObserver(), { deep: true })
+watch(
+  () => props.article.slug,
+  () => initObserver(),
+)
+
+watch(
+  tableOfContents,
+  () => initObserver(),
+  { deep: true },
+)
+
 onMounted(() => initObserver())
 onBeforeUnmount(() => observer?.disconnect())
 </script>
 
 <template>
   <aside class="sp-reader-rail space-y-5 xl:sticky xl:top-28">
-    <section class="sp-reader-rail-card overflow-hidden rounded-[26px] border border-line bg-elevated shadow-lift">
-      <header class="flex items-center justify-between gap-4 border-b border-line px-5 py-4">
-        <div>
-          <p class="text-[8px] font-bold uppercase tracking-[.16em] text-accent">
-            In this story
-          </p>
-          <h2 class="mt-1.5 text-[20px] font-bold tracking-[-.035em] text-fg">
-            Reading guide
-          </h2>
-        </div>
+    <section class="sp-reader-rail-card overflow-hidden rounded-[24px] border border-line bg-elevated shadow-lift">
+      <header class="border-b border-line px-5 py-5">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <p class="text-[9px] font-bold uppercase tracking-[0.17em] text-accent">
+              In this story
+            </p>
+            <h2 class="mt-2 text-xl font-bold tracking-[-0.035em] text-fg">
+              Reading guide
+            </h2>
+            <p class="mt-2 text-[11px] leading-5 text-fg-subtle">
+              Jump to the part you need.
+            </p>
+          </div>
 
-        <span class="flex h-9 w-9 items-center justify-center rounded-[11px] border border-line bg-surface-2 text-accent">
-          ≡
-        </span>
+          <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-[12px] border border-line bg-surface-2 text-accent">
+            ≡
+          </div>
+        </div>
       </header>
 
-      <nav aria-label="Article contents" class="p-2">
+      <nav aria-label="Article contents" class="p-2.5">
         <button
           v-for="(item, index) in tableOfContents"
           :key="item.id"
           type="button"
-          class="group flex w-full items-center gap-3 rounded-[13px] px-3 py-2.5 text-left transition"
+          class="group flex w-full items-center gap-3 rounded-[14px] px-3 py-3 text-left transition"
           :class="
             activeSectionId === item.id
               ? 'bg-accent-soft text-accent'
@@ -143,7 +162,7 @@ onBeforeUnmount(() => observer?.disconnect())
           @click="scrollToSection(item.id)"
         >
           <span
-            class="flex h-6 min-w-6 items-center justify-center rounded-[8px] text-[7px] font-black"
+            class="flex h-7 min-w-7 items-center justify-center rounded-[9px] text-[8px] font-black"
             :class="
               activeSectionId === item.id
                 ? 'bg-accent text-accent-fg'
@@ -153,52 +172,54 @@ onBeforeUnmount(() => observer?.disconnect())
             {{ String(index + 1).padStart(2, '0') }}
           </span>
 
-          <span class="min-w-0 flex-1 text-[10.5px] font-semibold leading-5">
+          <span class="min-w-0 flex-1 text-[11px] font-semibold leading-5">
             {{ item.title }}
+          </span>
+
+          <span class="text-[10px] transition-transform group-hover:translate-x-0.5">
+            →
           </span>
         </button>
       </nav>
+
+      <div class="flex items-center justify-between border-t border-line px-5 py-4">
+        <span class="text-[9px] font-semibold text-fg-subtle">Reading time</span>
+        <span class="rounded-full bg-accent-soft px-3 py-1.5 text-[9px] font-bold text-accent">
+          {{ article.readTime }}
+        </span>
+      </div>
     </section>
 
     <section
-      v-if="readNext.length"
-      class="sp-read-next overflow-hidden rounded-[28px] border border-line bg-elevated shadow-lift"
+      v-if="readMore.length"
+      class="sp-reader-rail-card overflow-hidden rounded-[24px] border border-line bg-elevated shadow-lift"
     >
-      <header class="sp-read-next-header relative overflow-hidden border-b border-line px-6 py-7">
-        <div class="sp-read-next-aura pointer-events-none absolute inset-0" />
-
-        <div class="relative flex items-end justify-between gap-4">
-          <div>
-            <p class="text-[9px] font-bold uppercase tracking-[.17em] text-accent">
-              Read next
-            </p>
-
-            <h2 class="mt-2 text-[34px] font-[800] leading-none tracking-[-.05em] text-fg">
-              More news
-            </h2>
-
-            <p class="mt-2 max-w-[280px] text-[10.5px] leading-5 text-fg-subtle">
-              Larger previews so readers can actually understand what each story is about.
-            </p>
-          </div>
-
-          <NuxtLink
-            :to="{ path: '/news/search', query: { sort: 'popular' } }"
-            class="shrink-0 rounded-full border border-line bg-surface px-3 py-2 text-[9px] font-bold text-fg-muted transition hover:border-accent/20 hover:text-accent"
-          >
-            All →
-          </NuxtLink>
+      <header class="flex items-end justify-between gap-4 border-b border-line px-5 py-5">
+        <div>
+          <p class="text-[9px] font-bold uppercase tracking-[0.17em] text-accent">
+            Read next
+          </p>
+          <h2 class="mt-2 text-xl font-bold tracking-[-0.035em] text-fg">
+            More news
+          </h2>
         </div>
+
+        <NuxtLink
+          :to="{ path: '/news/search', query: { sort: 'popular' } }"
+          class="text-[9px] font-bold text-fg-subtle transition hover:text-accent"
+        >
+          View all →
+        </NuxtLink>
       </header>
 
       <div class="divide-y divide-line">
         <NuxtLink
-          v-for="(item, index) in readNext"
+          v-for="(item, index) in readMore"
           :key="item.id"
           :to="`/news/posts/${item.slug}`"
-          class="sp-read-next-item group grid grid-cols-[150px_minmax(0,1fr)] gap-4 px-5 py-5 transition hover:bg-surface-2"
+          class="group grid grid-cols-[92px_minmax(0,1fr)] gap-3 px-4 py-4 transition hover:bg-surface-2"
         >
-          <div class="relative h-[116px] overflow-hidden rounded-[18px] bg-surface-3">
+          <div class="relative h-[78px] overflow-hidden rounded-[14px] bg-surface-3">
             <img
               v-if="item.image"
               :src="item.image"
@@ -206,26 +227,25 @@ onBeforeUnmount(() => observer?.disconnect())
               loading="lazy"
               class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
             >
-
-            <div v-else class="flex h-full items-center justify-center text-xl text-fg-subtle">
+            <div v-else class="flex h-full items-center justify-center text-lg text-fg-subtle">
               N
             </div>
 
-            <span class="absolute left-2 top-2 flex h-6 min-w-6 items-center justify-center rounded-[8px] border border-white/15 bg-black/45 px-1 text-[8px] font-black text-white backdrop-blur">
+            <span class="absolute left-1.5 top-1.5 flex h-6 min-w-6 items-center justify-center rounded-[8px] bg-surface/90 px-1 text-[8px] font-black text-accent shadow-xs backdrop-blur">
               {{ String(index + 1).padStart(2, '0') }}
             </span>
           </div>
 
-          <div class="min-w-0 self-center">
-            <span class="text-[8px] font-bold uppercase tracking-[.12em] text-accent">
+          <div class="min-w-0">
+            <span class="text-[8px] font-bold uppercase tracking-[0.12em] text-accent">
               {{ item.categoryName }}
             </span>
 
-            <h3 class="sp-read-next-title mt-1.5 text-[16.5px] font-[780] leading-[1.38rem] tracking-[-.02em] text-fg transition group-hover:text-accent">
+            <h3 class="mt-1.5 line-clamp-3 text-[12px] font-bold leading-[1.35rem] text-fg transition group-hover:text-accent">
               {{ item.title }}
             </h3>
 
-            <p class="mt-2 text-[8.5px] text-fg-subtle">
+            <p class="mt-1.5 text-[8px] text-fg-subtle">
               {{ timeAgo(item.publishedAt) }} · {{ formatViews(item.views) }} views
             </p>
           </div>

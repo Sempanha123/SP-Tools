@@ -1639,3 +1639,1382 @@
     background-image: none !important;
   }
 }
+
+
+/* ==========================================================================
+   SP-Tools V10 — Downloader input + page polish
+   Semantic light/dark URL workspace for TikTok, Facebook and YouTube.
+   ========================================================================== */
+
+/* ---------- URL resolver: shared structure ---------- */
+.sp-url-form {
+  position: relative;
+}
+
+.sp-url-shell {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--sp-border);
+  border-radius: 20px;
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--sp-platform-a) 5%, var(--sp-surface-raised)),
+      var(--sp-surface-raised) 38%,
+      color-mix(in srgb, var(--sp-platform-b) 4%, var(--sp-surface-raised))
+    );
+  padding: 8px;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / .72),
+    0 16px 44px rgb(var(--sp-shadow-rgb) / .075);
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease,
+    background-color 180ms ease;
+}
+
+.sp-url-shell:focus-within {
+  border-color: color-mix(in srgb, var(--sp-platform-a) 34%, var(--sp-border));
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / .8),
+    0 0 0 4px color-mix(in srgb, var(--sp-platform-a) 8%, transparent),
+    0 20px 52px rgb(var(--sp-shadow-rgb) / .09);
+}
+
+.sp-url-accent-line {
+  position: absolute;
+  inset-inline: 12%;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--sp-platform-a) 66%, transparent),
+    color-mix(in srgb, var(--sp-platform-b) 50%, transparent),
+    transparent
+  );
+  opacity: .75;
+}
+
+.sp-url-inner {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+}
+
+.sp-url-field {
+  display: flex;
+  min-width: 0;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: 10px;
+  min-height: 58px;
+  border: 1px solid var(--sp-border);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--sp-surface-soft) 54%, var(--sp-surface-raised));
+  padding: 7px 9px 7px 8px;
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.sp-url-field:focus-within {
+  border-color: color-mix(in srgb, var(--sp-platform-a) 32%, var(--sp-border));
+  background: var(--sp-surface-raised);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--sp-platform-a) 7%, transparent);
+}
+
+.sp-url-platform-icon {
+  display: inline-flex;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.sp-url-label {
+  margin: 0 0 2px;
+  padding-inline: 2px;
+  color: var(--sp-text-muted);
+  font-size: 8px;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.sp-url-input {
+  width: 100%;
+  min-width: 0;
+  height: 30px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  padding: 0 2px;
+  color: var(--sp-text);
+  font-size: 13px;
+  font-weight: 540;
+}
+
+.sp-url-input::placeholder {
+  color: color-mix(in srgb, var(--sp-text-muted) 82%, transparent);
+}
+
+.sp-url-input:disabled {
+  cursor: wait;
+  opacity: .62;
+}
+
+.sp-url-clear {
+  display: inline-flex;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--sp-text-muted);
+  transition: background-color 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.sp-url-clear:hover:not(:disabled) {
+  background: var(--sp-surface-soft);
+  color: var(--sp-text);
+  transform: rotate(4deg);
+}
+
+.sp-url-actions {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 8px;
+}
+
+.sp-url-paste,
+.sp-url-submit {
+  display: inline-flex;
+  min-height: 58px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 14px;
+  padding-inline: 18px;
+  font-size: 12px;
+  font-weight: 720;
+  transition:
+    transform 170ms ease,
+    border-color 170ms ease,
+    background-color 170ms ease,
+    color 170ms ease,
+    box-shadow 170ms ease,
+    filter 170ms ease;
+}
+
+.sp-url-paste {
+  min-width: 96px;
+  border: 1px solid var(--sp-border);
+  background: var(--sp-surface-raised);
+  color: var(--sp-text-secondary);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .58);
+}
+
+.sp-url-paste:hover:not(:disabled) {
+  border-color: color-mix(in srgb, var(--sp-platform-a) 18%, var(--sp-border));
+  background: color-mix(in srgb, var(--sp-platform-a) 3%, var(--sp-surface-raised));
+  color: var(--sp-text);
+  transform: translateY(-1px);
+}
+
+.sp-url-submit {
+  min-width: 138px;
+  border: 1px solid transparent;
+  color: #fff;
+}
+
+.sp-url-submit:disabled,
+.sp-url-paste:disabled,
+.sp-url-clear:disabled {
+  cursor: not-allowed;
+  opacity: .48;
+}
+
+.sp-url-submit:not(:disabled):hover {
+  transform: translateY(-1px);
+}
+
+.sp-url-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 9px 4px 0;
+  font-size: 9px;
+  font-weight: 560;
+}
+
+.sp-url-help {
+  color: var(--sp-text-muted);
+}
+
+.sp-url-error {
+  color: var(--sp-danger);
+}
+
+.sp-url-ready {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 7px;
+  color: var(--sp-positive);
+  font-weight: 700;
+}
+
+.sp-url-ready-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--sp-positive);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--sp-positive) 10%, transparent);
+}
+
+.sp-url-form.is-invalid .sp-url-shell {
+  border-color: color-mix(in srgb, var(--sp-danger) 34%, var(--sp-border));
+}
+
+.sp-url-form.is-invalid .sp-url-field {
+  border-color: color-mix(in srgb, var(--sp-danger) 28%, var(--sp-border));
+}
+
+/* TikTok cyan/pink gradients need dark ink in light mode for contrast. */
+.sp-platform-tiktok .sp-url-submit {
+  color: #071015;
+}
+
+/* ---------- Light downloader page refinement ---------- */
+.sp-download-page:not(.dark *) .sp-download-start-full {
+  border-block-color: var(--sp-border) !important;
+}
+
+.sp-download-page .sp-download-start-full {
+  border-radius: 22px !important;
+}
+
+.sp-download-page .sp-download-state {
+  border-radius: 24px;
+}
+
+.sp-download-page .sp-download-state[class*="border-y"] {
+  border: 1px solid var(--sp-border) !important;
+}
+
+.sp-download-page .sp-platform-step {
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / .6),
+    0 10px 26px rgb(var(--sp-shadow-rgb) / .06);
+}
+
+.sp-download-page dl {
+  border-radius: 24px !important;
+}
+
+.sp-download-page .sp-lens-card {
+  min-height: 240px;
+  transition:
+    transform 280ms cubic-bezier(.2,.8,.2,1),
+    border-color 220ms ease,
+    box-shadow 280ms ease,
+    background 280ms ease;
+}
+
+.sp-download-page .sp-lens-card:hover {
+  transform: translateY(-5px);
+}
+
+.sp-download-page .sp-kicker {
+  letter-spacing: .17em;
+}
+
+/* ---------- DARK MODE ---------- */
+.dark .sp-url-shell {
+  border-color: rgb(255 255 255 / .09);
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--sp-platform-a) 7%, #111925),
+      #0e1621 42%,
+      color-mix(in srgb, var(--sp-platform-b) 5%, #111925)
+    );
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / .035),
+    0 20px 55px rgb(0 0 0 / .24);
+}
+
+.dark .sp-url-shell:focus-within {
+  border-color: color-mix(in srgb, var(--sp-platform-a) 34%, rgb(255 255 255 / .1));
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / .04),
+    0 0 0 4px color-mix(in srgb, var(--sp-platform-a) 9%, transparent),
+    0 24px 65px rgb(0 0 0 / .30);
+}
+
+.dark .sp-url-field {
+  border-color: rgb(255 255 255 / .085);
+  background: rgb(255 255 255 / .035);
+}
+
+.dark .sp-url-field:focus-within {
+  border-color: color-mix(in srgb, var(--sp-platform-a) 30%, rgb(255 255 255 / .1));
+  background: rgb(255 255 255 / .05);
+}
+
+.dark .sp-url-label {
+  color: rgb(255 255 255 / .34);
+}
+
+.dark .sp-url-input {
+  color: #f5f7fb;
+}
+
+.dark .sp-url-input::placeholder {
+  color: rgb(255 255 255 / .26);
+}
+
+.dark .sp-url-clear {
+  color: rgb(255 255 255 / .36);
+}
+
+.dark .sp-url-clear:hover:not(:disabled) {
+  background: rgb(255 255 255 / .07);
+  color: #fff;
+}
+
+.dark .sp-url-paste {
+  border-color: rgb(255 255 255 / .09);
+  background: rgb(255 255 255 / .045);
+  color: rgb(255 255 255 / .72);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .025);
+}
+
+.dark .sp-url-paste:hover:not(:disabled) {
+  border-color: rgb(255 255 255 / .15);
+  background: rgb(255 255 255 / .075);
+  color: #fff;
+}
+
+.dark .sp-url-help {
+  color: rgb(255 255 255 / .38);
+}
+
+.dark .sp-url-ready {
+  color: #69ddb3;
+}
+
+.dark .sp-url-ready-dot {
+  background: #69ddb3;
+  box-shadow: 0 0 0 4px rgb(105 221 179 / .08), 0 0 16px rgb(105 221 179 / .24);
+}
+
+.dark .sp-download-page .sp-platform-step {
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / .035),
+    0 12px 30px rgb(0 0 0 / .20);
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 767px) {
+  .sp-url-inner {
+    flex-direction: column;
+  }
+
+  .sp-url-actions {
+    display: grid;
+    grid-template-columns: minmax(0, .72fr) minmax(0, 1fr);
+  }
+
+  .sp-url-paste,
+  .sp-url-submit {
+    width: 100%;
+    min-width: 0;
+    min-height: 52px;
+  }
+
+  .sp-url-field {
+    min-height: 56px;
+  }
+
+  .sp-url-meta {
+    align-items: flex-start;
+  }
+
+  .sp-url-ready {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sp-url-shell,
+  .sp-url-field,
+  .sp-url-paste,
+  .sp-url-submit,
+  .sp-url-clear,
+  .sp-download-page .sp-lens-card {
+    transition: none !important;
+  }
+}
+
+
+
+
+/* ==========================================================================
+   SP-Tools V11 — Reader-first News Post
+   Focus the article, reduce secondary UI, and make post pages theme-correct.
+   ========================================================================== */
+
+.sp-news-reader-width {
+  width: min(100% - 2rem, 70rem);
+  margin-inline: auto;
+}
+
+.sp-news-post {
+  --sp-reader-width: 760px;
+}
+
+.sp-news-post-header {
+  background:
+    radial-gradient(circle at 80% 0%, color-mix(in srgb, var(--sp-accent-2) 5%, transparent), transparent 26rem),
+    radial-gradient(circle at 10% 0%, color-mix(in srgb, var(--sp-accent) 6%, transparent), transparent 28rem),
+    var(--sp-page);
+}
+
+.sp-news-post-hero {
+  background:
+    linear-gradient(
+      145deg,
+      color-mix(in srgb, var(--sp-surface-raised) 96%, var(--sp-accent-soft) 4%),
+      var(--sp-surface) 56%,
+      color-mix(in srgb, var(--sp-surface-soft) 92%, var(--sp-accent-2) 8%)
+    );
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / .75),
+    0 24px 68px rgb(var(--sp-shadow-rgb) / .08);
+}
+
+.sp-news-post-aura {
+  background:
+    radial-gradient(circle at 15% 0%, color-mix(in srgb, var(--sp-accent) 7%, transparent), transparent 35%),
+    radial-gradient(circle at 90% 10%, color-mix(in srgb, var(--sp-accent-2) 6%, transparent), transparent 32%);
+}
+
+.sp-news-post-cover {
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / .55),
+    0 18px 46px rgb(var(--sp-shadow-rgb) / .07);
+}
+
+.sp-news-reading-progress {
+  background: linear-gradient(90deg, var(--sp-accent), var(--sp-accent-2));
+  box-shadow: 0 0 18px color-mix(in srgb, var(--sp-accent) 18%, transparent);
+}
+
+.sp-news-reader-toolbar {
+  top: 72px !important;
+  z-index: 35;
+  background: color-mix(in srgb, var(--sp-surface-raised) 88%, transparent) !important;
+  border-color: var(--sp-border) !important;
+  box-shadow: 0 10px 30px rgb(var(--sp-shadow-rgb) / .055) !important;
+  backdrop-filter: blur(18px) saturate(120%);
+}
+
+.sp-news-reading-section {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--sp-surface-soft) 18%, transparent), transparent 9rem),
+    var(--sp-page) !important;
+}
+
+.sp-news-reader-grid {
+  justify-content: center;
+}
+
+.sp-news-reader-main {
+  width: 100%;
+  max-width: var(--sp-reader-width);
+  margin-inline: auto;
+}
+
+.sp-news-reader-sidebar {
+  width: 250px;
+  font-size: .92em;
+  opacity: .92;
+}
+
+.sp-news-reader-sidebar > * {
+  max-width: 250px;
+}
+
+/* The body should feel like a reading surface, not another dashboard. */
+.sp-article-body {
+  max-width: var(--sp-reader-width) !important;
+}
+
+.sp-article-body .article-copy {
+  max-width: 70ch;
+  color: var(--sp-text-secondary) !important;
+  font-size: 1.06rem;
+  line-height: 1.9;
+  letter-spacing: -.006em;
+}
+
+.article-text-small .sp-article-body .article-copy {
+  font-size: .97rem;
+  line-height: 1.85;
+}
+
+.article-text-normal .sp-article-body .article-copy {
+  font-size: 1.06rem;
+  line-height: 1.9;
+}
+
+.article-text-large .sp-article-body .article-copy {
+  font-size: 1.16rem;
+  line-height: 1.95;
+}
+
+.sp-article-body .article-lead {
+  max-width: 66ch;
+  color: var(--sp-text) !important;
+  font-size: 1.18rem;
+  font-weight: 560;
+  line-height: 1.75;
+  letter-spacing: -.012em;
+}
+
+.sp-article-body .article-section {
+  margin-block: 3.4rem;
+}
+
+.sp-article-body .article-section > .group h2,
+.sp-article-body .article-section > div > h2 {
+  text-wrap: balance;
+}
+
+.sp-article-overview {
+  margin-bottom: 2.25rem !important;
+  border-radius: 20px !important;
+  background: var(--sp-surface-soft) !important;
+  padding: 1rem 1.1rem !important;
+  box-shadow: inset 0 1px 0 color-mix(in srgb, white 55%, transparent);
+}
+
+/* Avoid showing the lead twice: the overview remains a small reading-stat strip,
+   while the real lead stays in the article flow below. */
+.sp-article-overview .article-lead {
+  display: none !important;
+}
+
+.sp-article-overview > div {
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  gap: 1rem !important;
+}
+
+.sp-article-overview > div > div:last-child {
+  display: flex !important;
+  gap: .6rem !important;
+}
+
+.sp-article-overview > div > div:last-child > div {
+  min-width: 118px;
+  border-radius: 14px !important;
+  padding: .7rem .8rem !important;
+  background: var(--sp-surface-raised) !important;
+}
+
+.sp-news-post .sp-news-error-panel {
+  border-color: color-mix(in srgb, var(--sp-danger) 22%, var(--sp-border)) !important;
+  background: var(--sp-danger-soft) !important;
+  color: var(--sp-text);
+}
+
+/* Compact secondary content below the article. */
+.sp-news-more-section {
+  padding-block: 2.5rem !important;
+}
+
+.sp-news-more-section .sp-news-more-grid {
+  gap: 1rem !important;
+}
+
+.sp-news-related {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--sp-surface-soft) 72%, transparent), var(--sp-surface-2));
+}
+
+/* DARK */
+.dark .sp-news-post-header {
+  background:
+    radial-gradient(circle at 80% 0%, color-mix(in srgb, var(--sp-accent-2) 5%, transparent), transparent 26rem),
+    radial-gradient(circle at 8% 0%, color-mix(in srgb, var(--sp-accent) 7%, transparent), transparent 28rem),
+    #070b12;
+}
+
+.dark .sp-news-post-hero {
+  background:
+    radial-gradient(circle at 92% 0%, color-mix(in srgb, var(--sp-accent-2) 6%, transparent), transparent 32%),
+    radial-gradient(circle at 8% 0%, color-mix(in srgb, var(--sp-accent) 8%, transparent), transparent 38%),
+    linear-gradient(145deg, #0c121c, #091019 58%, #0b131d);
+  border-color: rgb(255 255 255 / .08);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / .035),
+    0 28px 80px rgb(0 0 0 / .26);
+}
+
+.dark .sp-news-post-cover {
+  border-color: rgb(255 255 255 / .08);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / .025),
+    0 20px 58px rgb(0 0 0 / .24);
+}
+
+.dark .sp-news-reader-toolbar {
+  background: rgb(8 13 21 / .90) !important;
+  border-color: rgb(255 255 255 / .075) !important;
+  box-shadow: 0 12px 32px rgb(0 0 0 / .22) !important;
+}
+
+.dark .sp-news-reading-section {
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / .012), transparent 9rem),
+    #070b12 !important;
+}
+
+.dark .sp-article-overview {
+  border-color: rgb(255 255 255 / .075) !important;
+  background: rgb(255 255 255 / .025) !important;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .025);
+}
+
+.dark .sp-article-overview > div > div:last-child > div {
+  border-color: rgb(255 255 255 / .075) !important;
+  background: rgb(255 255 255 / .028) !important;
+}
+
+.dark .sp-news-related {
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / .018), transparent 70%),
+    #080d15;
+}
+
+/* Article callouts that were authored with light-only utilities. */
+.dark .sp-article-body .bg-amber-50 {
+  background: rgb(245 158 11 / .08) !important;
+}
+.dark .sp-article-body .bg-amber-100 {
+  background: rgb(245 158 11 / .12) !important;
+}
+.dark .sp-article-body .text-amber-900,
+.dark .sp-article-body .text-amber-800,
+.dark .sp-article-body .text-amber-700 {
+  color: #f7cf83 !important;
+}
+.dark .sp-article-body .border-amber-200 {
+  border-color: rgb(245 158 11 / .20) !important;
+}
+
+/* Responsive: keep the article dominant. Secondary sidebar only returns on
+   very wide screens, where it no longer competes with the reading column. */
+@media (max-width: 1535px) {
+  .sp-news-reader-grid {
+    display: block !important;
+  }
+
+  .sp-news-reader-sidebar {
+    display: none !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .sp-news-reader-width {
+    width: min(100% - 1.25rem, 70rem);
+  }
+
+  .sp-news-reader-toolbar {
+    top: 64px !important;
+  }
+
+  .sp-article-body .article-copy {
+    font-size: 1rem;
+    line-height: 1.82;
+  }
+
+  .sp-article-body .article-lead {
+    font-size: 1.08rem;
+  }
+
+  .sp-article-body .article-section {
+    margin-block: 2.7rem;
+  }
+
+  .sp-article-overview > div {
+    display: block !important;
+  }
+
+  .sp-article-overview > div > div:last-child {
+    margin-top: .75rem;
+  }
+}
+
+@media print {
+  .sp-news-post-header {
+    background: white !important;
+  }
+
+  .sp-news-post-hero {
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+}
+
+
+
+
+/* ==========================================================================
+   SP-Tools V12 — News focus, larger read-next rail, compact overview,
+   Daily Brief contrast, denser Continue Reading + Latest.
+   ========================================================================== */
+
+.sp-news-post {
+  --sp-reader-width: 735px;
+}
+
+.sp-news-reader-grid {
+  width: min(100% - 2.5rem, 1180px) !important;
+  max-width: 1180px !important;
+  margin-inline: auto;
+  align-items: start;
+  gap: 34px !important;
+}
+
+.sp-news-reader-main {
+  max-width: 735px !important;
+}
+
+.sp-news-reader-sidebar {
+  width: 330px !important;
+  max-width: 330px !important;
+}
+
+.sp-reader-rail {
+  width: 100%;
+}
+
+.sp-reader-rail-card {
+  background: var(--sp-surface-raised, var(--sp-surface)) !important;
+  border-color: var(--sp-border) !important;
+}
+
+.sp-reader-rail-card h2,
+.sp-reader-rail-card h3 {
+  color: var(--sp-text) !important;
+}
+
+/* Compact Story Overview rail */
+.sp-article-overview {
+  width: fit-content !important;
+  max-width: 100%;
+  margin-bottom: 1.8rem !important;
+  padding: .72rem .82rem !important;
+  border-radius: 16px !important;
+  background: var(--sp-surface-soft) !important;
+}
+
+.sp-article-overview > div {
+  display: flex !important;
+  align-items: center !important;
+  gap: .8rem !important;
+}
+
+.sp-article-overview > div > div:first-child {
+  flex: 0 0 auto !important;
+}
+
+.sp-article-overview > div > div:first-child > p:first-child {
+  margin: 0 !important;
+  white-space: nowrap;
+  font-size: 8px !important;
+}
+
+.sp-article-overview > div > div:last-child {
+  display: flex !important;
+  gap: .5rem !important;
+  margin: 0 !important;
+}
+
+.sp-article-overview > div > div:last-child > div {
+  min-width: 104px !important;
+  padding: .58rem .68rem !important;
+  border-radius: 12px !important;
+}
+
+.sp-article-overview > div > div:last-child > div p:first-child {
+  font-size: 7px !important;
+}
+
+.sp-article-overview > div > div:last-child > div p:last-child {
+  margin-top: .12rem !important;
+  font-size: 1rem !important;
+}
+
+/* Daily Brief: guarantee contrast in BOTH themes. */
+.sp-daily-brief {
+  border-color: rgb(255 255 255 / .10) !important;
+  background:
+    radial-gradient(circle at 88% 0%, rgb(32 201 214 / .13), transparent 28rem),
+    radial-gradient(circle at 8% 20%, rgb(117 91 246 / .18), transparent 30rem),
+    linear-gradient(135deg, #0b1018, #0a1119 58%, #0b1820) !important;
+  color: #f7f9fc !important;
+  box-shadow: 0 28px 78px rgb(8 15 28 / .18) !important;
+}
+
+.sp-daily-brief-glow {
+  background:
+    linear-gradient(120deg, transparent 18%, rgb(255 255 255 / .025), transparent 46%);
+}
+
+.sp-daily-brief-kicker {
+  color: #a99cff !important;
+}
+
+.sp-daily-brief-title {
+  color: #f7f9fc !important;
+  text-shadow: 0 2px 24px rgb(0 0 0 / .16);
+}
+
+.sp-daily-brief-title-muted {
+  color: #aeb8c8 !important;
+}
+
+.sp-daily-brief-copy {
+  color: #aab4c4 !important;
+}
+
+.sp-daily-brief-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  border: 1px solid rgb(255 255 255 / .10);
+  border-radius: 999px;
+  background: rgb(255 255 255 / .055);
+  padding-inline: 11px;
+  color: #c7cfdb;
+  font-size: 9px;
+  font-weight: 650;
+}
+
+.sp-daily-brief-terminal {
+  border-color: rgb(255 255 255 / .10) !important;
+  background: rgb(255 255 255 / .06) !important;
+  color: #f7f9fc !important;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / .04),
+    0 20px 55px rgb(0 0 0 / .18);
+}
+
+.sp-daily-brief-terminal-label {
+  color: #7f8ca0 !important;
+}
+
+.sp-daily-brief-terminal-title {
+  color: #eef2f8 !important;
+}
+
+.sp-daily-brief-stat {
+  border-color: rgb(255 255 255 / .08) !important;
+  background: rgb(0 0 0 / .14) !important;
+  color: #7f8ca0 !important;
+}
+
+.sp-daily-brief-stat strong {
+  color: #dce4ef !important;
+}
+
+.sp-daily-brief-input {
+  border-color: rgb(255 255 255 / .10) !important;
+  background: rgb(0 0 0 / .18) !important;
+  color: #f7f9fc !important;
+}
+
+.sp-daily-brief-input::placeholder {
+  color: #738095 !important;
+}
+
+.sp-daily-brief-input:focus {
+  border-color: #8f7cff !important;
+  box-shadow: 0 0 0 4px rgb(117 91 246 / .10);
+}
+
+.sp-daily-brief-submit {
+  background: #f7f9fc !important;
+  color: #0b1018 !important;
+  box-shadow: 0 8px 24px rgb(0 0 0 / .16);
+}
+
+.sp-daily-brief-progress {
+  background: rgb(255 255 255 / .07);
+}
+
+/* In dark theme, separate the card from the page instead of letting it disappear. */
+.dark .sp-daily-brief {
+  border-color: rgb(255 255 255 / .12) !important;
+  background:
+    radial-gradient(circle at 88% 0%, rgb(32 201 214 / .12), transparent 28rem),
+    radial-gradient(circle at 8% 20%, rgb(117 91 246 / .18), transparent 30rem),
+    linear-gradient(135deg, #121925, #0e1621 58%, #0d1b24) !important;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / .035),
+    0 32px 86px rgb(0 0 0 / .30) !important;
+}
+
+/* Continue Reading / latest density */
+.sp-news-related .sp-news-reader-width {
+  width: min(100% - 2rem, 76rem);
+}
+
+.sp-news-related article,
+.sp-news-latest-grid article {
+  min-width: 0;
+}
+
+.sp-news-latest-grid > :not(:first-child) {
+  height: 100%;
+}
+
+/* Reader typography: content remains first priority. */
+.sp-article-body .article-copy {
+  color: var(--sp-text-secondary) !important;
+  font-size: 1.075rem !important;
+  line-height: 1.9 !important;
+}
+
+.sp-article-body .article-section {
+  margin-block: 3rem !important;
+}
+
+/* Dark mode reader cards */
+.dark .sp-reader-rail-card {
+  background: #0d141f !important;
+  border-color: rgb(255 255 255 / .08) !important;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / .025),
+    0 18px 45px rgb(0 0 0 / .22) !important;
+}
+
+/* Show the larger reading rail on standard large desktops. */
+@media (min-width: 1280px) {
+  .sp-news-reader-grid {
+    display: grid !important;
+    grid-template-columns: minmax(0, 735px) 330px !important;
+  }
+
+  .sp-news-reader-sidebar {
+    display: block !important;
+  }
+}
+
+@media (max-width: 1279px) {
+  .sp-news-reader-grid {
+    display: block !important;
+    width: min(100% - 2rem, 820px) !important;
+  }
+
+  .sp-news-reader-sidebar {
+    display: none !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .sp-article-overview {
+    width: 100% !important;
+  }
+
+  .sp-article-overview > div {
+    align-items: flex-start !important;
+    flex-direction: column !important;
+  }
+
+  .sp-article-overview > div > div:last-child {
+    width: 100%;
+  }
+
+  .sp-article-overview > div > div:last-child > div {
+    flex: 1 1 0;
+    min-width: 0 !important;
+  }
+}
+
+
+
+
+/* ==========================================================================
+   SP-Tools V13 — Rich article media + bigger Read Next + Daily Brief removal.
+   ========================================================================== */
+
+.sp-news-post {
+  --sp-reader-width: 760px;
+}
+
+.sp-news-reader-grid {
+  width: min(100% - 2.5rem, 1240px) !important;
+  max-width: 1240px !important;
+  grid-template-columns: minmax(0, 760px) 390px !important;
+  gap: 42px !important;
+  justify-content: center;
+}
+
+.sp-news-reader-main {
+  max-width: 760px !important;
+}
+
+.sp-news-reader-sidebar {
+  width: 390px !important;
+  max-width: 390px !important;
+}
+
+.sp-reader-rail-card,
+.sp-read-next {
+  background: var(--sp-surface-raised, var(--sp-surface)) !important;
+  border-color: var(--sp-border) !important;
+}
+
+.sp-read-next-aura {
+  background:
+    radial-gradient(circle at 92% 0%, color-mix(in srgb, var(--sp-accent-2) 12%, transparent), transparent 65%),
+    radial-gradient(circle at 18% 0%, color-mix(in srgb, var(--sp-accent) 9%, transparent), transparent 70%);
+}
+
+.sp-post-gallery > div > a {
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / .55),
+    0 14px 36px rgb(var(--sp-shadow-rgb) / .07);
+}
+
+.sp-post-youtube {
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / .52),
+    0 18px 46px rgb(var(--sp-shadow-rgb) / .08) !important;
+}
+
+.sp-news-related-width {
+  width: min(100% - 2rem, 82rem);
+  margin-inline: auto;
+}
+
+.sp-news-latest-grid > :not(:first-child) {
+  height: 100%;
+}
+
+/* Newsletter removed from News UI in V13. */
+#newsletter {
+  display: none !important;
+}
+
+.dark .sp-reader-rail-card,
+.dark .sp-read-next {
+  background: #0d141f !important;
+  border-color: rgb(255 255 255 / .08) !important;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / .025),
+    0 22px 54px rgb(0 0 0 / .24) !important;
+}
+
+.dark .sp-post-gallery > div > a,
+.dark .sp-post-youtube {
+  border-color: rgb(255 255 255 / .08) !important;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / .025),
+    0 18px 48px rgb(0 0 0 / .24) !important;
+}
+
+@media (max-width: 1279px) {
+  .sp-news-reader-grid {
+    display: block !important;
+    width: min(100% - 2rem, 820px) !important;
+  }
+
+  .sp-news-reader-sidebar {
+    display: none !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .sp-post-rich-media {
+    margin-top: 1.5rem;
+  }
+
+  .sp-news-related-width {
+    width: min(100% - 1.25rem, 82rem);
+  }
+}
+
+
+
+/* ==========================================================================
+   SP-Tools V14 — Reader stats in toolbar + larger titles + rich media.
+   ========================================================================== */
+
+.sp-article-overview {
+  display: none !important;
+}
+
+.sp-reader-progress-meta {
+  max-width: 620px;
+}
+
+.sp-reader-progress-badge {
+  display: inline-flex;
+  height: 42px;
+  min-width: 50px;
+  align-items: baseline;
+  justify-content: center;
+  gap: 1px;
+  border: 1px solid var(--sp-border);
+  border-radius: 13px;
+  background: var(--sp-accent-soft);
+  padding-inline: 10px;
+  color: var(--sp-accent);
+}
+
+.sp-reader-progress-badge span {
+  font-size: 13px;
+  font-weight: 850;
+}
+
+.sp-reader-progress-badge small {
+  font-size: 8px;
+  font-weight: 800;
+}
+
+.sp-reader-progress-stats {
+  display: flex;
+  align-items: stretch;
+  gap: 6px;
+  margin-left: 4px;
+}
+
+.sp-reader-progress-stats > div {
+  display: flex;
+  min-width: 72px;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid var(--sp-border);
+  border-radius: 11px;
+  background: var(--sp-surface-soft);
+  padding: 6px 9px;
+}
+
+.sp-reader-progress-stats span {
+  color: var(--sp-text-muted);
+  font-size: 7px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+}
+
+.sp-reader-progress-stats strong {
+  margin-top: 4px;
+  color: var(--sp-text);
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.sp-news-reader-grid {
+  width: min(100% - 2.5rem, 1280px) !important;
+  max-width: 1280px !important;
+  grid-template-columns: minmax(0, 760px) 405px !important;
+  gap: 42px !important;
+  justify-content: center;
+}
+
+.sp-news-reader-main {
+  max-width: 760px !important;
+}
+
+.sp-news-reader-sidebar {
+  width: 405px !important;
+  max-width: 405px !important;
+}
+
+.sp-read-next-header {
+  background:
+    radial-gradient(circle at 86% 0%, color-mix(in srgb, var(--sp-accent-2) 10%, transparent), transparent 70%),
+    radial-gradient(circle at 10% 0%, color-mix(in srgb, var(--sp-accent) 8%, transparent), transparent 74%);
+}
+
+.sp-read-next-title,
+.sp-continue-title {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+}
+
+.sp-read-next-title {
+  -webkit-line-clamp: 4;
+}
+
+.sp-continue-title {
+  -webkit-line-clamp: 3;
+}
+
+.sp-continue-reading-width {
+  width: min(100% - 2rem, 1180px);
+  margin-inline: auto;
+}
+
+.sp-post-gallery > div > a,
+.sp-post-youtube {
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / .55),
+    0 16px 42px rgb(var(--sp-shadow-rgb) / .075);
+}
+
+.dark .sp-reader-progress-badge,
+.dark .sp-reader-progress-stats > div {
+  border-color: rgb(255 255 255 / .08);
+}
+
+.dark .sp-reader-progress-stats > div {
+  background: rgb(255 255 255 / .035);
+}
+
+.dark .sp-read-next,
+.dark .sp-reader-rail-card {
+  background: #0d141f !important;
+  border-color: rgb(255 255 255 / .08) !important;
+}
+
+.dark .sp-post-gallery > div > a,
+.dark .sp-post-youtube {
+  border-color: rgb(255 255 255 / .08) !important;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / .025),
+    0 18px 48px rgb(0 0 0 / .24);
+}
+
+@media (max-width: 1279px) {
+  .sp-news-reader-grid {
+    display: block !important;
+    width: min(100% - 2rem, 820px) !important;
+  }
+
+  .sp-news-reader-sidebar {
+    display: none !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .sp-reader-progress-stats {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .sp-post-rich-media {
+    margin-top: 1.5rem;
+  }
+
+  .sp-continue-reading-width {
+    width: min(100% - 1.25rem, 1180px);
+  }
+}
+
+
+
+/* ==========================================================================
+   SP-Tools V15 — Bigger recommendation titles + richer Food Logistics demo.
+   ========================================================================== */
+
+.sp-news-reader-grid {
+  width: min(100% - 2.5rem, 1320px) !important;
+  max-width: 1320px !important;
+  grid-template-columns: minmax(0, 760px) 440px !important;
+  gap: 44px !important;
+}
+
+.sp-news-reader-sidebar {
+  width: 440px !important;
+  max-width: 440px !important;
+}
+
+.sp-read-next-title {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+}
+
+.sp-read-next-item:hover .sp-read-next-title {
+  color: var(--sp-accent);
+}
+
+.sp-continue-reading-width {
+  width: min(100% - 2rem, 1220px);
+  margin-inline: auto;
+}
+
+.sp-continue-title {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+}
+
+/* Reporting transparency is useful, but it should not visually outweigh the story. */
+#reporting-transparency {
+  margin-block: 2.4rem !important;
+}
+
+#reporting-transparency > div {
+  border-radius: 20px !important;
+}
+
+#reporting-transparency > div > div {
+  padding: 1.15rem !important;
+}
+
+/* Give article media a stronger editorial rhythm. */
+.sp-post-rich-media {
+  margin-block: 2rem 2.6rem;
+}
+
+.sp-post-gallery > div > a {
+  border-radius: 22px;
+}
+
+.sp-post-youtube {
+  border-radius: 24px !important;
+}
+
+.dark .sp-read-next,
+.dark .sp-reader-rail-card {
+  background: #0d141f !important;
+  border-color: rgb(255 255 255 / .08) !important;
+}
+
+@media (max-width: 1279px) {
+  .sp-news-reader-grid {
+    display: block !important;
+    width: min(100% - 2rem, 820px) !important;
+  }
+
+  .sp-news-reader-sidebar {
+    display: none !important;
+  }
+}
+

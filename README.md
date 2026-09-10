@@ -1,45 +1,39 @@
-# SP-Tools V8 — Current GitHub compatibility repair
+# SP-Tools V15 — News Article Polish
 
-This is NOT another visual redesign. It repairs the mismatch between the old V7 pack and the repository as it exists now.
+This is an incremental patch for the V14 result shown in the screenshot.
 
-## What changed in GitHub
+## Visible improvements
 
-The project root is now `frontend/` + `backend/`, not `SPTools/` + `backend/`.
-
-The latest cleanup commit also removed a set of live Nuxt routes/components. This pack restores only files that are currently missing, using commit:
-
-`a82051976bd8650bf5e59b4124774fed700d09b9`
-
-Existing files are not overwritten by the recovery step.
-
-## Important CSS issue
-
-The current V7 stylesheet exists at `frontend/css/main.css`, but Nuxt imports `~/assets/css/main.css`, i.e. `frontend/assets/css/main.css`.
-
-The downloader Vue files and `DownloadStudio` already match V7, but the stylesheet actually used by Nuxt is an older file. That is why the page can still look incomplete or partly like the older version.
-
-This repair copies the full V7 stylesheet into the live `frontend/assets/css/main.css` path.
+- Right-side reader rail grows from ~405px to **440px**.
+- **More news** titles become **16.5px** and can use up to **4 lines**.
+- Recommendation thumbnails become larger.
+- Reading Guide is slightly more compact, so More News starts higher.
+- **More from this category** heading becomes much larger.
+- Category cards use much larger headlines and automatically use the full width when only 1 or 2 articles exist.
+- `About this report` is visually reduced so it does not compete with the story.
+- Rich-media demo now updates **Food logistics** too, not only Open-source teams.
 
 ## Apply
 
-Stop Nuxt first, then from the repository root:
+V14 must already be applied.
 
 ```powershell
 Set-ExecutionPolicy -Scope Process Bypass
-.\APPLY_CURRENT_GITHUB_FIX.ps1
+.\APPLY_V15.ps1
+.\SEED_V15_DEMOS.ps1
 ```
 
-Then verify:
-
-```powershell
-.\VERIFY_CURRENT_GITHUB.ps1
-```
-
-Or start dev:
+Then restart Nuxt:
 
 ```powershell
 cd frontend
 npm run dev -- --port 3001
 ```
 
-Hard refresh with `Ctrl+Shift+R`.
+Hard refresh with Ctrl+Shift+R.
+
+The Food Logistics article will now contain:
+- section image
+- four-image gallery
+- embedded YouTube demo
+- second section image

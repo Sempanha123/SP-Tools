@@ -1,0 +1,307 @@
+/* ==========================================================================
+   SP-Tools V11 — Reader-first News Post
+   Focus the article, reduce secondary UI, and make post pages theme-correct.
+   ========================================================================== */
+
+.sp-news-reader-width {
+  width: min(100% - 2rem, 70rem);
+  margin-inline: auto;
+}
+
+.sp-news-post {
+  --sp-reader-width: 760px;
+}
+
+.sp-news-post-header {
+  background:
+    radial-gradient(circle at 80% 0%, color-mix(in srgb, var(--sp-accent-2) 5%, transparent), transparent 26rem),
+    radial-gradient(circle at 10% 0%, color-mix(in srgb, var(--sp-accent) 6%, transparent), transparent 28rem),
+    var(--sp-page);
+}
+
+.sp-news-post-hero {
+  background:
+    linear-gradient(
+      145deg,
+      color-mix(in srgb, var(--sp-surface-raised) 96%, var(--sp-accent-soft) 4%),
+      var(--sp-surface) 56%,
+      color-mix(in srgb, var(--sp-surface-soft) 92%, var(--sp-accent-2) 8%)
+    );
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / .75),
+    0 24px 68px rgb(var(--sp-shadow-rgb) / .08);
+}
+
+.sp-news-post-aura {
+  background:
+    radial-gradient(circle at 15% 0%, color-mix(in srgb, var(--sp-accent) 7%, transparent), transparent 35%),
+    radial-gradient(circle at 90% 10%, color-mix(in srgb, var(--sp-accent-2) 6%, transparent), transparent 32%);
+}
+
+.sp-news-post-cover {
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / .55),
+    0 18px 46px rgb(var(--sp-shadow-rgb) / .07);
+}
+
+.sp-news-reading-progress {
+  background: linear-gradient(90deg, var(--sp-accent), var(--sp-accent-2));
+  box-shadow: 0 0 18px color-mix(in srgb, var(--sp-accent) 18%, transparent);
+}
+
+.sp-news-reader-toolbar {
+  top: 72px !important;
+  z-index: 35;
+  background: color-mix(in srgb, var(--sp-surface-raised) 88%, transparent) !important;
+  border-color: var(--sp-border) !important;
+  box-shadow: 0 10px 30px rgb(var(--sp-shadow-rgb) / .055) !important;
+  backdrop-filter: blur(18px) saturate(120%);
+}
+
+.sp-news-reading-section {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--sp-surface-soft) 18%, transparent), transparent 9rem),
+    var(--sp-page) !important;
+}
+
+.sp-news-reader-grid {
+  justify-content: center;
+}
+
+.sp-news-reader-main {
+  width: 100%;
+  max-width: var(--sp-reader-width);
+  margin-inline: auto;
+}
+
+.sp-news-reader-sidebar {
+  width: 250px;
+  font-size: .92em;
+  opacity: .92;
+}
+
+.sp-news-reader-sidebar > * {
+  max-width: 250px;
+}
+
+/* The body should feel like a reading surface, not another dashboard. */
+.sp-article-body {
+  max-width: var(--sp-reader-width) !important;
+}
+
+.sp-article-body .article-copy {
+  max-width: 70ch;
+  color: var(--sp-text-secondary) !important;
+  font-size: 1.06rem;
+  line-height: 1.9;
+  letter-spacing: -.006em;
+}
+
+.article-text-small .sp-article-body .article-copy {
+  font-size: .97rem;
+  line-height: 1.85;
+}
+
+.article-text-normal .sp-article-body .article-copy {
+  font-size: 1.06rem;
+  line-height: 1.9;
+}
+
+.article-text-large .sp-article-body .article-copy {
+  font-size: 1.16rem;
+  line-height: 1.95;
+}
+
+.sp-article-body .article-lead {
+  max-width: 66ch;
+  color: var(--sp-text) !important;
+  font-size: 1.18rem;
+  font-weight: 560;
+  line-height: 1.75;
+  letter-spacing: -.012em;
+}
+
+.sp-article-body .article-section {
+  margin-block: 3.4rem;
+}
+
+.sp-article-body .article-section > .group h2,
+.sp-article-body .article-section > div > h2 {
+  text-wrap: balance;
+}
+
+.sp-article-overview {
+  margin-bottom: 2.25rem !important;
+  border-radius: 20px !important;
+  background: var(--sp-surface-soft) !important;
+  padding: 1rem 1.1rem !important;
+  box-shadow: inset 0 1px 0 color-mix(in srgb, white 55%, transparent);
+}
+
+/* Avoid showing the lead twice: the overview remains a small reading-stat strip,
+   while the real lead stays in the article flow below. */
+.sp-article-overview .article-lead {
+  display: none !important;
+}
+
+.sp-article-overview > div {
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  gap: 1rem !important;
+}
+
+.sp-article-overview > div > div:last-child {
+  display: flex !important;
+  gap: .6rem !important;
+}
+
+.sp-article-overview > div > div:last-child > div {
+  min-width: 118px;
+  border-radius: 14px !important;
+  padding: .7rem .8rem !important;
+  background: var(--sp-surface-raised) !important;
+}
+
+.sp-news-post .sp-news-error-panel {
+  border-color: color-mix(in srgb, var(--sp-danger) 22%, var(--sp-border)) !important;
+  background: var(--sp-danger-soft) !important;
+  color: var(--sp-text);
+}
+
+/* Compact secondary content below the article. */
+.sp-news-more-section {
+  padding-block: 2.5rem !important;
+}
+
+.sp-news-more-section .sp-news-more-grid {
+  gap: 1rem !important;
+}
+
+.sp-news-related {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--sp-surface-soft) 72%, transparent), var(--sp-surface-2));
+}
+
+/* DARK */
+.dark .sp-news-post-header {
+  background:
+    radial-gradient(circle at 80% 0%, color-mix(in srgb, var(--sp-accent-2) 5%, transparent), transparent 26rem),
+    radial-gradient(circle at 8% 0%, color-mix(in srgb, var(--sp-accent) 7%, transparent), transparent 28rem),
+    #070b12;
+}
+
+.dark .sp-news-post-hero {
+  background:
+    radial-gradient(circle at 92% 0%, color-mix(in srgb, var(--sp-accent-2) 6%, transparent), transparent 32%),
+    radial-gradient(circle at 8% 0%, color-mix(in srgb, var(--sp-accent) 8%, transparent), transparent 38%),
+    linear-gradient(145deg, #0c121c, #091019 58%, #0b131d);
+  border-color: rgb(255 255 255 / .08);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / .035),
+    0 28px 80px rgb(0 0 0 / .26);
+}
+
+.dark .sp-news-post-cover {
+  border-color: rgb(255 255 255 / .08);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / .025),
+    0 20px 58px rgb(0 0 0 / .24);
+}
+
+.dark .sp-news-reader-toolbar {
+  background: rgb(8 13 21 / .90) !important;
+  border-color: rgb(255 255 255 / .075) !important;
+  box-shadow: 0 12px 32px rgb(0 0 0 / .22) !important;
+}
+
+.dark .sp-news-reading-section {
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / .012), transparent 9rem),
+    #070b12 !important;
+}
+
+.dark .sp-article-overview {
+  border-color: rgb(255 255 255 / .075) !important;
+  background: rgb(255 255 255 / .025) !important;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .025);
+}
+
+.dark .sp-article-overview > div > div:last-child > div {
+  border-color: rgb(255 255 255 / .075) !important;
+  background: rgb(255 255 255 / .028) !important;
+}
+
+.dark .sp-news-related {
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / .018), transparent 70%),
+    #080d15;
+}
+
+/* Article callouts that were authored with light-only utilities. */
+.dark .sp-article-body .bg-amber-50 {
+  background: rgb(245 158 11 / .08) !important;
+}
+.dark .sp-article-body .bg-amber-100 {
+  background: rgb(245 158 11 / .12) !important;
+}
+.dark .sp-article-body .text-amber-900,
+.dark .sp-article-body .text-amber-800,
+.dark .sp-article-body .text-amber-700 {
+  color: #f7cf83 !important;
+}
+.dark .sp-article-body .border-amber-200 {
+  border-color: rgb(245 158 11 / .20) !important;
+}
+
+/* Responsive: keep the article dominant. Secondary sidebar only returns on
+   very wide screens, where it no longer competes with the reading column. */
+@media (max-width: 1535px) {
+  .sp-news-reader-grid {
+    display: block !important;
+  }
+
+  .sp-news-reader-sidebar {
+    display: none !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .sp-news-reader-width {
+    width: min(100% - 1.25rem, 70rem);
+  }
+
+  .sp-news-reader-toolbar {
+    top: 64px !important;
+  }
+
+  .sp-article-body .article-copy {
+    font-size: 1rem;
+    line-height: 1.82;
+  }
+
+  .sp-article-body .article-lead {
+    font-size: 1.08rem;
+  }
+
+  .sp-article-body .article-section {
+    margin-block: 2.7rem;
+  }
+
+  .sp-article-overview > div {
+    display: block !important;
+  }
+
+  .sp-article-overview > div > div:last-child {
+    margin-top: .75rem;
+  }
+}
+
+@media print {
+  .sp-news-post-header {
+    background: white !important;
+  }
+
+  .sp-news-post-hero {
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+}
