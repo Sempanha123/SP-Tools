@@ -47,11 +47,11 @@ const clearFilters = () => { selectedRegion.value = 'all'; sortMode.value = 'lat
       <p class="shrink-0 text-[10px] font-medium text-fg-subtle">{{ filteredArticles.length }} {{ filteredArticles.length === 1 ? 'story' : 'stories' }}</p>
     </div>
 
-    <div v-if="visibleArticles.length" class="sp-stagger mt-6 grid gap-4 md:grid-cols-2">
-      <NewsSharedArticleCard v-for="article in visibleArticles" :key="article.id" :article="article" />
+    <div v-if="visibleArticles.length" class="sp-stagger mt-7 grid gap-4 md:grid-cols-2">
+      <NewsSharedArticleCard v-for="(article, index) in visibleArticles" :key="article.id" :article="article" :horizontal="index === 0" :class="index === 0 ? 'md:col-span-2' : ''" />
     </div>
 
-    <div v-else class="sp-reveal relative mt-6 overflow-hidden rounded-[22px] border border-line bg-elevated px-6 py-14 text-center shadow-soft sm:py-16">
+    <div v-else class="sp-reveal sp-lens-card relative mt-7 overflow-hidden rounded-[24px] px-6 py-14 text-center shadow-lift sm:py-[72px]">
       <div class="sp-dot-grid pointer-events-none absolute inset-0 opacity-[0.2]" />
       <div class="pointer-events-none absolute left-1/2 top-0 h-40 w-72 -translate-x-1/2 rounded-full bg-accent/10 blur-[60px]" />
       <div class="relative mx-auto max-w-md">

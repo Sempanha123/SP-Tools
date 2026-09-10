@@ -92,19 +92,19 @@ watch(isMobileMenuOpen, (open) => {
     ref="headerRef"
     class="sticky top-0 z-50 border-b transition-all duration-300"
     :class="isScrolled
-      ? 'border-line bg-surface/[0.92] shadow-xs backdrop-blur-xl'
-      : 'border-line/70 bg-surface/[0.88] backdrop-blur-lg'"
+      ? 'border-line bg-surface/[0.88] shadow-soft backdrop-blur-2xl'
+      : 'border-line/60 bg-surface/[0.76] backdrop-blur-xl'"
   >
-    <div class="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent/35 to-transparent" />
+    <div class="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent/55 to-transparent" />
     <div class="sp-container-wide">
-      <div class="flex h-[68px] items-center justify-between gap-6">
+      <div class="flex h-[72px] items-center justify-between gap-6">
         <NuxtLink
           to="/"
           class="group flex shrink-0 items-center gap-2.5 rounded-xl focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/10"
           @click="closeMobileMenu"
         >
-          <span class="relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-[11px] bg-fg text-surface-2 shadow-xs transition duration-300 group-hover:-rotate-3 group-hover:scale-105">
-            <span class="absolute inset-x-0 bottom-0 h-[3px] bg-accent" />
+          <span class="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-[13px] bg-fg text-surface-2 shadow-xs transition duration-300 group-hover:-rotate-3 group-hover:scale-105">
+            <span class="absolute inset-x-0 bottom-0 h-[3px] bg-gradient-to-r from-accent to-accent-2" />
             <svg class="h-[17px] w-[17px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="M13 3 5 13h6l-1 8 9-12h-6V3Z" />
             </svg>
@@ -114,7 +114,7 @@ watch(isMobileMenuOpen, (open) => {
           </span>
         </NuxtLink>
 
-        <nav class="hidden h-full items-center gap-1 lg:flex" aria-label="Main navigation">
+        <nav class="hidden h-[44px] items-center gap-1 rounded-[15px] border border-line bg-elevated/78 p-1 shadow-xs backdrop-blur-xl lg:flex" aria-label="Main navigation">
           <div
             class="relative h-full"
             @mouseenter="openMenu('tools')"
@@ -122,10 +122,10 @@ watch(isMobileMenuOpen, (open) => {
           >
             <button
               type="button"
-              class="relative flex h-full items-center gap-1.5 border-b-2 px-3 text-[13px] font-semibold transition-all duration-200"
+              class="relative flex h-full items-center gap-1.5 rounded-[11px] px-3.5 text-[13px] font-semibold transition-all duration-200"
               :class="isSectionActive('/tools')
-                ? 'border-accent text-fg'
-                : 'border-transparent text-fg-muted hover:text-fg'"
+                ? 'bg-accent-soft text-accent shadow-xs'
+                : 'text-fg-muted hover:bg-surface-3 hover:text-fg'"
               :aria-expanded="openDesktopMenu === 'tools'"
               aria-haspopup="true"
               @click="toggleMenu('tools')"
@@ -186,10 +186,10 @@ watch(isMobileMenuOpen, (open) => {
           >
             <button
               type="button"
-              class="relative flex h-full items-center gap-1.5 border-b-2 px-3 text-[13px] font-semibold transition-all duration-200"
+              class="relative flex h-full items-center gap-1.5 rounded-[11px] px-3.5 text-[13px] font-semibold transition-all duration-200"
               :class="isSectionActive('/download')
-                ? 'border-accent text-fg'
-                : 'border-transparent text-fg-muted hover:text-fg'"
+                ? 'bg-accent-soft text-accent shadow-xs'
+                : 'text-fg-muted hover:bg-surface-3 hover:text-fg'"
               :aria-expanded="openDesktopMenu === 'downloads'"
               aria-haspopup="true"
               @click="toggleMenu('downloads')"
@@ -234,10 +234,10 @@ watch(isMobileMenuOpen, (open) => {
 
           <NuxtLink
             to="/news"
-            class="relative flex h-full items-center border-b-2 px-3 text-[13px] font-semibold transition-all duration-200"
+            class="relative flex h-full items-center rounded-[11px] px-3.5 text-[13px] font-semibold transition-all duration-200"
             :class="isSectionActive('/news')
-              ? 'border-accent text-fg'
-              : 'border-transparent text-fg-muted hover:text-fg'"
+              ? 'bg-accent-soft text-accent shadow-xs'
+              : 'text-fg-muted hover:bg-surface-3 hover:text-fg'"
           >
             News
           </NuxtLink>
@@ -264,7 +264,7 @@ watch(isMobileMenuOpen, (open) => {
 
           <NuxtLink
             to="/tools"
-            class="sp-shimmer ml-1 inline-flex h-9 items-center justify-center gap-2 rounded-[11px] bg-gradient-to-r from-accent to-accent-2 px-4 text-[12px] font-semibold text-white shadow-soft transition duration-200 hover:-translate-y-0.5 hover:shadow-soft"
+            class="sp-shimmer ml-1 inline-flex h-9 items-center justify-center gap-2 rounded-[11px] bg-gradient-to-r from-accent via-accent to-accent-2 px-[18px] text-[12px] font-semibold text-white shadow-soft transition duration-200 hover:-translate-y-0.5 hover:shadow-soft"
           >
             Explore tools
             <span aria-hidden="true">→</span>

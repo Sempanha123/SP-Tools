@@ -1,6 +1,6 @@
 /* ==========================================================================
-   SP-Tools — Prism Studio 2026
-   Premium product + editorial design system with restrained motion
+   SP-Tools — Prism Studio V3 / Aurora Interface
+   High-end product + editorial system with layered depth and cinematic motion
    ========================================================================== */
 
 @import "tailwindcss";
@@ -54,23 +54,23 @@
 :root {
   color-scheme: light;
 
-  --sp-page: #f6f7fb;
+  --sp-page: #f4f6fa;
   --sp-surface: #ffffff;
-  --sp-surface-soft: #eef1f6;
+  --sp-surface-soft: #edf0f6;
   --sp-surface-raised: #ffffff;
   --sp-ink-soft: #171821;
 
-  --sp-text: #101117;
-  --sp-text-secondary: #565d6d;
+  --sp-text: #0c0e14;
+  --sp-text-secondary: #535b6c;
   --sp-text-muted: #8a92a1;
 
-  --sp-border: #e2e6ee;
-  --sp-border-strong: #cfd5df;
+  --sp-border: #dfe4ed;
+  --sp-border-strong: #cbd2de;
 
-  --sp-accent: #6756e8;
-  --sp-accent-2: #16a3b6;
-  --sp-accent-hover: #5745db;
-  --sp-accent-soft: #efedff;
+  --sp-accent: #6557f5;
+  --sp-accent-2: #13adbf;
+  --sp-accent-hover: #5546df;
+  --sp-accent-soft: #eeecff;
   --sp-accent-foreground: #ffffff;
 
   --sp-positive: #128260;
@@ -87,10 +87,10 @@
 .dark {
   color-scheme: dark;
 
-  --sp-page: #080b11;
-  --sp-surface: #0e131c;
-  --sp-surface-soft: #141b27;
-  --sp-surface-raised: #182130;
+  --sp-page: #06090e;
+  --sp-surface: #0b111a;
+  --sp-surface-soft: #111925;
+  --sp-surface-raised: #151f2e;
   --sp-ink-soft: #f2f4f8;
 
   --sp-text: #f3f5f9;
@@ -100,8 +100,8 @@
   --sp-border: rgb(255 255 255 / 0.075);
   --sp-border-strong: rgb(255 255 255 / 0.145);
 
-  --sp-accent: #8c7cf4;
-  --sp-accent-2: #49bfd0;
+  --sp-accent: #8f82ff;
+  --sp-accent-2: #44c5d6;
   --sp-accent-hover: #9d90f8;
   --sp-accent-soft: rgb(140 124 244 / 0.14);
   --sp-accent-foreground: #ffffff;
@@ -150,12 +150,12 @@
 
 @layer components {
   .sp-container {
-    width: min(100% - 2rem, 78rem);
+    width: min(100% - 2rem, 80rem);
     margin-inline: auto;
   }
 
   .sp-container-wide {
-    width: min(100% - 2rem, 88rem);
+    width: min(100% - 2rem, 92rem);
     margin-inline: auto;
   }
 
@@ -457,4 +457,229 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+
+/* ========================================================================== 
+   V3 expressive layers — reusable, dependency-free, reduced-motion safe
+   ========================================================================== */
+@layer components {
+  .sp-prism-field {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background:
+      radial-gradient(900px 420px at 16% 2%, color-mix(in srgb, var(--sp-accent) 12%, transparent), transparent 62%),
+      radial-gradient(760px 360px at 86% 12%, color-mix(in srgb, var(--sp-accent-2) 10%, transparent), transparent 64%),
+      linear-gradient(180deg, color-mix(in srgb, var(--sp-surface) 70%, transparent), var(--sp-page));
+  }
+
+  .sp-prism-field::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background-image:
+      linear-gradient(to right, color-mix(in srgb, var(--sp-border) 58%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in srgb, var(--sp-border) 58%, transparent) 1px, transparent 1px);
+    background-size: 54px 54px;
+    mask-image: linear-gradient(to bottom, black, transparent 78%);
+    opacity: .44;
+    pointer-events: none;
+  }
+
+  .sp-prism-field::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    width: 56rem;
+    height: 16rem;
+    left: 50%;
+    top: 3rem;
+    transform: translateX(-50%) rotate(-7deg);
+    border-radius: 999px;
+    background: linear-gradient(90deg,
+      color-mix(in srgb, var(--sp-accent) 26%, transparent),
+      color-mix(in srgb, var(--sp-accent-2) 16%, transparent),
+      color-mix(in srgb, #ffb66f 10%, transparent));
+    filter: blur(72px);
+    opacity: .55;
+    animation: sp-aurora-drift 12s ease-in-out infinite alternate;
+    pointer-events: none;
+  }
+
+  .sp-noise {
+    position: relative;
+  }
+  .sp-noise::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: .035;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+  }
+  .dark .sp-noise::after { opacity: .055; mix-blend-mode: screen; }
+
+  .sp-lens-card {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--sp-border) 88%, transparent);
+    background:
+      linear-gradient(145deg,
+        color-mix(in srgb, var(--sp-surface-raised) 96%, white 4%),
+        color-mix(in srgb, var(--sp-surface) 92%, var(--sp-accent-soft) 8%));
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / .55),
+      0 24px 70px rgb(var(--sp-shadow-rgb) / .09);
+  }
+  .dark .sp-lens-card {
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / .055), 0 28px 80px rgb(0 0 0 / .34);
+  }
+  .sp-lens-card::before {
+    content: "";
+    position: absolute;
+    width: 22rem;
+    height: 22rem;
+    border-radius: 999px;
+    right: -12rem;
+    top: -13rem;
+    background: radial-gradient(circle, color-mix(in srgb, var(--sp-accent) 20%, transparent), transparent 70%);
+    transition: transform 700ms cubic-bezier(.2,.8,.2,1), opacity 500ms ease;
+    opacity: .62;
+    pointer-events: none;
+  }
+  .sp-lens-card:hover::before { transform: translate(-2rem, 2rem) scale(1.16); opacity: .92; }
+
+  .sp-border-flow {
+    position: relative;
+    isolation: isolate;
+  }
+  .sp-border-flow::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    z-index: -2;
+    border-radius: inherit;
+    background: conic-gradient(from var(--sp-ring-angle), transparent 0 28%, color-mix(in srgb, var(--sp-accent) 70%, transparent) 36%, color-mix(in srgb, var(--sp-accent-2) 58%, transparent) 42%, transparent 50% 100%);
+    animation: sp-ring 7s linear infinite;
+    opacity: .52;
+  }
+  .sp-border-flow::after {
+    content: "";
+    position: absolute;
+    inset: 1px;
+    z-index: -1;
+    border-radius: inherit;
+    background: var(--sp-surface-raised);
+  }
+
+  .sp-orbit {
+    position: relative;
+  }
+  .sp-orbit::before,
+  .sp-orbit::after {
+    content: "";
+    position: absolute;
+    border: 1px solid color-mix(in srgb, var(--sp-border-strong) 56%, transparent);
+    border-radius: 999px;
+    pointer-events: none;
+  }
+  .sp-orbit::before { inset: 9% -8%; transform: rotate(10deg); }
+  .sp-orbit::after { inset: 21% 4%; transform: rotate(-12deg); opacity: .65; }
+
+  .sp-scanline {
+    position: relative;
+    overflow: hidden;
+  }
+  .sp-scanline::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    top: -25%;
+    height: 16%;
+    background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--sp-accent-2) 18%, transparent), transparent);
+    filter: blur(4px);
+    animation: sp-scan 5.8s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  .sp-ambient-ring {
+    position: absolute;
+    border: 1px solid color-mix(in srgb, var(--sp-accent) 18%, transparent);
+    border-radius: 999px;
+    animation: sp-orbit-spin 18s linear infinite;
+    pointer-events: none;
+  }
+
+  .sp-gradient-text {
+    background: linear-gradient(105deg, var(--sp-text) 8%, var(--sp-accent) 50%, var(--sp-accent-2) 88%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .dark .sp-gradient-text {
+    background: linear-gradient(105deg, #fff 8%, #b2a8ff 52%, #6ed6e2 90%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .sp-hero-rule {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--sp-accent) 55%, transparent), color-mix(in srgb, var(--sp-accent-2) 42%, transparent), transparent);
+  }
+
+  .sp-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+    min-height: 2rem;
+    border: 1px solid var(--sp-border);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--sp-surface-raised) 84%, transparent);
+    padding-inline: .75rem;
+    font-size: .68rem;
+    font-weight: 650;
+    color: var(--sp-text-secondary);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 4px 18px rgb(var(--sp-shadow-rgb) / .045);
+  }
+
+  .sp-depth-hover {
+    transform-style: preserve-3d;
+    transition: transform 420ms cubic-bezier(.2,.8,.2,1), box-shadow 420ms ease;
+  }
+  .sp-depth-hover:hover {
+    transform: perspective(900px) rotateX(1.25deg) rotateY(-1.25deg) translateY(-5px);
+    box-shadow: 0 30px 80px rgb(var(--sp-shadow-rgb) / .13);
+  }
+  .dark .sp-depth-hover:hover { box-shadow: 0 34px 90px rgb(0 0 0 / .38); }
+
+  .sp-glow-dot {
+    box-shadow: 0 0 0 5px color-mix(in srgb, currentColor 10%, transparent), 0 0 22px color-mix(in srgb, currentColor 36%, transparent);
+  }
+
+  .sp-fade-bottom {
+    mask-image: linear-gradient(to bottom, black 0 80%, transparent 100%);
+  }
+}
+
+@keyframes sp-aurora-drift {
+  0% { transform: translateX(-54%) rotate(-8deg) scale(.96); }
+  100% { transform: translateX(-46%) rotate(6deg) scale(1.06); }
+}
+@keyframes sp-orbit-spin { to { transform: rotate(360deg); } }
+@keyframes sp-scan {
+  0%, 10% { transform: translateY(-120%); opacity: 0; }
+  22% { opacity: .8; }
+  68% { opacity: .45; }
+  86%, 100% { transform: translateY(760%); opacity: 0; }
+}
+
+@media (max-width: 900px) {
+  .sp-depth-hover:hover { transform: translateY(-3px); }
+  .sp-prism-field::after { width: 38rem; height: 14rem; }
 }

@@ -10,18 +10,18 @@ const getCategoryShortName = (name: string | null | undefined) => { const cleanN
 </script>
 
 <template>
-  <section class="sticky top-[68px] z-30 border-b border-line bg-surface/[0.88] shadow-xs backdrop-blur-2xl">
+  <section class="sticky top-[72px] z-30 border-b border-line bg-surface/[0.88] shadow-xs backdrop-blur-2xl">
     <div class="sp-container-wide flex flex-col gap-3 py-2.5 xl:flex-row xl:items-center">
       <nav aria-label="News categories" class="category-scroll flex min-w-0 flex-1 items-center gap-1 overflow-x-auto">
-        <NuxtLink to="/news" class="relative shrink-0 rounded-full px-3.5 py-2 text-[11px] font-semibold transition" :class="route.path === '/news' ? 'bg-fg text-surface-2 shadow-xs' : 'text-fg-muted hover:bg-surface-3 hover:text-fg'">Latest</NuxtLink>
-        <NuxtLink v-for="category in categories" :key="category.slug" :to="`/news/category/${category.slug}`" class="relative shrink-0 rounded-full px-3.5 py-2 text-[11px] font-semibold transition" :class="isCategoryActive(category.slug) ? 'bg-accent-soft text-accent' : 'text-fg-muted hover:bg-surface-3 hover:text-fg'">{{ getCategoryShortName(category.name) }}</NuxtLink>
+        <NuxtLink to="/news" class="relative shrink-0 rounded-[10px] px-3.5 py-2 text-[11px] font-semibold transition" :class="route.path === '/news' ? 'bg-fg text-surface-2 shadow-xs' : 'text-fg-muted hover:bg-surface-3 hover:text-fg'">Latest</NuxtLink>
+        <NuxtLink v-for="category in categories" :key="category.slug" :to="`/news/category/${category.slug}`" class="relative shrink-0 rounded-[10px] px-3.5 py-2 text-[11px] font-semibold transition" :class="isCategoryActive(category.slug) ? 'bg-accent-soft text-accent' : 'text-fg-muted hover:bg-surface-3 hover:text-fg'">{{ getCategoryShortName(category.name) }}</NuxtLink>
       </nav>
 
       <form class="relative w-full shrink-0 xl:w-[290px]" role="search" @submit.prevent="submitSearch">
         <label for="news-nav-search" class="sr-only">Search news</label>
         <svg class="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-fg-subtle" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-        <input id="news-nav-search" v-model="navSearchQuery" type="search" placeholder="Search the desk" autocomplete="off" class="h-10 w-full rounded-full border border-line bg-elevated pl-10 pr-10 text-[11px] font-medium text-fg outline-none transition placeholder:text-fg-subtle focus:border-accent/45 focus:ring-4 focus:ring-accent/10" />
-        <button type="submit" class="absolute right-1.5 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full bg-surface-3 text-fg-subtle transition hover:bg-accent-soft hover:text-accent" aria-label="Submit news search">→</button>
+        <input id="news-nav-search" v-model="navSearchQuery" type="search" placeholder="Search the desk" autocomplete="off" class="h-10 w-full rounded-[11px] border border-line bg-elevated pl-10 pr-10 text-[11px] font-medium text-fg outline-none transition placeholder:text-fg-subtle focus:border-accent/45 focus:ring-4 focus:ring-accent/10" />
+        <button type="submit" class="absolute right-1.5 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-[9px] bg-surface-3 text-fg-subtle transition hover:bg-accent-soft hover:text-accent" aria-label="Submit news search">→</button>
       </form>
     </div>
   </section>

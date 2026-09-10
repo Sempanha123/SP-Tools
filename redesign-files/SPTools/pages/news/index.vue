@@ -39,7 +39,7 @@ useHead({
     <NewsHomeCategoryNav />
     <NewsHomeFeaturedNews />
 
-    <section class="relative border-b border-line bg-surface-2 py-16 sm:py-20">
+    <section class="sp-prism-field relative border-b border-line bg-surface-2 py-[72px] sm:py-[88px]">
       <div class="pointer-events-none absolute -left-36 top-40 h-80 w-80 rounded-full bg-accent/7 blur-[110px]" />
       <div class="sp-container-wide relative">
         <div class="grid items-start gap-7 lg:grid-cols-[minmax(0,1fr)_350px] xl:gap-9">

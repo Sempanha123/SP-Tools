@@ -31,8 +31,8 @@ const regionCards = computed(() => {
       </div>
 
       <div class="sp-stagger mt-9 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        <NuxtLink v-for="region in regionCards" :key="region.name" :to="region.route" class="group relative min-h-[360px] overflow-hidden rounded-[22px] border border-line bg-[#10131b] text-white shadow-soft transition duration-300 hover:-translate-y-1 hover:shadow-lift">
-          <img v-if="region.latestArticle?.image" :src="region.latestArticle.image ?? undefined" :alt="region.name" loading="lazy" class="absolute inset-0 h-full w-full object-cover opacity-70 transition-transform duration-700 group-hover:scale-[1.045]" />
+        <NuxtLink v-for="(region, index) in regionCards" :key="region.name" :to="region.route" class="sp-depth-hover group relative min-h-[390px] overflow-hidden rounded-[24px] border border-white/8 bg-[#0c1119] text-white shadow-soft" :class="index % 2 ? 'lg:mt-7' : ''">
+          <img v-if="region.latestArticle?.image" :src="region.latestArticle.image ?? undefined" :alt="region.name" loading="lazy" class="absolute inset-0 h-full w-full object-cover opacity-[.72] transition-transform duration-700 group-hover:scale-[1.045]" />
           <div v-else class="sp-dot-grid absolute inset-0 opacity-[0.13]" />
           <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/45 to-black/5" />
           <div class="absolute -right-10 -top-10 h-40 w-40 rounded-full opacity-25 blur-3xl transition duration-500 group-hover:scale-125" :style="{ background: region.accent }" />

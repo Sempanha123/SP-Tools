@@ -1,122 +1,117 @@
 [
   {
     "path": "SPTools/assets/css/main.css",
-    "sha256": "c64f995b1b840311717f686d9767dc6455a2b23fe2ed1252bec64d72c38851ab",
-    "bytes": 14217
+    "sha256": "e886451ec295dc35336dcd539dad7877c7d053ea33d0b21a1ec640e97b4d8dfe",
+    "bytes": 21716
   },
   {
     "path": "SPTools/components/download/Steps.vue",
-    "sha256": "f086e84f847d7056f0e8bb06a4e34e24d84fc0880ce815dca60c6e05424f0a48",
-    "bytes": 3136
+    "sha256": "4fa470ad43d6ebeb6db2b517f03fc0d78348c5d4a57b1e3d66a8d93dc6a9d41f",
+    "bytes": 2525
   },
   {
     "path": "SPTools/components/download/UrlInput.vue",
-    "sha256": "80dd901389b120657c888553c09b00c7ebac39e58c6499c28d2a63387b6a58e9",
-    "bytes": 4898
+    "sha256": "81e6b0de0ff19c09848cc86501cb1a857e54dc599cbd2189440e2c6c82cdf2d2",
+    "bytes": 4791
   },
   {
     "path": "SPTools/components/news/home/BreakingTicker.vue",
-    "sha256": "98fbca8763b17b5b12da4d99f7eb59689231ce89c9d85099a0cb61f7957143a3",
-    "bytes": 1699
+    "sha256": "df37d36ef768c899674a686f87e24f951d2f24803c031c38259e3442f0b6a47b",
+    "bytes": 2221
   },
   {
     "path": "SPTools/components/news/home/CategoryNav.vue",
-    "sha256": "8bf1c36ba4ab3b7293f594ae365c7832a8461c8b4cc7c79c48f080102a7f01b2",
-    "bytes": 3064
+    "sha256": "e208ba0bd995fc3ca57e58107c2de16afb5953a40e201eb1d62c001ce44e438d",
+    "bytes": 3071
   },
   {
     "path": "SPTools/components/news/home/FeaturedNews.vue",
-    "sha256": "88df5d9c4f3b74b5d48492d0cb8d357262521e738277138df822bac76e57e8ee",
-    "bytes": 5188
+    "sha256": "a4d443c37d4acd1b5ac10b24a28d83df6d3b7967e650946a996e04521ea6c35c",
+    "bytes": 6718
   },
   {
     "path": "SPTools/components/news/home/Hero.vue",
-    "sha256": "83f9f9601db8107385a776a00f655978401dc05d5f113f23502b48539dd04495",
-    "bytes": 6253
+    "sha256": "65f6c58eadc2b7efbef5e42fee69548923812002293ffe7347300871629c7f3e",
+    "bytes": 6828
   },
   {
     "path": "SPTools/components/news/home/LatestNews.vue",
-    "sha256": "d61417196ee03f72477991cbdc7235cfb8fcb569f806ba40ffddb69af1d93608",
-    "bytes": 4820
+    "sha256": "fd0898ff2cd0d48e9160bd3562ab8be7d29e99fd375c9867a79583ce8176f914",
+    "bytes": 4885
   },
   {
     "path": "SPTools/components/news/home/Newsletter.vue",
-    "sha256": "a5626dce60bdea2f78a0fb13b1bfce9f2250586d6e864c5e7f9523e53343bb68",
-    "bytes": 3314
+    "sha256": "72782751bd462459ec87986997e6d3ffbb414decc5a6f356503291ed10717b29",
+    "bytes": 4691
   },
   {
     "path": "SPTools/components/news/home/Topics.vue",
-    "sha256": "4c459a1b50415531cbbbd960e7115e51f5d43f9bf47073221ee86b766fcb046e",
-    "bytes": 2350
+    "sha256": "a2297eeaad7863435e2d59120ec2b1ef4f566fe68879b4957ae72bf7dba3eeca",
+    "bytes": 2897
   },
   {
     "path": "SPTools/components/news/home/TrendingSidebar.vue",
-    "sha256": "c353459aff7a9f8628e77fcdf4f25033db5e12fbdbfa77b3b8fdc0af1eb90ac8",
-    "bytes": 7011
+    "sha256": "76fbf1bd765efdfd445e06a3571f4500198f04b0dc014ce229a08db376ad59ab",
+    "bytes": 7648
   },
   {
     "path": "SPTools/components/news/home/WorldRegions.vue",
-    "sha256": "bbc3421d07f119695cc8e8b0de1b826ca96fbc4e51b50ba4487af87946706f98",
-    "bytes": 4127
+    "sha256": "8024783e35339e1c780db8478689119ab27739cd108e1b129a8c850f9c9713cf",
+    "bytes": 4130
   },
   {
     "path": "SPTools/components/news/shared/ArticleCard.vue",
-    "sha256": "3d15f32b0f50a1a3423cb8ac392af1955bdf947f092e807f0dec44caeb299e55",
-    "bytes": 4399
+    "sha256": "a31cdb69e95498f55558004900b687989818ab2562874ef20b9ea762afceb0f1",
+    "bytes": 4409
   },
   {
     "path": "SPTools/components/site/Footer.vue",
-    "sha256": "d7d128388dbe0bd146e30141fbd81d310a19cdb5f3c62cf71f154e525d553d26",
-    "bytes": 4703
+    "sha256": "1725ece5450931e2201dd89c89d273e98345fc2d7ded10bac74b9fe68256a4b2",
+    "bytes": 4932
   },
   {
     "path": "SPTools/components/site/Header.vue",
-    "sha256": "dc94a676e5c3c9b7f1e1789d9e80e3f8d24fb0388f9d7370549a9a514d8cdd65",
-    "bytes": 15482
+    "sha256": "358befe192a73df64894a2b04f5c9c6e910a1802606d380144f77f8f731616e4",
+    "bytes": 15679
   },
   {
     "path": "SPTools/components/tool/Dropzone.vue",
-    "sha256": "e429d43aaa89a35177cbe8d733b21f787e1b760a5fa95946136c84d10678db0a",
-    "bytes": 5101
+    "sha256": "b15ef28efc42a128ce10fec5f594973e5d9e8042ea05b9e631496398898e8f74",
+    "bytes": 5678
   },
   {
     "path": "SPTools/components/tool/Faq.vue",
-    "sha256": "82fb8b0a16c8605dcd1818dd39782d64b5197ef0f3215919e929c034d722e675",
-    "bytes": 2251
+    "sha256": "5823b49c00bd8157498e4b151292350775ddda4631ef1cd9385163dff8c2ba90",
+    "bytes": 2807
   },
   {
     "path": "SPTools/components/tool/Hero.vue",
-    "sha256": "d27ce35e2b471c6218baa4a73fd56c0dfd39fb785f6575b9f5686191ea46615c",
-    "bytes": 3887
+    "sha256": "aed7eb014522d648b05fcd9e255e57859bc92832d1df92f1caeaefa228e45190",
+    "bytes": 6834
   },
   {
     "path": "SPTools/components/tool/RelatedTools.vue",
-    "sha256": "9bf2b205f91978ed289b29528d4eeae1cc3771844b3fedc65369f8560142ce4b",
-    "bytes": 2794
+    "sha256": "2d65599a041518a4fa1e23d44963a33bf228e6d8c27a84a1a3b24d1eb0dd1171",
+    "bytes": 3119
   },
   {
     "path": "SPTools/components/ui/SectionHeading.vue",
-    "sha256": "a120e07b3b6665543624ef3d3a003b4dead92f5ccd1ae82b8c99c20c93ae80ce",
-    "bytes": 673
-  },
-  {
-    "path": "SPTools/nuxt.config.ts",
-    "sha256": "3b75449ab61be47faedd608832f837b0bffbb2d7c477cc1cca90d79f122cfa80",
-    "bytes": 872
+    "sha256": "62e5d8d58f5b4d3c349afdf9498f7542d14c41e7a781a70c58adee78b517bbac",
+    "bytes": 815
   },
   {
     "path": "SPTools/pages/index.vue",
-    "sha256": "f9352c55de2b7350335fece9a48b70cf30528ad17fb3cb83fbbc0f3b8cc59da0",
-    "bytes": 17175
+    "sha256": "18301cbb4f8d88c4e8ab66e2aab5f41e614c38ba1d62fe06ae107aca11ac538e",
+    "bytes": 20731
   },
   {
     "path": "SPTools/pages/news/index.vue",
-    "sha256": "29cea32d0464ef249e2db82d1c2d1babb539e1cc619134bf42d6c5aabca60843",
-    "bytes": 2614
+    "sha256": "383c5245f945495f70b586d96f24fc13ed2709f2ed05f783223a8f81bf16995b",
+    "bytes": 2637
   },
   {
     "path": "SPTools/pages/tools/index.vue",
-    "sha256": "6cdc5072e8f7d7b488f73c3f1c86919b7d9f494583d1d3f4e54ca4cbd882a800",
-    "bytes": 7490
+    "sha256": "bb4e18ef938a1c8c0dfda9c5876af2d9690adee304c74fd7459f64d5cd7a10ee",
+    "bytes": 10571
   }
 ]

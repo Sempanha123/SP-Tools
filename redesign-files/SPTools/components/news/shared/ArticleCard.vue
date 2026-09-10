@@ -14,7 +14,7 @@ watch(() => props.article.image, () => { imageLoaded.value = false; imageFailed.
 </script>
 
 <template>
-  <article class="sp-card-interactive group h-full overflow-hidden rounded-[20px] border border-line bg-elevated shadow-xs">
+  <article class="sp-lens-card sp-depth-hover group h-full overflow-hidden rounded-[22px] border border-line bg-elevated shadow-soft">
     <NuxtLink :to="articleUrl" :aria-label="`Read article: ${article.title}`" class="grid h-full outline-none focus-visible:ring-2 focus-visible:ring-accent" :class="horizontal ? 'sm:grid-cols-[210px_minmax(0,1fr)]' : 'grid-rows-[auto_minmax(0,1fr)]'">
       <div class="relative overflow-hidden bg-surface-3" :class="horizontal ? 'aspect-[16/10] sm:aspect-auto sm:h-full sm:min-h-[230px]' : 'aspect-[16/10]'">
         <div v-if="hasSourceImage && !imageLoaded && !imageFailed" class="sp-skeleton absolute inset-0" />
