@@ -29,7 +29,6 @@ const tableOfContents = computed<TocItem[]>(() => {
   if (sections.length) {
     sections.forEach((section, index) => {
       const title = section.title?.trim() || `Section ${index + 1}`
-
       result.push({
         id: section.id?.trim() || slugify(title) || `article-section-${index + 1}`,
         title,
@@ -40,10 +39,7 @@ const tableOfContents = computed<TocItem[]>(() => {
   }
 
   if ((props.article.keyPoints ?? []).length) {
-    result.splice(Math.min(2, result.length), 0, {
-      id: 'key-points',
-      title: 'Key points',
-    })
+    result.splice(Math.min(2, result.length), 0, { id: 'key-points', title: 'Key points' })
   }
 
   if ((props.article.timeline ?? []).length) {
@@ -73,9 +69,7 @@ const initObserver = async () => {
         .filter(entry => entry.isIntersecting)
         .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
 
-      if (visible[0]?.target.id) {
-        activeSectionId.value = visible[0].target.id
-      }
+      if (visible[0]?.target.id) activeSectionId.value = visible[0].target.id
     },
     {
       rootMargin: '-145px 0px -68% 0px',
@@ -112,8 +106,8 @@ onBeforeUnmount(() => observer?.disconnect())
 </script>
 
 <template>
-  <aside class="sp-reader-rail space-y-5 xl:sticky xl:top-28">
-    <section class="sp-reader-rail-card overflow-hidden rounded-[26px] border border-line bg-elevated shadow-lift">
+  <aside class="sp-reader-rail w-full space-y-5 xl:sticky xl:top-28">
+    <section class="sp-reader-rail-card overflow-hidden rounded-[24px] border border-line bg-elevated shadow-lift">
       <header class="flex items-center justify-between gap-4 border-b border-line px-5 py-4">
         <div>
           <p class="text-[8px] font-bold uppercase tracking-[.16em] text-accent">
@@ -153,7 +147,7 @@ onBeforeUnmount(() => observer?.disconnect())
             {{ String(index + 1).padStart(2, '0') }}
           </span>
 
-          <span class="min-w-0 flex-1 text-[10.5px] font-semibold leading-5">
+          <span class="min-w-0 flex-1 text-[11px] font-semibold leading-5">
             {{ item.title }}
           </span>
         </button>
@@ -167,18 +161,18 @@ onBeforeUnmount(() => observer?.disconnect())
       <header class="sp-read-next-header relative overflow-hidden border-b border-line px-6 py-7">
         <div class="sp-read-next-aura pointer-events-none absolute inset-0" />
 
-        <div class="relative flex items-end justify-between gap-4">
+        <div class="relative flex items-end justify-between gap-5">
           <div>
             <p class="text-[9px] font-bold uppercase tracking-[.17em] text-accent">
               Read next
             </p>
 
-            <h2 class="mt-2 text-[34px] font-[800] leading-none tracking-[-.05em] text-fg">
+            <h2 class="mt-2 text-[36px] font-[820] leading-[.92] tracking-[-.055em] text-fg">
               More news
             </h2>
 
-            <p class="mt-2 max-w-[280px] text-[10.5px] leading-5 text-fg-subtle">
-              Larger previews so readers can actually understand what each story is about.
+            <p class="mt-3 max-w-[300px] text-[11px] leading-5 text-fg-subtle">
+              Full-size previews with enough headline space to choose the next story.
             </p>
           </div>
 
@@ -196,9 +190,9 @@ onBeforeUnmount(() => observer?.disconnect())
           v-for="(item, index) in readNext"
           :key="item.id"
           :to="`/news/posts/${item.slug}`"
-          class="sp-read-next-item group grid grid-cols-[150px_minmax(0,1fr)] gap-4 px-5 py-5 transition hover:bg-surface-2"
+          class="sp-read-next-item group grid grid-cols-[168px_minmax(0,1fr)] gap-5 px-5 py-5 transition hover:bg-surface-2"
         >
-          <div class="relative h-[116px] overflow-hidden rounded-[18px] bg-surface-3">
+          <div class="relative h-[124px] overflow-hidden rounded-[18px] bg-surface-3">
             <img
               v-if="item.image"
               :src="item.image"
@@ -221,11 +215,11 @@ onBeforeUnmount(() => observer?.disconnect())
               {{ item.categoryName }}
             </span>
 
-            <h3 class="sp-read-next-title mt-1.5 text-[16.5px] font-[780] leading-[1.38rem] tracking-[-.02em] text-fg transition group-hover:text-accent">
+            <h3 class="sp-read-next-title mt-2 text-[17px] font-[790] leading-[1.4rem] tracking-[-.022em] text-fg transition group-hover:text-accent">
               {{ item.title }}
             </h3>
 
-            <p class="mt-2 text-[8.5px] text-fg-subtle">
+            <p class="mt-2.5 text-[9px] text-fg-subtle">
               {{ timeAgo(item.publishedAt) }} · {{ formatViews(item.views) }} views
             </p>
           </div>

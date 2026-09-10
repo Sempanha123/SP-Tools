@@ -672,12 +672,12 @@ const retryLoad = async (): Promise<void> => {
             <!-- Article content -->
 
             <section id="article-content" ref="articleContainer" class="sp-news-reading-section bg-surface py-10 sm:py-12 lg:py-14">
-                <div class="sp-news-reader-grid mx-auto grid max-w-[1120px] items-start gap-8 px-5 sm:px-6 xl:grid-cols-[minmax(0,760px)_390px] xl:gap-[34px]">
-                    <div class="sp-news-reader-main min-w-0" :class="articleTextClass">
+                <div class="sp-news-reader-grid mx-auto grid w-full max-w-[1380px] items-start gap-[52px] px-0 xl:grid-cols-[minmax(0,800px)_minmax(460px,1fr)]">
+                    <div class="sp-news-reader-main min-w-0 w-full max-w-[800px]" :class="articleTextClass">
                         <NewsPostArticleBody :article="article" />
                     </div>
 
-                    <aside class="sp-news-reader-sidebar hidden min-w-0 print:hidden xl:block">
+                    <aside class="sp-news-reader-sidebar hidden min-w-0 w-full print:hidden xl:block">
                         <NewsPostSidebar :article="article" :most-read="mostReadArticles.slice(0, 6)
                             " />
                     </aside>

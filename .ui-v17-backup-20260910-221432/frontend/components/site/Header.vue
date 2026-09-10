@@ -91,7 +91,7 @@ watch(isMobileMenuOpen, (open) => {
 <template>
   <header
     ref="headerRef"
-    class="sp-site-header-v17 sticky top-0 z-50 border-b transition-all duration-300"
+    class="sticky top-0 z-50 border-b transition-all duration-300"
     :class="[
       isScrolled
         ? 'border-line bg-surface/[0.88] shadow-soft backdrop-blur-2xl'
@@ -101,24 +101,24 @@ watch(isMobileMenuOpen, (open) => {
   >
     <div class="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent/55 to-transparent" />
     <div class="sp-container-wide">
-      <div class="flex h-[80px] items-center justify-between gap-7">
+      <div class="flex h-[72px] items-center justify-between gap-6">
         <NuxtLink
           to="/"
           class="group flex shrink-0 items-center gap-2.5 rounded-xl focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/10"
           @click="closeMobileMenu"
         >
-          <span class="relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-[14px] bg-fg text-surface-2 shadow-xs transition duration-300 group-hover:-rotate-3 group-hover:scale-105">
+          <span class="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-[13px] bg-fg text-surface-2 shadow-xs transition duration-300 group-hover:-rotate-3 group-hover:scale-105">
             <span class="absolute inset-x-0 bottom-0 h-[3px] bg-gradient-to-r from-accent to-accent-2" />
-            <svg class="h-[19px] w-[19px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" aria-hidden="true">
+            <svg class="h-[17px] w-[17px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="M13 3 5 13h6l-1 8 9-12h-6V3Z" />
             </svg>
           </span>
-          <span class="text-[18px] font-[740] tracking-[-0.035em] text-fg">
+          <span class="text-[17px] font-[720] tracking-[-0.035em] text-fg">
             SP<span class="text-accent">-Tools</span>
           </span>
         </NuxtLink>
 
-        <nav class="hidden h-[48px] items-center gap-1 rounded-[16px] border border-line bg-elevated/78 p-1 shadow-xs backdrop-blur-xl lg:flex" aria-label="Main navigation">
+        <nav class="hidden h-[44px] items-center gap-1 rounded-[15px] border border-line bg-elevated/78 p-1 shadow-xs backdrop-blur-xl lg:flex" aria-label="Main navigation">
           <div
             class="relative h-full"
             @mouseenter="openMenu('tools')"
@@ -126,7 +126,7 @@ watch(isMobileMenuOpen, (open) => {
           >
             <button
               type="button"
-              class="relative flex h-full items-center gap-1.5 rounded-[11px] px-4 text-[13.5px] font-semibold transition-all duration-200"
+              class="relative flex h-full items-center gap-1.5 rounded-[11px] px-3.5 text-[13px] font-semibold transition-all duration-200"
               :class="isSectionActive('/tools')
                 ? 'bg-accent-soft text-accent shadow-xs'
                 : 'text-fg-muted hover:bg-surface-3 hover:text-fg'"
@@ -190,7 +190,7 @@ watch(isMobileMenuOpen, (open) => {
           >
             <button
               type="button"
-              class="relative flex h-full items-center gap-1.5 rounded-[11px] px-4 text-[13.5px] font-semibold transition-all duration-200"
+              class="relative flex h-full items-center gap-1.5 rounded-[11px] px-3.5 text-[13px] font-semibold transition-all duration-200"
               :class="isSectionActive('/download')
                 ? 'bg-accent-soft text-accent shadow-xs'
                 : 'text-fg-muted hover:bg-surface-3 hover:text-fg'"
@@ -238,7 +238,7 @@ watch(isMobileMenuOpen, (open) => {
 
           <NuxtLink
             to="/news"
-            class="relative flex h-full items-center rounded-[11px] px-4 text-[13.5px] font-semibold transition-all duration-200"
+            class="relative flex h-full items-center rounded-[11px] px-3.5 text-[13px] font-semibold transition-all duration-200"
             :class="isSectionActive('/news')
               ? 'bg-accent-soft text-accent shadow-xs'
               : 'text-fg-muted hover:bg-surface-3 hover:text-fg'"
@@ -250,7 +250,7 @@ watch(isMobileMenuOpen, (open) => {
         <div class="hidden items-center gap-2 lg:flex">
           <NuxtLink
             to="/news/search"
-            class="flex h-10 w-10 items-center justify-center rounded-[12px] border border-line bg-elevated text-fg-muted transition hover:border-line-strong hover:bg-surface-3 hover:text-fg"
+            class="flex h-9 w-9 items-center justify-center rounded-[11px] border border-line bg-elevated text-fg-muted transition hover:border-line-strong hover:bg-surface-3 hover:text-fg"
             aria-label="Search news"
           >
             <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true">
@@ -268,7 +268,7 @@ watch(isMobileMenuOpen, (open) => {
 
           <NuxtLink
             to="/tools"
-            class="sp-shimmer ml-1 inline-flex h-10 items-center justify-center gap-2 rounded-[12px] bg-gradient-to-r from-accent via-accent to-accent-2 px-5 text-[13px] font-semibold text-white shadow-soft transition duration-200 hover:-translate-y-0.5 hover:shadow-soft"
+            class="sp-shimmer ml-1 inline-flex h-9 items-center justify-center gap-2 rounded-[11px] bg-gradient-to-r from-accent via-accent to-accent-2 px-[18px] text-[12px] font-semibold text-white shadow-soft transition duration-200 hover:-translate-y-0.5 hover:shadow-soft"
           >
             Explore tools
             <span aria-hidden="true">→</span>

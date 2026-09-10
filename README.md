@@ -1,26 +1,54 @@
-# SP-Tools V15 — News Article Polish
+# SP-Tools V17 — Header Balance + Complete Category Archives
 
-This is an incremental patch for the V14 result shown in the screenshot.
+This patch addresses two things together.
 
-## Visible improvements
+## 1. Header balance
 
-- Right-side reader rail grows from ~405px to **440px**.
-- **More news** titles become **16.5px** and can use up to **4 lines**.
-- Recommendation thumbnails become larger.
-- Reading Guide is slightly more compact, so More News starts higher.
-- **More from this category** heading becomes much larger.
-- Category cards use much larger headlines and automatically use the full width when only 1 or 2 articles exist.
-- `About this report` is visually reduced so it does not compete with the story.
-- Rich-media demo now updates **Food logistics** too, not only Open-source teams.
+The article reader is now wide and substantial, so V17 brings the global header up to the same scale:
+
+- Desktop header: 80px
+- Logo icon: 44px
+- Brand text: 18px
+- Main nav: 48px
+- Larger desktop search / CTA controls
+- News category sticky bar now starts below the 80px header
+- Reading toolbar top offset updated to 80px
+
+The article/body widths from V16 are intentionally kept.
+
+## 2. Business / Tech / Science / Climate / Health
+
+The routes themselves are valid. The backend category endpoint filters only published articles belonging to that category.
+
+The original demo set has very few stories in these topic categories. The category page also treated `remainingArticles.length === 0` as an empty state after pulling the first article out as the lead story. That could make a working one-story category look broken.
+
+V17 fixes both sides:
+
+- Category page no longer claims “No stories” when a lead story exists.
+- Adds a real empty state only when the category has zero published articles.
+- Rebuilds the category page with a clearer hero, lead story, archive grid, most-read rail and filters.
+- Fallback category navigation now includes all 10 categories, including Science, Climate and Health.
+- Adds 15 new fictional demo articles:
+  - 3 Business
+  - 3 Technology
+  - 3 Science
+  - 3 Climate
+  - 3 Health
+- Fresh `DatabaseSeeder` runs include the expansion automatically.
 
 ## Apply
 
-V14 must already be applied.
+Extract this ZIP into the SP-Tools repository root:
 
 ```powershell
 Set-ExecutionPolicy -Scope Process Bypass
-.\APPLY_V15.ps1
-.\SEED_V15_DEMOS.ps1
+.\APPLY_V17.ps1
+```
+
+Populate the category archives:
+
+```powershell
+.\SEED_V17_CATEGORIES.ps1
 ```
 
 Then restart Nuxt:
@@ -30,10 +58,10 @@ cd frontend
 npm run dev -- --port 3001
 ```
 
-Hard refresh with Ctrl+Shift+R.
+Hard refresh with `Ctrl + Shift + R`.
 
-The Food Logistics article will now contain:
-- section image
-- four-image gallery
-- embedded YouTube demo
-- second section image
+Optional:
+
+```powershell
+.\VERIFY_V17.ps1
+```
