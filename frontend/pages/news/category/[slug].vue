@@ -483,48 +483,10 @@ useHead(() => ({
             </div>
 
             <aside class="space-y-5 xl:sticky xl:top-[150px]">
-              <section class="sp-category-v17-reader rounded-[24px] border border-line bg-elevated p-5 shadow-lift">
-                <div class="flex items-end justify-between gap-3">
-                  <div>
-                    <p class="text-[9px] font-bold uppercase tracking-[.15em] text-accent">
-                      Reader pulse
-                    </p>
-                    <h3 class="mt-2 text-2xl font-[780] tracking-[-.04em] text-fg">
-                      Most read
-                    </h3>
-                  </div>
-
-                  <NuxtLink
-                    :to="{ path: '/news/search', query: { sort: 'popular' } }"
-                    class="text-[9px] font-bold text-fg-subtle transition hover:text-accent"
-                  >
-                    All →
-                  </NuxtLink>
-                </div>
-
-                <div class="mt-4 divide-y divide-line">
-                  <NuxtLink
-                    v-for="(article, index) in mostReadArticles.slice(0, 5)"
-                    :key="article.id"
-                    :to="`/news/posts/${article.slug}`"
-                    class="group grid grid-cols-[36px_minmax(0,1fr)] gap-3 py-4"
-                  >
-                    <span class="text-xl font-[800] tracking-[-.04em] text-fg-subtle">
-                      0{{ index + 1 }}
-                    </span>
-
-                    <div class="min-w-0">
-                      <p class="line-clamp-3 text-[12px] font-[700] leading-5 text-fg transition group-hover:text-accent">
-                        {{ article.title }}
-                      </p>
-
-                      <p class="mt-1.5 text-[8px] text-fg-subtle">
-                        {{ formatViews(article.views) }} views
-                      </p>
-                    </div>
-                  </NuxtLink>
-                </div>
-              </section>
+              <NewsSharedMostReadPanel
+                  :articles="mostReadArticles"
+                  :subtitle="`Popular stories in ${categoryName}.`"
+                />
 
               <section class="rounded-[24px] border border-line bg-surface-2 p-5">
                 <p class="sp-kicker">About this desk</p>

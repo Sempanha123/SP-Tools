@@ -1,74 +1,54 @@
-# SP-Tools V21 — Image-First Coverage Explorer
+# SP-Tools V26 — One Canonical Most Read Layout
 
-V21 implements the image-led category design.
+V26 removes the different Most Read designs and makes the `/news/tag/` version the canonical design everywhere.
 
-## Why V21 is different
+The reusable component is:
 
-The category cards no longer depend only on icons, gradients and descriptions.
+`frontend/components/news/shared/MostReadPanel.vue`
 
-Every active desk attempts to show:
+It is used by:
 
-- latest article image
-- category name
-- category description
-- article count
-- latest headline
-- latest timestamp
-- clear arrow / click affordance
+- News homepage
+- `/news/category/[slug]`
+- `/news/tag/[slug]`
+- `/news/posts/[slug]`
+- `/news/search`
+- author sidebar
 
-## How images are resolved
+The canonical UI is:
 
-1. V21 first looks inside the existing `latestArticles` homepage feed.
-2. If that category is missing from the homepage feed but has published articles, V21 calls:
-
-   `/categories/{slug}/news?sort=latest&per_page=1`
-
-3. If the latest article still has no image, V21 uses a category-specific visual fallback.
-
-This means Business, Technology, Science, Climate, Health, etc. can still have their own image even when the first 24 homepage stories do not include every category.
-
-## Layout
-
-Desktop:
-
-- Large featured World card
-- Asia + Americas
-- Europe + Middle East
-- Business + Technology + Science
-- Climate + Health
-
-Tablet:
-
-- 2-column image grid
-
-Mobile:
-
-- horizontal snap cards so images stay large enough to be visually useful
+- dark editorial header
+- `Trending now`
+- `Most read`
+- large image card for #01
+- 68px thumbnail rows for #02–#05
+- category + time + views
+- one footer button
+- same radius, spacing and light/dark behavior
 
 ## Apply
 
-Extract into your SP-Tools repository root:
+From the SP-Tools repository root:
 
 ```powershell
+Ctrl + C
 Set-ExecutionPolicy -Scope Process Bypass
-.\APPLY_V21.ps1
+.\APPLY_V26.ps1
 ```
 
-Then restart:
+Restart:
 
 ```powershell
 cd frontend
 npm run dev -- --port 3001
 ```
 
-Hard refresh:
+Hard refresh with:
 
 `Ctrl + Shift + R`
 
-Optional:
+Verify and build:
 
 ```powershell
-.\VERIFY_V21.ps1
+.\VERIFY_V26.ps1
 ```
-
-The installer backs up the existing `Topics.vue` and `main.css` automatically.

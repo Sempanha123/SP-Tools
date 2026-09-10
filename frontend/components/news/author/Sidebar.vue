@@ -11,10 +11,7 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const {
-  timeAgo,
-  formatViews,
-} = useNewsData()
+const { formatViews } = useNewsData()
 
 const coverageAreas = computed<string[]>(() => {
   const areas = [
@@ -54,92 +51,11 @@ const authorLocation = computed(() => {
     lg:sticky lg:top-36">
     <!-- Coverage areas -->
 
-    <section class="rounded-[28px]
-      border border-line
-      bg-surface p-6">
-      <div class="flex items-center
-        justify-between gap-4">
-        <div>
-          <span class="text-[10px] font-bold
-            uppercase tracking-[0.18em]
-            text-indigo-600">
-            Author expertise
-          </span>
-
-          <h2 class="mt-2 text-xl font-bold
-            text-fg">
-            Coverage areas
-          </h2>
-        </div>
-
-        <div class="flex h-10 w-10
-          shrink-0 items-center
-          justify-center rounded-xl
-          bg-indigo-50
-          text-indigo-600">
-          ✦
-        </div>
-      </div>
-
-      <div v-if="coverageAreas.length" class="mt-6 flex flex-wrap gap-2">
-        <span v-for="topic in coverageAreas" :key="topic" class="rounded-full border
-          border-line bg-surface-2
-          px-3.5 py-2 text-[10px]
-          font-semibold text-fg-muted">
-          {{ topic }}
-        </span>
-      </div>
-
-      <p v-else class="mt-6 text-sm
-        leading-6 text-fg-subtle">
-        Coverage areas will appear after
-        this author publishes articles.
-      </p>
-
-      <!-- Categories -->
-
-      <div v-if="author.categories.length" class="mt-6 border-t
-        border-line pt-5">
-        <p class="text-[10px] font-bold
-          uppercase tracking-wider
-          text-fg-subtle">
-          Categories
-        </p>
-
-        <div class="mt-3 flex flex-wrap gap-2">
-          <NuxtLink v-for="category in author.categories" :key="category.id" :to="`/news/category/${category.slug}`
-            " class="rounded-full
-            bg-indigo-50 px-3 py-1.5
-            text-[10px] font-bold
-            text-indigo-600
-            transition-colors
-            hover:bg-indigo-600
-            hover:text-white">
-            {{ category.name }}
-          </NuxtLink>
-        </div>
-      </div>
-
-      <!-- Regions -->
-
-      <div v-if="author.regions.length" class="mt-5 border-t
-        border-line pt-5">
-        <p class="text-[10px] font-bold
-          uppercase tracking-wider
-          text-fg-subtle">
-          Regions
-        </p>
-
-        <div class="mt-3 flex flex-wrap gap-2">
-          <span v-for="region in author.regions" :key="region" class="rounded-full
-            bg-cyan-50 px-3 py-1.5
-            text-[10px] font-bold
-            text-cyan-700">
-            {{ region }}
-          </span>
-        </div>
-      </div>
-    </section>
+    <NewsSharedMostReadPanel
+      :articles="popularArticles"
+      kicker="Popular reporting"
+      subtitle="Popular reporting from this author."
+    />
 
     <!-- Popular articles -->
 

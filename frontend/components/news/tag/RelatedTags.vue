@@ -44,84 +44,10 @@ const remainingMostRead = computed(() => {
     lg:sticky lg:top-36">
     <!-- Related topics -->
 
-    <section class="overflow-hidden rounded-[28px]
-      border border-line bg-surface
-      shadow-[0_14px_40px_rgba(15,23,42,0.05)]">
-      <header class="flex items-start
-        justify-between gap-4
-        border-b border-line
-        px-6 py-5">
-        <div>
-          <span class="text-[9px] font-bold
-            uppercase tracking-[0.18em]
-            text-indigo-600">
-            Explore more
-          </span>
-
-          <h2 class="mt-2 text-xl font-bold
-            tracking-[-0.03em]">
-            Related topics
-          </h2>
-
-          <p class="mt-2 text-xs
-            leading-5 text-fg-subtle">
-            Topics frequently appearing
-            with #{{ currentTag }}.
-          </p>
-        </div>
-
-        <div class="flex h-10 w-10
-          shrink-0 items-center
-          justify-center rounded-xl
-          bg-indigo-50 font-bold
-          text-indigo-600">
-          #
-        </div>
-      </header>
-
-      <div class="p-5">
-        <div v-if="relatedTags.length" class="flex flex-wrap gap-2">
-          <NuxtLink v-for="tag in relatedTags" :key="tag.name" :to="`/news/tag/${tagToSlug(tag.name)}`" class="group inline-flex
-            items-center gap-1.5
-            rounded-full border
-            border-line bg-surface-2
-            px-3.5 py-2 text-[10px]
-            font-semibold text-fg-muted
-            transition-all
-            hover:-translate-y-0.5
-            hover:border-indigo-200
-            hover:bg-indigo-50
-            hover:text-indigo-600">
-            <span>
-              #{{ tag.name }}
-            </span>
-
-            <span class="rounded-full bg-surface
-              px-1.5 py-0.5 text-[8px]
-              text-fg-subtle shadow-sm
-              group-hover:text-indigo-500">
-              {{ tag.count }}
-            </span>
-          </NuxtLink>
-        </div>
-
-        <div v-else class="rounded-2xl border
-          border-dashed border-line
-          bg-surface-2 px-4 py-8
-          text-center">
-          <p class="text-sm font-bold
-            text-fg-muted">
-            No related topics yet
-          </p>
-
-          <p class="mt-2 text-xs
-            leading-5 text-fg-subtle">
-            More related topics will appear
-            as additional stories are published.
-          </p>
-        </div>
-      </div>
-    </section>
+    <NewsSharedMostReadPanel
+      :articles="mostRead"
+      :subtitle="`Popular stories connected to #${currentTag}.`"
+    />
 
     <!-- Most read -->
 

@@ -6,8 +6,6 @@ const props = defineProps<{
   mostRead: NewsArticle[]
 }>()
 
-const { timeAgo, formatViews } = useNewsData()
-
 const slugify = (value: string) =>
   value
     .trim()
@@ -33,31 +31,51 @@ const toc = computed(() => {
   )
 
   if ((props.article.keyPoints ?? []).length) {
-    items.splice(
-      Math.min(1, items.length),
-      0,
-      {
-        id: 'key-points',
-        title: 'What to know',
-      },
-    )
+    items.splice(Math.min(1, items.length), 0, {
+      id: 'key-points',
+      title: 'What to know',
+    })
   }
 
   if ((props.article.timeline ?? []).length) {
-    items.push({
-      id: 'story-timeline',
-      title: 'Timeline',
-    })
+    items.push({ id: 'story-timeline', title: 'Timeline' })
   }
 
   if ((props.article.sources ?? []).length) {
-    items.push({
-      id: 'article-sources',
-      title: 'Sources',
-    })
+    items.push({ id: 'article-sources', title: 'Sources' })
   }
 
   return items
+})
+
+const relatedTopics = computed(() => {
+  const items = [
+    {
+      label: props.article.categoryName,
+      to: `/news/category/${props.article.category}`,
+      primary: true,
+      prefix: '',
+    },
+    ...(props.article.tags ?? []).map(tag => ({
+      label: tag,
+      to: `/news/tag/${slugify(tag)}`,
+      primary: false,
+      prefix: '#',
+    })),
+  ]
+
+  const seen = new Set<string>()
+
+  return items
+    .filter(item => {
+      const label = item.label.trim()
+      if (!label) return false
+      const key = label.toLowerCase()
+      if (seen.has(key)) return false
+      seen.add(key)
+      return true
+    })
+    .slice(0, 7)
 })
 
 const activeId = ref('')
@@ -65,7 +83,6 @@ let observer: IntersectionObserver | null = null
 
 const initObserver = async () => {
   if (!import.meta.client) return
-
   await nextTick()
   observer?.disconnect()
   activeId.value = toc.value[0]?.id ?? ''
@@ -98,7 +115,6 @@ const initObserver = async () => {
 
 const jumpTo = (id: string) => {
   if (!import.meta.client) return
-
   const element = document.getElementById(id)
   if (!element) return
 
@@ -110,12 +126,6 @@ const jumpTo = (id: string) => {
   activeId.value = id
 }
 
-const readNext = computed(() =>
-  props.mostRead
-    .filter(item => item.id !== props.article.id)
-    .slice(0, 4),
-)
-
 watch(() => props.article.slug, () => initObserver())
 watch(toc, () => initObserver(), { deep: true })
 onMounted(() => initObserver())
@@ -123,106 +133,88 @@ onBeforeUnmount(() => observer?.disconnect())
 </script>
 
 <template>
-  <aside class="sp-v19-sidebar space-y-7 xl:sticky xl:top-[160px]">
+  <aside class="space-y-6 xl:sticky xl:top-[160px]">
     <section
       v-if="toc.length"
-      class="sp-v19-toc"
+      class="overflow-hidden rounded-[28px] border border-line bg-surface shadow-[0_14px_40px_rgba(15,23,42,0.05)]"
     >
-      <div class="flex items-center justify-between gap-3">
+      <header class="flex items-start justify-between gap-4 border-b border-line px-6 py-5">
         <div>
-          <p class="sp-v19-kicker">
-            In this article
-          </p>
-
-          <h2 class="mt-1.5 text-[20px] font-[780] tracking-[-.04em] text-fg">
+          <span class="text-[9px] font-bold uppercase tracking-[0.18em] text-indigo-600 dark:text-indigo-300">
+            In this story
+          </span>
+          <h2 class="mt-2 text-xl font-bold tracking-[-0.03em] text-fg">
             Reading guide
           </h2>
         </div>
 
-        <span class="sp-v19-toc-icon">
+        <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-indigo-50 font-bold text-indigo-600 dark:bg-indigo-400/10 dark:text-indigo-300">
           ≡
-        </span>
-      </div>
+        </div>
+      </header>
 
-      <nav
-        aria-label="Article contents"
-        class="mt-4"
-      >
+      <nav class="p-3" aria-label="Article contents">
         <button
           v-for="(item, index) in toc"
           :key="item.id"
           type="button"
-          class="sp-v19-toc-row"
-          :class="activeId === item.id ? 'sp-v19-toc-row-active' : ''"
+          class="grid w-full grid-cols-[28px_minmax(0,1fr)] items-center gap-3 rounded-xl px-3 py-2.5 text-left text-[10px] font-semibold transition"
+          :class="activeId === item.id
+            ? 'bg-indigo-50 text-indigo-600 dark:bg-indigo-400/10 dark:text-indigo-300'
+            : 'text-fg-muted hover:bg-surface-2 hover:text-fg'"
           @click="jumpTo(item.id)"
         >
-          <span class="sp-v19-toc-number">
+          <span class="flex h-7 w-7 items-center justify-center rounded-lg border border-line bg-surface-2 text-[8px] font-bold">
             {{ String(index + 1).padStart(2, '0') }}
           </span>
-
-          <span class="min-w-0 flex-1">
-            {{ item.title }}
-          </span>
+          <span class="truncate">{{ item.title }}</span>
         </button>
       </nav>
     </section>
 
-    <section v-if="readNext.length">
-      <div class="flex items-end justify-between gap-3">
+    <section
+      v-if="relatedTopics.length"
+      class="overflow-hidden rounded-[28px] border border-line bg-surface shadow-[0_14px_40px_rgba(15,23,42,0.05)]"
+    >
+      <header class="flex items-start justify-between gap-4 border-b border-line px-6 py-5">
         <div>
-          <p class="sp-v19-kicker">
-            More news
-          </p>
-
-          <h2 class="mt-1.5 text-[24px] font-[800] tracking-[-.045em] text-fg">
-            Read next
+          <span class="text-[9px] font-bold uppercase tracking-[0.18em] text-indigo-600 dark:text-indigo-300">
+            Explore more
+          </span>
+          <h2 class="mt-2 text-xl font-bold tracking-[-0.03em] text-fg">
+            Related topics
           </h2>
+          <p class="mt-2 text-xs leading-5 text-fg-subtle">
+            More coverage connected to this story.
+          </p>
         </div>
 
-        <NuxtLink
-          :to="{ path: '/news/search', query: { sort: 'popular' } }"
-          class="text-[9px] font-bold text-fg-subtle transition hover:text-accent"
-        >
-          View all →
-        </NuxtLink>
-      </div>
+        <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-indigo-50 font-bold text-indigo-600 dark:bg-indigo-400/10 dark:text-indigo-300">
+          #
+        </div>
+      </header>
 
-      <div class="sp-v19-read-next mt-4">
-        <NuxtLink
-          v-for="(item, index) in readNext"
-          :key="item.id"
-          :to="`/news/posts/${item.slug}`"
-          class="sp-v19-read-next-item group"
-        >
-          <div class="sp-v19-read-next-image">
-            <img
-              v-if="item.image"
-              :src="item.image"
-              :alt="item.title"
-              loading="lazy"
-              class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-            >
-
-            <span class="sp-v19-read-next-index">
-              {{ String(index + 1).padStart(2, '0') }}
-            </span>
-          </div>
-
-          <div class="min-w-0">
-            <p class="text-[8px] font-bold uppercase tracking-[.12em] text-accent">
-              {{ item.categoryName }}
-            </p>
-
-            <h3 class="mt-1.5 line-clamp-3 text-[14px] font-[740] leading-[1.28rem] tracking-[-.018em] text-fg transition group-hover:text-accent">
-              {{ item.title }}
-            </h3>
-
-            <p class="mt-1.5 text-[8px] text-fg-subtle">
-              {{ timeAgo(item.publishedAt) }} · {{ formatViews(item.views) }}
-            </p>
-          </div>
-        </NuxtLink>
+      <div class="p-5">
+        <div class="flex flex-wrap gap-2">
+          <NuxtLink
+            v-for="topic in relatedTopics"
+            :key="`${topic.to}-${topic.label}`"
+            :to="topic.to"
+            class="group inline-flex items-center gap-1.5 rounded-full border border-line bg-surface-2 px-3.5 py-2 text-[10px] font-semibold text-fg-muted transition-all hover:-translate-y-0.5 hover:border-indigo-200 hover:bg-indigo-50 hover:text-indigo-600 dark:hover:border-indigo-400/20 dark:hover:bg-indigo-400/10 dark:hover:text-indigo-300"
+            :class="topic.primary ? 'border-indigo-200 bg-indigo-50 text-indigo-600 dark:border-indigo-400/20 dark:bg-indigo-400/10 dark:text-indigo-300' : ''"
+          >
+            <span v-if="topic.prefix">{{ topic.prefix }}</span>
+            {{ topic.label }}
+            <span class="opacity-40 transition group-hover:translate-x-0.5 group-hover:opacity-100">↗</span>
+          </NuxtLink>
+        </div>
       </div>
     </section>
+
+    <NewsSharedMostReadPanel
+      :articles="mostRead"
+      :current-article-id="article.id"
+      subtitle="Popular stories readers are opening now."
+    />
   </aside>
 </template>
