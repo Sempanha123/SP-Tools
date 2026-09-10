@@ -1,7 +1,7 @@
 {
-  "name": "SP-Tools Prism Aurora V5 \u2014 Real Downloader Studios + Demo Newsroom",
-  "version": "5.0",
-  "base": "V4 redesign / GitHub main update v3",
+  "name": "SP-Tools Prism Aurora V7 — Full-Page Downloader Console + Demo Newsroom",
+  "version": "6.0",
+  "base": "V5 real downloader studio + demo newsroom",
   "file_count": 45,
   "files": [
     "SPTools/assets/css/main.css",
@@ -51,10 +51,10 @@
     "backend/database/seeders/DemoNewsSeeder.php"
   ],
   "notes": [
-    "Downloader right-side platform UI is now the actual interactive workspace, not a fake player mockup.",
-    "TikTok, Facebook and YouTube keep their own visual identity while sharing one interaction system.",
-    "Includes V4 full News theme completion and API bridge fixes.",
-    "Adds DemoNewsSeeder with 24 synthetic development articles and four demo authors.",
-    "DatabaseSeeder now uses DemoNewsSeeder instead of the single ArticleSeeder fixture."
+    "Downloader console is no longer a right-side widget; it now becomes the full-page visual system.",
+    "TikTok, Facebook and YouTube pages are full-width, stacked, dark interactive experiences with platform-specific accent colors.",
+    "How it works, FAQ and Related tools inherit the same console palette for one continuous page experience.",
+    "Retains V5 News theme completion, API bridge fixes and DemoNewsSeeder with 24 synthetic development articles.",
+    "DatabaseSeeder continues to use DemoNewsSeeder instead of the single ArticleSeeder fixture."
   ]
 }

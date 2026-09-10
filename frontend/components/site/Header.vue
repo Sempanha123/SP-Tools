@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const { imageTools, downloadTools } = useTools()
 const route = useRoute()
+const isDownloadRoute = computed(() => route.path.startsWith('/download'))
 
 const isMobileMenuOpen = ref(false)
 const activeMobileSection = ref<string | null>(null)
@@ -91,9 +92,12 @@ watch(isMobileMenuOpen, (open) => {
   <header
     ref="headerRef"
     class="sticky top-0 z-50 border-b transition-all duration-300"
-    :class="isScrolled
-      ? 'border-line bg-surface/[0.88] shadow-soft backdrop-blur-2xl'
-      : 'border-line/60 bg-surface/[0.76] backdrop-blur-xl'"
+    :class="[
+      isScrolled
+        ? 'border-line bg-surface/[0.88] shadow-soft backdrop-blur-2xl'
+        : 'border-line/60 bg-surface/[0.76] backdrop-blur-xl',
+      isDownloadRoute ? 'sp-header-download' : '',
+    ]"
   >
     <div class="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent/55 to-transparent" />
     <div class="sp-container-wide">
