@@ -1,120 +1,82 @@
-# SP-Tools Prism Aurora V3 — High-End UI/UX Upgrade
+# SP-Tools Prism Aurora V4 — Platform + News Completion Pass
 
-This V3 pack is designed specifically on top of your current **`updatev2`** SP-Tools frontend.
-It keeps the existing product/API behavior while pushing the interface further into a high-end product + editorial direction.
+Built specifically on top of the current GitHub `main` V3 UI.
 
-## V3 visual direction
+## What V4 fixes
 
-The goal is **wow without becoming noisy**:
+- Finishes light/dark semantic theme cleanup for old News screens.
+- Replaces the old full-purple News Search hero with the same cinematic editorial language as News Home.
+- Rebuilds News Search controls, results and sidebar.
+- Rebuilds News category hero/layout, author hero, tag hero and article header.
+- Adds useful category fallbacks when the News API is temporarily offline, so navigation does not collapse to only “Latest”.
+- Gives TikTok, Facebook and YouTube their own visual identity inside the shared downloader system.
+- Gives resolved media/result cards and quality rows platform-aware styling.
+- Updates browser theme-color metadata so the browser UI is not permanently violet.
+- Fixes local News CORS for a frontend running on port 3001.
+- Fixes absolute Laravel `/storage/...` article image URLs.
+- Uses the real stored author slug in article API responses.
 
-- asymmetric, cinematic product composition instead of basic centered landing-page sections
-- deeper light/dark surfaces with restrained violet + cyan brand energy
-- lens/glass panels used selectively rather than everywhere
-- subtle grid/noise/aurora fields for atmosphere
-- larger editorial moments mixed with compact functional UI
-- bento layouts with different card sizes rather than rows of identical boxes
-- dark “command center” sections to create rhythm and contrast
-- stronger visual hierarchy on `/`, `/tools`, downloader flows and `/news`
+## Platform visual identities
 
-## Motion upgrade
+- TikTok: dark creator/reel studio, cyan + pink signal, portrait preview, audio/no-watermark cues.
+- Facebook: Facebook-blue media desk, public reel/video composition, HD quality stack.
+- YouTube: red stream console, video-player timeline, 4K/video/audio cues.
 
-V3 adds dependency-free motion using CSS/Vue-friendly classes:
-
-- scroll reveal and staggered cards
-- animated aurora field
-- moving border highlights
-- subtle floating status panels
-- scanline/processing effects
-- animated timeline beam
-- hover depth / perspective
-- CTA shimmer
-- image/card zoom motion
-- live-signal pulses
-
-`prefers-reduced-motion` is respected.
-
-## Key areas upgraded
-
-- Global design system and V3 motion primitives
-- Header and navigation shell
-- Root homepage
-- `/tools` directory
-- Shared Tool Hero
-- Upload workspace
-- Downloader URL command bar
-- “How it works” timeline
-- FAQ
-- Related tools
-- News hero
-- Breaking ticker
-- News category navigation
-- Featured/top stories
-- Latest-news presentation
-- Most-read / trending sidebar
-- Topic bento grid
-- Region cards
-- Newsletter
-- Shared article cards
-- Footer
+The downloader request/download logic itself is not replaced.
 
 ## Apply on Windows
 
-Extract this ZIP into the folder containing your current `SPTools` directory.
-Open PowerShell there and run:
+Extract this pack into the repository root—the folder that contains both `SPTools` and `backend`—then run:
 
 ```powershell
 Set-ExecutionPolicy -Scope Process Bypass
 .\APPLY_REDESIGN.ps1
 ```
 
-The script creates a timestamped backup of every file it replaces and clears `SPTools\.nuxt`.
+The script creates a timestamped backup first. It also adds `platform="..."` presentation props to the three existing downloader page components without changing their business logic.
 
-Then:
+### Start News API
+
+```powershell
+cd backend
+php artisan config:clear
+php artisan serve --host=127.0.0.1 --port=8000
+```
+
+### Start frontend
 
 ```powershell
 cd SPTools
 npm run dev -- --port 3001
 ```
 
-Open:
+### Start media API when using downloader/image tools
+Run the existing FastAPI media service on port 8001 as before.
 
-```text
-http://127.0.0.1:3001/
-```
-
-Use `Ctrl + Shift + R` once after the server starts.
+Hard refresh the browser with `Ctrl + Shift + R`.
 
 ## Pages to review
 
-```text
-/
-/tools
-/tools/bg-remover
-/tools/image-upscaler
-/download/tiktok-download
-/download/facebook-video-download
-/download/youtube-download
-/news
-```
+- `/`
+- `/tools`
+- `/tools/bg-remover`
+- `/tools/image-upscaler`
+- `/download/tiktok-download`
+- `/download/facebook-video-download`
+- `/download/youtube-download`
+- `/news`
+- `/news/search`
+- `/news/category/world`
+- any `/news/tag/...`
+- any `/news/author/...`
+- any `/news/posts/...`
 
-## Production build check
-
-From the extracted pack folder you can run:
+## Verify
 
 ```powershell
 .\VERIFY_REDESIGN.ps1
 ```
 
-or from `SPTools`:
+This clears Laravel config, checks API route registration when PHP/backend dependencies are available, then runs the Nuxt production build.
 
-```powershell
-npm run build
-```
-
-The current project does not define dedicated `lint` or `typecheck` scripts, so the Nuxt production build remains the configured verification step.
-
-## Functionality intentionally untouched
-
-V3 does not intentionally change FastAPI/Laravel integration, URL validation rules, clipboard behavior, download generation, image-processing requests, News composables, routes, or SEO logic.
-
-The News API `Failed to fetch` state is a connectivity/backend issue if it still appears; the V3 UI improves how that state looks but does not fake story data.
+See `NEWS_BACKEND_AUDIT.md` for the frontend/backend compatibility audit.

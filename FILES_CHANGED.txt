@@ -1,6 +1,10 @@
 SPTools/assets/css/main.css
+SPTools/components/download/FormatRow.vue
+SPTools/components/download/MediaCard.vue
 SPTools/components/download/Steps.vue
 SPTools/components/download/UrlInput.vue
+SPTools/components/news/author/ArticleGrid.vue
+SPTools/components/news/author/Header.vue
 SPTools/components/news/home/BreakingTicker.vue
 SPTools/components/news/home/CategoryNav.vue
 SPTools/components/news/home/FeaturedNews.vue
@@ -10,7 +14,14 @@ SPTools/components/news/home/Newsletter.vue
 SPTools/components/news/home/Topics.vue
 SPTools/components/news/home/TrendingSidebar.vue
 SPTools/components/news/home/WorldRegions.vue
+SPTools/components/news/post/Header.vue
+SPTools/components/news/search/Controls.vue
+SPTools/components/news/search/Hero.vue
+SPTools/components/news/search/Results.vue
+SPTools/components/news/search/Sidebar.vue
 SPTools/components/news/shared/ArticleCard.vue
+SPTools/components/news/tag/ArticleGrid.vue
+SPTools/components/news/tag/Header.vue
 SPTools/components/site/Footer.vue
 SPTools/components/site/Header.vue
 SPTools/components/tool/Dropzone.vue
@@ -18,6 +29,14 @@ SPTools/components/tool/Faq.vue
 SPTools/components/tool/Hero.vue
 SPTools/components/tool/RelatedTools.vue
 SPTools/components/ui/SectionHeading.vue
+SPTools/nuxt.config.ts
 SPTools/pages/index.vue
+SPTools/pages/news/category/[slug].vue
 SPTools/pages/news/index.vue
+SPTools/pages/news/search.vue
 SPTools/pages/tools/index.vue
+backend/app/Http/Resources/Api/V1/ArticleResource.php
+backend/config/cors.php
+SPTools/pages/download/tiktok-download.vue  [platform presentation prop patched by installer]
+SPTools/pages/download/facebook-video-download.vue  [platform presentation prop patched by installer]
+SPTools/pages/download/youtube-download.vue  [platform presentation prop patched by installer]
