@@ -11,6 +11,8 @@
 
     <SiteHeader />
 
+    <SiteContextRail />
+
     <main id="main-content" class="flex-1">
       <NuxtPage />
     </main>

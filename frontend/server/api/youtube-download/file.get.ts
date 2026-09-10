@@ -32,7 +32,10 @@ let youtubePromise:
 const getYoutube = () => {
   if (!youtubePromise) {
     youtubePromise =
-      Innertube.create().catch(
+      Innertube.create({
+        retrieve_player: true,
+        enable_session_cache: true,
+      }).catch(
         error => {
           youtubePromise = null
           throw error
@@ -44,7 +47,9 @@ const getYoutube = () => {
 }
 
 const enforceRateLimit = (
-  event: Parameters<typeof getRequestIP>[0],
+  event: Parameters<
+    typeof getRequestIP
+  >[0],
 ) => {
   const ip =
     getRequestIP(
@@ -155,6 +160,16 @@ const contentLength = (
     : 0
 }
 
+const hasResolvableMediaUrl = (
+  format: any,
+) =>
+  Boolean(
+    format?.url
+    || format?.signature_cipher
+    || format?.signatureCipher
+    || format?.cipher,
+  )
+
 const mimeParts = (
   format: any,
 ) => {
@@ -228,19 +243,68 @@ const resolveFormatUrl = async (
   }
 
   if (
-    typeof format?.decipher
-    === 'function'
+    !format?.signature_cipher
+    && !format?.signatureCipher
+    && !format?.cipher
   ) {
-    return String(
-      await format.decipher(
-        youtube.session.player,
-      ),
+    throw new Error(
+      'This YouTube stream does not expose a downloadable URL.',
     )
   }
 
+  if (
+    typeof format?.decipher
+    === 'function'
+  ) {
+    const value =
+      await format.decipher(
+        youtube.session.player,
+      )
+
+    if (value) {
+      return String(value)
+    }
+  }
+
   throw new Error(
-    'Could not resolve this YouTube stream.',
+    'Could not decipher this YouTube stream URL.',
   )
+}
+
+const fetchMedia = async (
+  url: string,
+) => {
+  const controller =
+    new AbortController()
+
+  const timeout =
+    setTimeout(
+      () => controller.abort(),
+      25_000,
+    )
+
+  try {
+    return await fetch(
+      url,
+      {
+        headers: {
+          'user-agent':
+            'Mozilla/5.0',
+          accept:
+            '*/*',
+          origin:
+            'https://www.youtube.com',
+          referer:
+            'https://www.youtube.com/',
+        },
+        redirect: 'follow',
+        signal:
+          controller.signal,
+      },
+    )
+  } finally {
+    clearTimeout(timeout)
+  }
 }
 
 export default defineEventHandler(
@@ -272,7 +336,7 @@ export default defineEventHandler(
         ? 'audio'
         : 'video'
 
-    const client =
+    const requestedClient =
       cleanClient(query.client)
 
     activeDownloads += 1
@@ -281,64 +345,121 @@ export default defineEventHandler(
       const youtube =
         await getYoutube()
 
-      // Use the same InnerTube client that produced the option.
-      const info =
-        await youtube.getBasicInfo(
-          videoId,
-          {
-            client,
-          } as any,
+      // The options route stores the client that produced the selected
+      // downloadable format. If that response changed between resolve and
+      // click, retry compatible clients before failing.
+      const clients =
+        [
+          requestedClient,
+          'WEB',
+          'TV_EMBEDDED',
+          'ANDROID',
+        ].filter(
+          (
+            value,
+            index,
+            values,
+          ) =>
+            values.indexOf(value)
+            === index,
         )
 
-      const streaming =
-        (info as any)
-          .streaming_data
+      let selected:
+        {
+          info: any
+          format: any
+          client: string
+        }
+        | null = null
 
-      const muxed =
-        Array.isArray(
-          streaming?.formats,
-        )
-          ? streaming.formats
-          : []
-
-      const adaptive =
-        Array.isArray(
-          streaming?.adaptive_formats,
-        )
-          ? streaming.adaptive_formats
-          : []
-
-      const allowed =
-        kind === 'audio'
-          ? adaptive.filter(
-              (format: any) =>
-                String(
-                  format?.mime_type
-                  ?? format?.mimeType
-                  ?? '',
-                )
-                  .toLowerCase()
-                  .startsWith('audio/'),
+      for (
+        const client
+        of clients
+      ) {
+        try {
+          const info =
+            await youtube.getBasicInfo(
+              videoId,
+              {
+                client,
+              } as any,
             )
-          : muxed
 
-      const format =
-        allowed.find(
-          (candidate: any) =>
-            Number(candidate?.itag)
-            === itag,
-        )
+          const streaming =
+            (info as any)
+              .streaming_data
 
-      if (!format) {
+          const pool =
+            kind === 'audio'
+              ? (
+                  Array.isArray(
+                    streaming
+                      ?.adaptive_formats,
+                  )
+                    ? streaming
+                        .adaptive_formats
+                    : []
+                ).filter(
+                  (format: any) =>
+                    String(
+                      format?.mime_type
+                      ?? format?.mimeType
+                      ?? '',
+                    )
+                      .toLowerCase()
+                      .startsWith(
+                        'audio/',
+                      ),
+                )
+              : (
+                  Array.isArray(
+                    streaming?.formats,
+                  )
+                    ? streaming.formats
+                    : []
+                )
+
+          const format =
+            pool.find(
+              (
+                candidate: any,
+              ) =>
+                Number(
+                  candidate?.itag,
+                ) === itag
+                && hasResolvableMediaUrl(
+                  candidate,
+                ),
+            )
+
+          if (format) {
+            selected = {
+              info,
+              format,
+              client,
+            }
+            break
+          }
+        } catch (error) {
+          console.warn(
+            `[YouTube file] ${client} lookup failed`,
+            error,
+          )
+        }
+      }
+
+      if (!selected) {
         throw createError({
           statusCode: 404,
           statusMessage:
-            'That YouTube stream is no longer available. Refresh the options and try again.',
+            'That YouTube stream is no longer available. Refresh the formats and try again.',
         })
       }
 
       const bytes =
-        contentLength(format)
+        contentLength(
+          selected.format,
+        )
 
       if (
         bytes
@@ -353,53 +474,25 @@ export default defineEventHandler(
 
       const streamUrl =
         await resolveFormatUrl(
-          format,
+          selected.format,
           youtube,
         )
 
-      const controller =
-        new AbortController()
-
-      const timeout =
-        setTimeout(
-          () => controller.abort(),
-          20_000,
+      const upstream =
+        await fetchMedia(
+          streamUrl,
         )
 
-      let upstream: Response
-
-      try {
-        upstream =
-          await fetch(
-            streamUrl,
-            {
-              headers: {
-                'user-agent':
-                  'Mozilla/5.0',
-              },
-              redirect: 'follow',
-              signal:
-                controller.signal,
-            },
-          )
-      } finally {
-        clearTimeout(timeout)
-      }
-
       if (!upstream.ok) {
-        throw createError({
-          statusCode: 502,
-          statusMessage:
-            `YouTube returned HTTP ${upstream.status} for this stream.`,
-        })
+        throw new Error(
+          `YouTube returned HTTP ${upstream.status} for this ${kind} stream.`,
+        )
       }
 
       if (!upstream.body) {
-        throw createError({
-          statusCode: 502,
-          statusMessage:
-            'YouTube returned an empty stream.',
-        })
+        throw new Error(
+          `YouTube returned an empty ${kind} stream.`,
+        )
       }
 
       const upstreamLength =
@@ -410,33 +503,15 @@ export default defineEventHandler(
           || 0,
         )
 
-      const contentRangeHeader =
-        upstream.headers.get(
-          'content-range',
-        )
-
-      const totalFromRange =
-        Number(
-          contentRangeHeader
-            ?.match(
-              /\/(\d+)$/,
-            )?.[1]
-          || 0,
-        )
-
-      const effectiveBytes =
-        totalFromRange
-        || upstreamLength
-        || bytes
-
       if (
-        effectiveBytes
-        && effectiveBytes > MAX_BYTES
+        upstreamLength
+        && upstreamLength
+          > MAX_BYTES
       ) {
         try {
           await upstream.body.cancel()
         } catch {
-          // Nothing else to do.
+          // No additional action required.
         }
 
         throw createError({
@@ -449,19 +524,28 @@ export default defineEventHandler(
       const {
         mime,
         container,
-      } = mimeParts(format)
+      } = mimeParts(
+        selected.format,
+      )
 
       const basic =
-        (info as any)
-          .basic_info
+        selected.info?.basic_info
         || {}
 
       const suffix =
         kind === 'audio'
-          ? 'audio'
+          ? (
+              selected.format
+                ?.average_bitrate
+              || selected.format
+                ?.bitrate
+              || 'audio'
+            )
           : String(
-              format?.quality_label
-              || format?.height
+              selected.format
+                ?.quality_label
+              || selected.format
+                ?.height
               || itag,
             )
               .replace(
@@ -491,25 +575,13 @@ export default defineEventHandler(
         || mime,
       )
 
-      const contentLengthHeader =
-        upstream.headers.get(
-          'content-length',
-        )
-
-      if (contentLengthHeader) {
+      if (upstreamLength) {
         setHeader(
           event,
           'content-length',
-          contentLengthHeader,
+          String(upstreamLength),
         )
       }
-
-      setHeader(
-        event,
-        'accept-ranges',
-        'none',
-      )
-
 
       setHeader(
         event,
@@ -523,10 +595,43 @@ export default defineEventHandler(
         'private, no-store',
       )
 
+      setHeader(
+        event,
+        'accept-ranges',
+        'none',
+      )
+
       return await sendStream(
         event,
         upstream.body,
       )
+    } catch (error) {
+      if (
+        error
+        && typeof error === 'object'
+        && 'statusCode' in error
+      ) {
+        throw error
+      }
+
+      console.error(
+        '[YouTube file]',
+        {
+          videoId,
+          itag,
+          kind,
+          requestedClient,
+          error,
+        },
+      )
+
+      throw createError({
+        statusCode: 502,
+        statusMessage:
+          error instanceof Error
+            ? error.message
+            : 'Could not start that YouTube download.',
+      })
     } finally {
       activeDownloads =
         Math.max(

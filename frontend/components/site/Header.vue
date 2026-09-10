@@ -7,12 +7,37 @@ const isMobileMenuOpen = ref(false)
 const activeMobileSection = ref<string | null>(null)
 const openDesktopMenu = ref<string | null>(null)
 const isScrolled = ref(false)
+const isHeaderVisible = ref(true)
+const lastScrollY = ref(0)
+let scrollFrame: number | null = null
 
 const headerRef = ref<HTMLElement | null>(null)
 let closeTimer: ReturnType<typeof setTimeout> | null = null
 
 const onScroll = () => {
-  isScrolled.value = window.scrollY > 16
+  if (scrollFrame !== null) return
+
+  scrollFrame = window.requestAnimationFrame(() => {
+    const currentY = Math.max(window.scrollY, 0)
+    const delta = currentY - lastScrollY.value
+
+    isScrolled.value = currentY > 16
+
+    const menuIsOpen =
+      isMobileMenuOpen.value
+      || openDesktopMenu.value !== null
+
+    if (menuIsOpen || currentY <= 72) {
+      isHeaderVisible.value = true
+    } else if (delta > 8) {
+      isHeaderVisible.value = false
+    } else if (delta < -6) {
+      isHeaderVisible.value = true
+    }
+
+    lastScrollY.value = currentY
+    scrollFrame = null
+  })
 }
 
 const openMenu = (id: string) => {
@@ -66,6 +91,7 @@ onMounted(() => {
   window.addEventListener('scroll', onScroll, { passive: true })
   window.addEventListener('keydown', onKeydown)
   window.addEventListener('pointerdown', onPointerDown)
+  lastScrollY.value = window.scrollY
   onScroll()
 })
 
@@ -73,35 +99,85 @@ onUnmounted(() => {
   window.removeEventListener('scroll', onScroll)
   window.removeEventListener('keydown', onKeydown)
   window.removeEventListener('pointerdown', onPointerDown)
+  if (scrollFrame !== null) {
+    window.cancelAnimationFrame(scrollFrame)
+    scrollFrame = null
+  }
   if (closeTimer) clearTimeout(closeTimer)
-  if (import.meta.client) document.body.style.overflow = ''
+  if (import.meta.client) {
+    document.body.style.overflow = ''
+    document.documentElement.classList.remove(
+      'sp-site-header-v36-visible',
+      'sp-site-header-v36-hidden',
+    )
+  }
 })
 
 watch(() => route.fullPath, () => {
   closeMenuNow()
   closeMobileMenu()
+  isHeaderVisible.value = true
+
+  if (import.meta.client) {
+    lastScrollY.value = window.scrollY
+  }
 })
 
 watch(isMobileMenuOpen, (open) => {
   if (!import.meta.client) return
+
+  if (open) {
+    isHeaderVisible.value = true
+  }
+
   document.body.style.overflow = open ? 'hidden' : ''
 })
+
+watch(
+  isHeaderVisible,
+  (visible) => {
+    if (!import.meta.client) return
+
+    document.documentElement.classList.toggle(
+      'sp-site-header-v36-visible',
+      visible,
+    )
+
+    document.documentElement.classList.toggle(
+      'sp-site-header-v36-hidden',
+      !visible,
+    )
+  },
+  {
+    immediate: true,
+  },
+)
 </script>
 
 <template>
   <header
     ref="headerRef"
-    class="sp-site-header-v17 sticky top-0 z-50 border-b transition-all duration-300"
+    class="sp-site-header-v17 sp-smart-header-v36 sticky top-0 z-50 transition-all duration-300"
     :class="[
+      isHeaderVisible
+        ? 'sp-smart-header-visible'
+        : 'sp-smart-header-hidden',
       isScrolled
-        ? 'border-line bg-surface/[0.88] shadow-soft backdrop-blur-2xl'
-        : 'border-line/60 bg-surface/[0.76] backdrop-blur-xl',
+        ? 'sp-smart-header-scrolled'
+        : 'sp-smart-header-top',
       isDownloadRoute ? 'sp-header-download' : '',
     ]"
   >
-    <div class="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent/55 to-transparent" />
-    <div class="sp-container-wide">
-      <div class="flex h-[80px] items-center justify-between gap-7">
+    <div class="sp-smart-header-glow pointer-events-none absolute top-0 h-px bg-gradient-to-r from-transparent via-accent/55 to-transparent" />
+    <div
+      class="sp-container-wide sp-smart-header-panel border border-line bg-surface/[0.88] shadow-soft backdrop-blur-2xl transition-[width,background-color,box-shadow] duration-500"
+      :class="
+        isScrolled
+          ? 'bg-surface/[0.94] shadow-pop'
+          : 'bg-surface/[0.82] shadow-soft'
+      "
+    >
+      <div class="flex h-[68px] items-center justify-between gap-7">
         <NuxtLink
           to="/"
           class="group flex shrink-0 items-center gap-2.5 rounded-xl focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/10"
@@ -118,7 +194,7 @@ watch(isMobileMenuOpen, (open) => {
           </span>
         </NuxtLink>
 
-        <nav class="hidden h-[48px] items-center gap-1 rounded-[16px] border border-line bg-elevated/78 p-1 shadow-xs backdrop-blur-xl lg:flex" aria-label="Main navigation">
+        <nav class="hidden h-[44px] items-center gap-1 rounded-[16px] border border-line bg-elevated/78 p-1 shadow-xs backdrop-blur-xl lg:flex" aria-label="Main navigation">
           <div
             class="relative h-full"
             @mouseenter="openMenu('tools')"
@@ -305,7 +381,7 @@ watch(isMobileMenuOpen, (open) => {
       leave-active-class="transition duration-150 ease-in"
       leave-to-class="opacity-0 -translate-y-2"
     >
-      <div v-if="isMobileMenuOpen" class="border-t border-line bg-elevated shadow-pop lg:hidden">
+      <div v-if="isMobileMenuOpen" class="sp-smart-mobile-menu-v39 border-t border-line bg-elevated shadow-pop lg:hidden">
         <div class="sp-container py-4">
           <div class="space-y-1">
             <div class="border-b border-line pb-2">

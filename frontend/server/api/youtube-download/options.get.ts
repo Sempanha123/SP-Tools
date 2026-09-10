@@ -19,6 +19,7 @@ interface YoutubeNuxtAudioOption {
   container: string
   filesize_mb: number | string
   client: string
+  source_score?: number
 }
 
 interface YoutubeNuxtOptions {
@@ -45,8 +46,8 @@ const MAX_BYTES = 300 * 1024 * 1024
 // depending on the InnerTube client. V34 tries several documented clients.
 const CLIENTS = [
   'ANDROID',
-  'TV_EMBEDDED',
   'WEB',
+  'TV_EMBEDDED',
 ] as const
 
 const resultCache =
@@ -321,6 +322,47 @@ const sizeMb = (
   )
 }
 
+const hasResolvableMediaUrl = (
+  format: any,
+) =>
+  Boolean(
+    format?.url
+    || format?.signature_cipher
+    || format?.signatureCipher
+    || format?.cipher,
+  )
+
+const audioSourceScore = (
+  format: any,
+  client: string,
+) => {
+  // Prefer a direct CDN URL. A decipherable cipher is the next-best option.
+  // WEB is preferred over Android when both are otherwise equivalent because
+  // modern Android responses can expose SABR-only adaptive formats without a
+  // traditional downloadable URL.
+  let score = 0
+
+  if (format?.url) {
+    score += 10000
+  } else if (
+    format?.signature_cipher
+    || format?.signatureCipher
+    || format?.cipher
+  ) {
+    score += 5000
+  }
+
+  if (client === 'WEB') {
+    score += 300
+  } else if (client === 'TV_EMBEDDED') {
+    score += 200
+  } else if (client === 'ANDROID') {
+    score += 100
+  }
+
+  return score
+}
+
 const heightOf = (
   value: string,
 ) =>
@@ -544,6 +586,11 @@ export default defineEventHandler(
               sizeMb(bytes),
             client:
               entry.client,
+            source_score:
+              audioSourceScore(
+                format,
+                entry.client,
+              ),
           })
         }
 
@@ -561,6 +608,17 @@ export default defineEventHandler(
             !mime
               .toLowerCase()
               .startsWith('audio/')
+          ) {
+            continue
+          }
+
+          // Do not show SABR-only/adaptive entries that have no normal URL
+          // and no cipher payload. Those were the source of:
+          // "No valid URL to decipher".
+          if (
+            !hasResolvableMediaUrl(
+              format,
+            )
           ) {
             continue
           }
@@ -690,8 +748,18 @@ export default defineEventHandler(
         const key =
           `${option.abr}|${option.container}`
 
+        const current =
+          audioByQuality.get(key)
+
         if (
-          !audioByQuality.has(key)
+          !current
+          || (
+            option.source_score
+            || 0
+          ) > (
+            current.source_score
+            || 0
+          )
         ) {
           audioByQuality.set(
             key,
@@ -703,11 +771,18 @@ export default defineEventHandler(
       const audioOptions =
         [
           ...audioByQuality.values(),
-        ].sort(
-          (a, b) =>
-            bitrateOf(b.abr)
-            - bitrateOf(a.abr),
-        )
+        ]
+          .map(
+            ({
+              source_score: _,
+              ...option
+            }) => option,
+          )
+          .sort(
+            (a, b) =>
+              bitrateOf(b.abr)
+              - bitrateOf(a.abr),
+          )
 
       if (
         !videoOptions.length

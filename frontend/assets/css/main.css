@@ -6889,3 +6889,482 @@
   }
 }
 
+/* SP-Tools V36 — Smart Floating Header
+   Hide on downward scroll, reveal on upward scroll.
+   The visible glass panel is intentionally not full-width. */
+
+.sp-smart-header-v36 {
+  pointer-events: none;
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  padding: 8px 12px 0;
+  will-change: transform, opacity;
+  transform: translate3d(0, 0, 0);
+  transition:
+    transform 440ms cubic-bezier(.22, 1, .36, 1),
+    opacity 300ms ease;
+}
+
+.sp-smart-header-v36.sp-smart-header-hidden {
+  transform: translate3d(0, calc(-100% - 18px), 0);
+  opacity: 0;
+}
+
+.sp-smart-header-v36.sp-smart-header-visible {
+  transform: translate3d(0, 0, 0);
+  opacity: 1;
+}
+
+.sp-smart-header-v36 .sp-smart-header-panel {
+  pointer-events: auto;
+  width: min(1180px, calc(100vw - 24px));
+  margin-inline: auto;
+  border-radius: 20px;
+  overflow: visible;
+  transform-origin: top center;
+}
+
+.sp-smart-header-v36.sp-smart-header-scrolled .sp-smart-header-panel {
+  width: min(1120px, calc(100vw - 28px));
+}
+
+.sp-smart-header-v36 .sp-smart-header-glow {
+  left: 50%;
+  width: min(760px, 68vw);
+  transform: translateX(-50%);
+}
+
+@media (max-width: 1023px) {
+  .sp-smart-header-v36 {
+    padding: 6px 8px 0;
+  }
+
+  .sp-smart-header-v36 .sp-smart-header-panel,
+  .sp-smart-header-v36.sp-smart-header-scrolled .sp-smart-header-panel {
+    width: calc(100vw - 16px);
+    border-radius: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sp-smart-header-v36,
+  .sp-smart-header-v36 .sp-smart-header-panel {
+    transition-duration: 1ms !important;
+  }
+}
+
+/* SP-Tools V37 — Sticky Downloader Context Rail
+   Keeps "Interactive downloader / <platform> studio" visible while browsing
+   a downloader page. It sits below the smart SiteHeader when visible and
+   moves close to the viewport top when the SiteHeader hides. */
+
+:root {
+  --sp-site-header-offset: 84px;
+}
+
+.sp-download-sticky-rail {
+  position: sticky;
+  top: var(--sp-site-header-offset);
+  z-index: 40;
+  margin-inline: auto;
+  width: min(1240px, calc(100% - 24px));
+  border: 1px solid var(--sp-line);
+  border-radius: 18px;
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--sp-surface-2) 92%, transparent),
+      color-mix(in srgb, var(--sp-surface) 90%, transparent)
+    );
+  box-shadow:
+    0 12px 32px rgba(2, 6, 23, .08),
+    inset 0 1px 0 rgba(255, 255, 255, .05);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  transition:
+    top 380ms cubic-bezier(.22, 1, .36, 1),
+    width 380ms cubic-bezier(.22, 1, .36, 1),
+    background-color 240ms ease,
+    box-shadow 240ms ease,
+    border-color 240ms ease;
+}
+
+.sp-download-sticky-rail::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -1px;
+  width: min(460px, 56%);
+  height: 1px;
+  transform: translateX(-50%);
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--sp-accent),
+    transparent
+  );
+  opacity: .42;
+}
+
+.sp-download-sticky-rail .sp-container-wide {
+  min-height: 62px;
+}
+
+html.sp-site-header-v36-hidden {
+  --sp-site-header-offset: 10px;
+}
+
+html.sp-site-header-v36-visible {
+  --sp-site-header-offset: 84px;
+}
+
+@media (max-width: 1023px) {
+  :root {
+    --sp-site-header-offset: 80px;
+  }
+
+  html.sp-site-header-v36-visible {
+    --sp-site-header-offset: 80px;
+  }
+
+  html.sp-site-header-v36-hidden {
+    --sp-site-header-offset: 8px;
+  }
+
+  .sp-download-sticky-rail {
+    width: calc(100% - 16px);
+    border-radius: 15px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sp-download-sticky-rail {
+    transition-duration: 1ms !important;
+  }
+}
+
+/* SP-Tools V38 — Header spacing + reliable sticky downloader rail */
+
+/* V36: no outer horizontal padding around the floating SiteHeader shell.
+   The panel itself remains intentionally narrower than the viewport. */
+.sp-smart-header-v36 {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* Keep a little safe internal breathing room for controls while removing
+   the extra outer X-padding that made the floating panel look inset twice. */
+.sp-smart-header-v36 .sp-smart-header-panel {
+  width: min(1180px, calc(100vw - 12px)) !important;
+  padding-left: 12px !important;
+  padding-right: 12px !important;
+}
+
+.sp-smart-header-v36.sp-smart-header-scrolled .sp-smart-header-panel {
+  width: min(1120px, calc(100vw - 12px)) !important;
+}
+
+/* Sticky failed because DownloadStudio's outer section used overflow-hidden.
+   overflow: clip prevents decorative artwork from creating horizontal
+   overflow but does NOT create the scroll container that breaks sticky. */
+.sp-download-console-page.sp-download-sticky-host {
+  overflow-x: clip !important;
+  overflow-y: visible !important;
+}
+
+/* Stronger sticky rule so Tailwind/base declarations cannot override it. */
+.sp-download-console-page .sp-download-sticky-rail {
+  position: sticky !important;
+  top: var(--sp-site-header-offset, 84px) !important;
+  z-index: 45 !important;
+  width: min(1240px, calc(100% - 12px)) !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  isolation: isolate;
+  transform: translateZ(0);
+}
+
+/* When the global SiteHeader hides, move the downloader identity rail
+   almost to the viewport top instead of leaving an empty header-sized gap. */
+html.sp-site-header-v36-hidden
+  .sp-download-console-page
+  .sp-download-sticky-rail {
+  top: 6px !important;
+}
+
+html.sp-site-header-v36-visible
+  .sp-download-console-page
+  .sp-download-sticky-rail {
+  top: 84px !important;
+}
+
+@media (max-width: 1023px) {
+  .sp-smart-header-v36 .sp-smart-header-panel,
+  .sp-smart-header-v36.sp-smart-header-scrolled .sp-smart-header-panel {
+    width: calc(100vw - 8px) !important;
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+
+  .sp-download-console-page .sp-download-sticky-rail {
+    width: calc(100% - 8px) !important;
+  }
+
+  html.sp-site-header-v36-visible
+    .sp-download-console-page
+    .sp-download-sticky-rail {
+    top: 80px !important;
+  }
+
+  html.sp-site-header-v36-hidden
+    .sp-download-console-page
+    .sp-download-sticky-rail {
+    top: 4px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sp-download-console-page .sp-download-sticky-rail {
+    transition-duration: 1ms !important;
+  }
+}
+
+/* SP-Tools V39 — Global Context Header
+   One context rail for downloader + AI detail pages.
+   It is outside DownloadStudio/ToolHero, so it remains sticky through
+   "How it works", FAQ and the rest of the page. */
+
+:root {
+  --sp-context-top-v39: 82px;
+}
+
+html.sp-site-header-v36-hidden {
+  --sp-context-top-v39: 6px;
+}
+
+html.sp-site-header-v36-visible {
+  --sp-context-top-v39: 82px;
+}
+
+.sp-context-header-v39 {
+  position: sticky;
+  top: var(--sp-context-top-v39);
+  z-index: 32;
+  width: 100%;
+  padding: 6px 0 0;
+  pointer-events: none;
+  transition:
+    top 380ms cubic-bezier(.22, 1, .36, 1);
+}
+
+.sp-context-header-v39__panel {
+  pointer-events: auto;
+  position: relative;
+  display: flex;
+  min-height: 58px;
+  width: min(1240px, calc(100vw - 12px));
+  margin-inline: auto;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 8px 12px;
+  overflow: hidden;
+  border: 1px solid var(--sp-line);
+  border-radius: 17px;
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--sp-surface-2) 94%, transparent),
+      color-mix(in srgb, var(--sp-context-accent) 5%, var(--sp-surface-2))
+    );
+  box-shadow:
+    0 14px 36px rgba(2, 6, 23, .08),
+    inset 0 1px 0 rgba(255, 255, 255, .06);
+  backdrop-filter: blur(20px) saturate(145%);
+  -webkit-backdrop-filter: blur(20px) saturate(145%);
+}
+
+.sp-context-header-v39__panel::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background:
+    linear-gradient(
+      180deg,
+      transparent,
+      var(--sp-context-accent),
+      transparent
+    );
+  opacity: .85;
+}
+
+.sp-context-header-v39__panel::after {
+  content: "";
+  position: absolute;
+  left: 14%;
+  top: -36px;
+  width: 240px;
+  height: 86px;
+  border-radius: 999px;
+  background: var(--sp-context-accent);
+  opacity: .055;
+  filter: blur(34px);
+  pointer-events: none;
+}
+
+.sp-context-header-v39__icon {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid
+    color-mix(
+      in srgb,
+      var(--sp-context-accent) 22%,
+      var(--sp-line)
+    );
+  border-radius: 12px;
+  background:
+    color-mix(
+      in srgb,
+      var(--sp-context-accent) 10%,
+      var(--sp-surface-3)
+    );
+  color: var(--sp-context-accent);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .08);
+}
+
+.sp-context-header-v39__chip,
+.sp-context-header-v39__status {
+  position: relative;
+  z-index: 1;
+  align-items: center;
+  justify-content: center;
+  min-height: 27px;
+  border: 1px solid var(--sp-line);
+  border-radius: 999px;
+  background:
+    color-mix(
+      in srgb,
+      var(--sp-surface-3) 88%,
+      transparent
+    );
+  padding-inline: 10px;
+  font-size: 8px;
+  font-weight: 750;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--sp-fg-subtle);
+}
+
+.sp-context-header-v39__status {
+  display: inline-flex;
+  gap: 7px;
+  color: var(--sp-fg-muted);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.sp-context-header-v39__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--sp-context-accent);
+  box-shadow:
+    0 0 0 4px
+    color-mix(
+      in srgb,
+      var(--sp-context-accent) 10%,
+      transparent
+    );
+}
+
+/* The old downloader rail lives inside DownloadStudio and therefore stops
+   at the end of DownloadStudio. Hide it after V39 to avoid duplicate bars. */
+.sp-download-console-page
+  > .sp-download-sticky-rail {
+  display: none !important;
+}
+
+/* V38's old sticky source marker can stay in markup, but it no longer owns
+   the sticky context header. */
+.sp-download-console-page.sp-download-sticky-host {
+  overflow-x: clip !important;
+  overflow-y: visible !important;
+}
+
+/* Mobile menu fix:
+   V36 intentionally set pointer-events:none on the global header shell.
+   The desktop panel re-enabled pointer events, but the mobile dropdown is
+   outside that panel. This class explicitly makes the dropdown interactive. */
+.sp-smart-header-v36
+  .sp-smart-mobile-menu-v39 {
+  pointer-events: auto !important;
+  position: relative;
+  z-index: 80;
+}
+
+/* Main SiteHeader always sits above the context rail. */
+.sp-smart-header-v36 {
+  z-index: 70 !important;
+}
+
+@media (max-width: 1023px) {
+  :root {
+    --sp-context-top-v39: 76px;
+  }
+
+  html.sp-site-header-v36-visible {
+    --sp-context-top-v39: 76px;
+  }
+
+  html.sp-site-header-v36-hidden {
+    --sp-context-top-v39: 4px;
+  }
+
+  .sp-context-header-v39 {
+    z-index: 28;
+    padding-top: 4px;
+  }
+
+  .sp-context-header-v39__panel {
+    min-height: 52px;
+    width: calc(100vw - 8px);
+    gap: 10px;
+    padding: 7px 9px;
+    border-radius: 14px;
+  }
+
+  .sp-context-header-v39__icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+  }
+
+  .sp-smart-header-v36
+    .sp-smart-mobile-menu-v39 {
+    position: fixed;
+    left: 4px;
+    right: 4px;
+    top: 72px;
+    max-height: calc(100dvh - 80px);
+    overflow-y: auto;
+    border-radius: 0 0 16px 16px;
+    pointer-events: auto !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sp-context-header-v39 {
+    transition-duration: 1ms !important;
+  }
+}

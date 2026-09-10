@@ -65,7 +65,7 @@ const statusText = computed(() => {
     no right-hand mockup and no light hero wrapped around a dark widget.
   -->
   <section
-    class="sp-download-console-page sp-download-fullbleed relative overflow-hidden"
+    class="sp-download-console-page sp-download-fullbleed sp-download-sticky-host relative"
     :class="`sp-platform-${platform}`"
   >
     <div class="sp-dot-grid pointer-events-none absolute inset-0 opacity-[.07]" />
@@ -74,7 +74,7 @@ const statusText = computed(() => {
     <div class="sp-download-orb sp-download-orb-b" />
 
     <!-- Console rail spans the complete page width. -->
-    <div class="relative border-b border-line bg-surface-2/55 backdrop-blur-xl">
+    <div class="sp-download-sticky-rail relative border-b border-line bg-surface-2/55 backdrop-blur-xl">
       <div class="sp-container-wide flex min-h-[68px] flex-col gap-3 py-3 sm:flex-row sm:items-center sm:justify-between">
         <div class="flex min-w-0 items-center gap-3.5">
           <span class="sp-platform-logo flex h-11 w-11 shrink-0 items-center justify-center rounded-[13px] text-sm font-black">
