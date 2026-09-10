@@ -2,6 +2,7 @@ SPTools/assets/css/main.css
 SPTools/components/download/FormatRow.vue
 SPTools/components/download/MediaCard.vue
 SPTools/components/download/Steps.vue
+SPTools/components/download/Studio.vue
 SPTools/components/download/UrlInput.vue
 SPTools/components/news/author/ArticleGrid.vue
 SPTools/components/news/author/Header.vue
@@ -30,6 +31,9 @@ SPTools/components/tool/Hero.vue
 SPTools/components/tool/RelatedTools.vue
 SPTools/components/ui/SectionHeading.vue
 SPTools/nuxt.config.ts
+SPTools/pages/download/facebook-video-download.vue
+SPTools/pages/download/tiktok-download.vue
+SPTools/pages/download/youtube-download.vue
 SPTools/pages/index.vue
 SPTools/pages/news/category/[slug].vue
 SPTools/pages/news/index.vue
@@ -37,6 +41,5 @@ SPTools/pages/news/search.vue
 SPTools/pages/tools/index.vue
 backend/app/Http/Resources/Api/V1/ArticleResource.php
 backend/config/cors.php
-SPTools/pages/download/tiktok-download.vue  [platform presentation prop patched by installer]
-SPTools/pages/download/facebook-video-download.vue  [platform presentation prop patched by installer]
-SPTools/pages/download/youtube-download.vue  [platform presentation prop patched by installer]
+backend/database/seeders/DatabaseSeeder.php
+backend/database/seeders/DemoNewsSeeder.php

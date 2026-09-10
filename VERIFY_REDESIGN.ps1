@@ -3,26 +3,31 @@ $ErrorActionPreference = "Stop"
 $CandidateRoots = @((Get-Location).Path, (Split-Path -Parent $MyInvocation.MyCommand.Path)) | Select-Object -Unique
 $RepoRoot = $null
 foreach ($candidate in $CandidateRoots) {
-    if (Test-Path (Join-Path $candidate "SPTools\package.json")) { $RepoRoot = $candidate; break }
+    if ((Test-Path (Join-Path $candidate "SPTools\package.json")) -and (Test-Path (Join-Path $candidate "backend\artisan"))) { $RepoRoot = $candidate; break }
 }
-if (-not $RepoRoot) { throw "Could not find SPTools\package.json." }
+if (-not $RepoRoot) { throw "Could not find the SP-Tools repository root." }
 
 $CssPath = Join-Path $RepoRoot "SPTools\assets\css\main.css"
-if (-not (Select-String -Path $CssPath -Pattern "Prism Aurora V4" -Quiet)) {
-    throw "V4 marker not found. Apply APPLY_REDESIGN.ps1 first."
-}
+$StudioPath = Join-Path $RepoRoot "SPTools\components\download\Studio.vue"
+$SeederPath = Join-Path $RepoRoot "backend\database\seeders\DemoNewsSeeder.php"
 
-Write-Host "V4 marker found." -ForegroundColor Green
+if (-not (Select-String -Path $CssPath -Pattern "Prism Aurora V5" -Quiet)) { throw "V5 CSS marker not found." }
+if (-not (Test-Path $StudioPath)) { throw "Download Studio component is missing." }
+if (-not (Test-Path $SeederPath)) { throw "DemoNewsSeeder is missing." }
 
-$Backend = Join-Path $RepoRoot "backend"
-if ((Test-Path (Join-Path $Backend "artisan")) -and (Get-Command php -ErrorAction SilentlyContinue)) {
-    Push-Location $Backend
+Write-Host "V5 markers found." -ForegroundColor Green
+
+if (Get-Command php -ErrorAction SilentlyContinue) {
+    Push-Location (Join-Path $RepoRoot "backend")
     try {
-        Write-Host "Checking Laravel API routes..." -ForegroundColor Yellow
+        Write-Host "Checking PHP syntax and API routes..." -ForegroundColor Yellow
+        & php -l "database/seeders/DemoNewsSeeder.php"
+        if ($LASTEXITCODE -ne 0) { throw "DemoNewsSeeder syntax check failed." }
         & php artisan config:clear
         & php artisan route:list --path=api/v1
         if ($LASTEXITCODE -ne 0) { throw "Laravel API route check failed." }
-    } finally { Pop-Location }
+    }
+    finally { Pop-Location }
 }
 
 Push-Location (Join-Path $RepoRoot "SPTools")
@@ -30,6 +35,7 @@ try {
     Write-Host "Running Nuxt production build..." -ForegroundColor Yellow
     & npm run build
     if ($LASTEXITCODE -ne 0) { throw "Nuxt build failed." }
-} finally { Pop-Location }
+}
+finally { Pop-Location }
 
-Write-Host "V4 verification passed." -ForegroundColor Green
+Write-Host "V5 verification passed." -ForegroundColor Green

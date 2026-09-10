@@ -1,38 +1,64 @@
-# SP-Tools News Frontend ↔ Backend Audit (V4)
+# SP-Tools News backend/frontend audit — V5
 
-## Contract status
-The Nuxt frontend and Laravel backend are structurally aligned:
+## API contract
 
-- Frontend default API base: `http://127.0.0.1:8000/api/v1`
-- Laravel routes are registered through `routes/api.php`, with the app-level `/api` prefix and route-level `/v1` prefix.
-- Core routes match: news index/search/detail, featured, breaking, most-read, categories, tags and authors.
-- Query filters match: `q`, `category`, `tag`, `region`, `date`, `sort`, `featured`, `breaking`, `live`, `per_page`.
-- `ArticleResource` uses the camelCase fields expected by `SPTools/types/news.ts`.
+The Laravel route set and Nuxt `useNewsApi.ts` agree on the main public endpoints:
 
-## Problems found and fixed in this pack
+- `GET /api/v1/news`
+- `GET /api/v1/news/search`
+- `GET /api/v1/news/featured`
+- `GET /api/v1/news/breaking`
+- `GET /api/v1/news/most-read`
+- `GET /api/v1/news/{slug}`
+- `GET /api/v1/categories`
+- `GET /api/v1/categories/{slug}/news`
+- `GET /api/v1/tags`
+- `GET /api/v1/tags/{slug}/news`
+- `GET /api/v1/authors/{slug}/news`
 
-### 1. Port 3001 CORS mismatch
-The backend CORS config only explicitly allowed the original local frontend origins. V4 permits loopback development origins, including `127.0.0.1:3001`, while keeping arbitrary remote origins blocked. Production should still set `NEWS_FRONTEND_URL` to the real frontend origin.
+## Integration fixes included from V4/V5 pack
 
-### 2. Relative `/storage/...` article images
-When an article image path was already stored as `/storage/...`, the API could return it as a relative URL. A Nuxt frontend on a different port/domain would then request that path from the frontend host. V4 makes those URLs absolute using the Laravel request/app origin.
+- CORS permits the local Nuxt dev origin on `127.0.0.1:3001` / `localhost:3001` as well as the prior 3000 origin.
+- Article author links use the stored user slug rather than blindly slugifying the display name.
+- `/storage/...` cover/section images are returned with the Laravel origin so the Nuxt browser does not accidentally request them from port 3001.
 
-### 3. Author slug consistency
-The article resource previously derived an author slug from the author name. The author API resolves users by the actual `users.slug` column. V4 returns the real stored author slug when available, falling back to a generated slug only when necessary.
+## Why the News screenshots were empty
 
-## Local run order
+The screenshot showed the frontend reporting a failed request to `127.0.0.1:8000`. A UI redesign cannot supply real article data if Laravel is not reachable. Make sure the backend is running:
 
-Backend:
 ```powershell
 cd backend
-php artisan config:clear
 php artisan serve --host=127.0.0.1 --port=8000
 ```
 
-Frontend:
-```powershell
-cd SPTools
-npm run dev -- --port 3001
+Then check:
+
+```text
+http://127.0.0.1:8000/api/v1/health
+http://127.0.0.1:8000/api/v1/news
 ```
 
-Media service for image/download tools remains on port 8001.
+## Demo newsroom
+
+V5 adds 24 fictional, clearly identified development fixtures through `DemoNewsSeeder`. They are designed to populate:
+
+- News home lead/secondary stories
+- Breaking ticker
+- Most Read
+- Category archives
+- Search
+- Tag pages
+- Author pages
+- Article detail sections/timeline/source modules
+
+For an existing local database:
+
+```powershell
+.\SEED_DEMO_NEWS.ps1
+```
+
+For a brand-new local database (destructive):
+
+```powershell
+.\SEED_DEMO_NEWS.ps1 -Fresh
+```

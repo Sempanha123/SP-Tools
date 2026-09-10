@@ -1,75 +1,95 @@
-# SP-Tools Prism Aurora V4 — Platform + News Completion Pass
+# SP-Tools Prism Aurora V5
 
-Built specifically on top of the current GitHub `main` V3 UI.
+This V5 pass is built on top of the V4 redesign pack and focuses on the two things that were still unclear in the browser:
 
-## What V4 fixes
+1. The right-side downloader visual looked like a screenshot/mockup. V5 turns it into the actual interactive downloader workspace.
+2. The News UI needs real demo content to expose the finished layouts, filters, category pages, author pages, tags, most-read and breaking states.
 
-- Finishes light/dark semantic theme cleanup for old News screens.
-- Replaces the old full-purple News Search hero with the same cinematic editorial language as News Home.
-- Rebuilds News Search controls, results and sidebar.
-- Rebuilds News category hero/layout, author hero, tag hero and article header.
-- Adds useful category fallbacks when the News API is temporarily offline, so navigation does not collapse to only “Latest”.
-- Gives TikTok, Facebook and YouTube their own visual identity inside the shared downloader system.
-- Gives resolved media/result cards and quality rows platform-aware styling.
-- Updates browser theme-color metadata so the browser UI is not permanently violet.
-- Fixes local News CORS for a frontend running on port 3001.
-- Fixes absolute Laravel `/storage/...` article image URLs.
-- Uses the real stored author slug in article API responses.
+## Downloader UX change
 
-## Platform visual identities
+TikTok, Facebook and YouTube now use `components/download/Studio.vue`.
 
-- TikTok: dark creator/reel studio, cyan + pink signal, portrait preview, audio/no-watermark cues.
-- Facebook: Facebook-blue media desk, public reel/video composition, HD quality stack.
-- YouTube: red stream console, video-player timeline, 4K/video/audio cues.
+The dark platform panel is no longer decorative UI. The real URL input sits under a visible `01 · Start here` label. After submit, the same panel changes to a resolver state and then to the actual thumbnail/creator/channel + returned download formats.
 
-The downloader request/download logic itself is not replaced.
+Platform identities stay distinct:
 
-## Apply on Windows
+- TikTok: cyan + pink
+- Facebook: blue
+- YouTube: red
 
-Extract this pack into the repository root—the folder that contains both `SPTools` and `backend`—then run:
+The page no longer renders a fake player above the real form, so users should immediately understand where to paste a link.
+
+## News demo database
+
+V5 adds `backend/database/seeders/DemoNewsSeeder.php` and wires it into `DatabaseSeeder.php`.
+
+It creates:
+
+- 24 fictional demo articles
+- coverage across all 10 existing categories
+- 4 demo authors
+- featured stories
+- breaking stories
+- one live fixture
+- view counts for Most Read
+- tags, article sections, key points, timeline entries and source metadata
+- unique demo cover images from Picsum
+
+IMPORTANT: the seeded stories are synthetic UI-development fixtures, not real reporting. Their `source` and methodology fields explicitly identify them as demo content.
+
+## Apply
+
+Stop the Nuxt dev server first if possible.
 
 ```powershell
 Set-ExecutionPolicy -Scope Process Bypass
 .\APPLY_REDESIGN.ps1
 ```
 
-The script creates a timestamped backup first. It also adds `platform="..."` presentation props to the three existing downloader page components without changing their business logic.
+The installer creates `.ui-redesign-v5-backup-<timestamp>` before replacing existing files. It also retries locked files instead of failing immediately.
 
-### Start News API
+## Seed demo News without deleting the database
+
+```powershell
+.\SEED_DEMO_NEWS.ps1
+```
+
+This runs the normal `DatabaseSeeder`, which uses update-or-create behavior for the supplied fixtures.
+
+## Build a completely fresh local News database
+
+WARNING: this deletes the configured database tables/data and recreates them.
+
+```powershell
+.\SEED_DEMO_NEWS.ps1 -Fresh
+```
+
+Equivalent Laravel command:
 
 ```powershell
 cd backend
-php artisan config:clear
+php artisan migrate:fresh --seed
+```
+
+## Run services
+
+News API:
+
+```powershell
+cd backend
 php artisan serve --host=127.0.0.1 --port=8000
 ```
 
-### Start frontend
+Frontend:
 
 ```powershell
 cd SPTools
 npm run dev -- --port 3001
 ```
 
-### Start media API when using downloader/image tools
-Run the existing FastAPI media service on port 8001 as before.
+Keep the existing media service on port `8001` for downloader/image APIs.
 
-Hard refresh the browser with `Ctrl + Shift + R`.
-
-## Pages to review
-
-- `/`
-- `/tools`
-- `/tools/bg-remover`
-- `/tools/image-upscaler`
-- `/download/tiktok-download`
-- `/download/facebook-video-download`
-- `/download/youtube-download`
-- `/news`
-- `/news/search`
-- `/news/category/world`
-- any `/news/tag/...`
-- any `/news/author/...`
-- any `/news/posts/...`
+Then hard refresh the browser with `Ctrl + Shift + R`.
 
 ## Verify
 
@@ -77,6 +97,4 @@ Hard refresh the browser with `Ctrl + Shift + R`.
 .\VERIFY_REDESIGN.ps1
 ```
 
-This clears Laravel config, checks API route registration when PHP/backend dependencies are available, then runs the Nuxt production build.
-
-See `NEWS_BACKEND_AUDIT.md` for the frontend/backend compatibility audit.
+It checks the V5 marker, the new Studio component, the demo seeder PHP syntax, Laravel API routes, and runs the Nuxt production build.

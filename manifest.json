@@ -1,197 +1,60 @@
-[
-  {
-    "path": "SPTools/assets/css/main.css",
-    "sha256": "39f486db273b6d0c2b68339082e20eaecd6bcd4eda0f8b11c9d2536f588c98cc",
-    "bytes": 30868
-  },
-  {
-    "path": "SPTools/components/download/FormatRow.vue",
-    "sha256": "64d0b0c5502cc4de25941b3e3e69584f6d0e8d249c2f1b098781b8c07ea217e9",
-    "bytes": 2317
-  },
-  {
-    "path": "SPTools/components/download/MediaCard.vue",
-    "sha256": "027dd7789e38863ed5201411a9a1f931e3de150954d5a294f285ab6fdd7f5a7c",
-    "bytes": 4136
-  },
-  {
-    "path": "SPTools/components/download/Steps.vue",
-    "sha256": "a7057aaa881f889b31030184d16025d51542e70c3fc4ca31447b3941435f7843",
-    "bytes": 3235
-  },
-  {
-    "path": "SPTools/components/download/UrlInput.vue",
-    "sha256": "1addde188f3435e3a7b8faf8a63353d49bb53aea7f71ae80b553deb1c2b52071",
-    "bytes": 5607
-  },
-  {
-    "path": "SPTools/components/news/author/ArticleGrid.vue",
-    "sha256": "3cd4efd7bfff9929a9161339ea309d310ab414b55f9df2901d9349839c10027b",
-    "bytes": 3746
-  },
-  {
-    "path": "SPTools/components/news/author/Header.vue",
-    "sha256": "0683e3463029005466e4b42eff82609aeb63e4cf5ae4547da19fe3383228f83b",
-    "bytes": 5287
-  },
-  {
-    "path": "SPTools/components/news/home/BreakingTicker.vue",
-    "sha256": "df37d36ef768c899674a686f87e24f951d2f24803c031c38259e3442f0b6a47b",
-    "bytes": 2221
-  },
-  {
-    "path": "SPTools/components/news/home/CategoryNav.vue",
-    "sha256": "9e72cf6fe14789cdc59cef2d8e25132253b395fd97f06c9309d6e354d1830c04",
-    "bytes": 3500
-  },
-  {
-    "path": "SPTools/components/news/home/FeaturedNews.vue",
-    "sha256": "a4d443c37d4acd1b5ac10b24a28d83df6d3b7967e650946a996e04521ea6c35c",
-    "bytes": 6718
-  },
-  {
-    "path": "SPTools/components/news/home/Hero.vue",
-    "sha256": "65f6c58eadc2b7efbef5e42fee69548923812002293ffe7347300871629c7f3e",
-    "bytes": 6828
-  },
-  {
-    "path": "SPTools/components/news/home/LatestNews.vue",
-    "sha256": "fd0898ff2cd0d48e9160bd3562ab8be7d29e99fd375c9867a79583ce8176f914",
-    "bytes": 4885
-  },
-  {
-    "path": "SPTools/components/news/home/Newsletter.vue",
-    "sha256": "72782751bd462459ec87986997e6d3ffbb414decc5a6f356503291ed10717b29",
-    "bytes": 4691
-  },
-  {
-    "path": "SPTools/components/news/home/Topics.vue",
-    "sha256": "a2297eeaad7863435e2d59120ec2b1ef4f566fe68879b4957ae72bf7dba3eeca",
-    "bytes": 2897
-  },
-  {
-    "path": "SPTools/components/news/home/TrendingSidebar.vue",
-    "sha256": "76fbf1bd765efdfd445e06a3571f4500198f04b0dc014ce229a08db376ad59ab",
-    "bytes": 7648
-  },
-  {
-    "path": "SPTools/components/news/home/WorldRegions.vue",
-    "sha256": "8024783e35339e1c780db8478689119ab27739cd108e1b129a8c850f9c9713cf",
-    "bytes": 4130
-  },
-  {
-    "path": "SPTools/components/news/post/Header.vue",
-    "sha256": "1e95596b90483caeef513f00e74c3dc9d5a6625e9ed1a1f48cd19a951ea43732",
-    "bytes": 8517
-  },
-  {
-    "path": "SPTools/components/news/search/Controls.vue",
-    "sha256": "9021e251e9ce6482406826dcb5831108fefe2d29fb2c05e8103079f28d0af9c3",
-    "bytes": 5040
-  },
-  {
-    "path": "SPTools/components/news/search/Hero.vue",
-    "sha256": "da81cd0ab03aa7c06188ac8d962853f77a509ba8cdd0c2ee8c2b35d03ee7f061",
-    "bytes": 5256
-  },
-  {
-    "path": "SPTools/components/news/search/Results.vue",
-    "sha256": "61a035273acab76d0033da8d41eb0fda14e397127780c504e1a11e1b67f0d114",
-    "bytes": 3333
-  },
-  {
-    "path": "SPTools/components/news/search/Sidebar.vue",
-    "sha256": "cb12b227b0eba1b1844c726888e7de432a6794128af75243599a2af5c1b3b870",
-    "bytes": 5763
-  },
-  {
-    "path": "SPTools/components/news/shared/ArticleCard.vue",
-    "sha256": "a31cdb69e95498f55558004900b687989818ab2562874ef20b9ea762afceb0f1",
-    "bytes": 4409
-  },
-  {
-    "path": "SPTools/components/news/tag/ArticleGrid.vue",
-    "sha256": "3a96efde277f38ed822b7d4b96919d7fae80dd345ad740288d47fe9d438c082f",
-    "bytes": 3162
-  },
-  {
-    "path": "SPTools/components/news/tag/Header.vue",
-    "sha256": "7baaf1ea432048827baa9cac18aa4181ddafe5f96daa3f7ce4a462a5e738e6ca",
-    "bytes": 3236
-  },
-  {
-    "path": "SPTools/components/site/Footer.vue",
-    "sha256": "1725ece5450931e2201dd89c89d273e98345fc2d7ded10bac74b9fe68256a4b2",
-    "bytes": 4932
-  },
-  {
-    "path": "SPTools/components/site/Header.vue",
-    "sha256": "358befe192a73df64894a2b04f5c9c6e910a1802606d380144f77f8f731616e4",
-    "bytes": 15679
-  },
-  {
-    "path": "SPTools/components/tool/Dropzone.vue",
-    "sha256": "b15ef28efc42a128ce10fec5f594973e5d9e8042ea05b9e631496398898e8f74",
-    "bytes": 5678
-  },
-  {
-    "path": "SPTools/components/tool/Faq.vue",
-    "sha256": "5823b49c00bd8157498e4b151292350775ddda4631ef1cd9385163dff8c2ba90",
-    "bytes": 2807
-  },
-  {
-    "path": "SPTools/components/tool/Hero.vue",
-    "sha256": "c7d7c8aa48b2b50b9979a87599c9d805f23bb92442f78366b7f5ae8049914ece",
-    "bytes": 12139
-  },
-  {
-    "path": "SPTools/components/tool/RelatedTools.vue",
-    "sha256": "2d65599a041518a4fa1e23d44963a33bf228e6d8c27a84a1a3b24d1eb0dd1171",
-    "bytes": 3119
-  },
-  {
-    "path": "SPTools/components/ui/SectionHeading.vue",
-    "sha256": "62e5d8d58f5b4d3c349afdf9498f7542d14c41e7a781a70c58adee78b517bbac",
-    "bytes": 815
-  },
-  {
-    "path": "SPTools/nuxt.config.ts",
-    "sha256": "4d3a451bff38bdedc8c8cd4c640d448fe0f8ce69b4dfad89baa431f9d75d226b",
-    "bytes": 1155
-  },
-  {
-    "path": "SPTools/pages/index.vue",
-    "sha256": "18301cbb4f8d88c4e8ab66e2aab5f41e614c38ba1d62fe06ae107aca11ac538e",
-    "bytes": 20731
-  },
-  {
-    "path": "SPTools/pages/news/category/[slug].vue",
-    "sha256": "5875d5fa300abc2c1bff05f6ab326ef8086cf84f679f3fce5e8c166fef56f122",
-    "bytes": 11586
-  },
-  {
-    "path": "SPTools/pages/news/index.vue",
-    "sha256": "383c5245f945495f70b586d96f24fc13ed2709f2ed05f783223a8f81bf16995b",
-    "bytes": 2637
-  },
-  {
-    "path": "SPTools/pages/news/search.vue",
-    "sha256": "64e2c60da915980f5b157ca1fa149456dad5ca960dafe9ca69b467350aa378f2",
-    "bytes": 3964
-  },
-  {
-    "path": "SPTools/pages/tools/index.vue",
-    "sha256": "bb4e18ef938a1c8c0dfda9c5876af2d9690adee304c74fd7459f64d5cd7a10ee",
-    "bytes": 10571
-  },
-  {
-    "path": "backend/app/Http/Resources/Api/V1/ArticleResource.php",
-    "sha256": "429d7aaf8fcc0cf3d7e35842ed5906d1ae04d0d6fef2c9dd9d7d21dceaf98c1e",
-    "bytes": 4489
-  },
-  {
-    "path": "backend/config/cors.php",
-    "sha256": "a37a95247b64716d818a7ac669d107f79ab989afb0d361fac8964e37587ebb78",
-    "bytes": 938
-  }
-]
+{
+  "name": "SP-Tools Prism Aurora V5 \u2014 Real Downloader Studios + Demo Newsroom",
+  "version": "5.0",
+  "base": "V4 redesign / GitHub main update v3",
+  "file_count": 45,
+  "files": [
+    "SPTools/assets/css/main.css",
+    "SPTools/components/download/FormatRow.vue",
+    "SPTools/components/download/MediaCard.vue",
+    "SPTools/components/download/Steps.vue",
+    "SPTools/components/download/Studio.vue",
+    "SPTools/components/download/UrlInput.vue",
+    "SPTools/components/news/author/ArticleGrid.vue",
+    "SPTools/components/news/author/Header.vue",
+    "SPTools/components/news/home/BreakingTicker.vue",
+    "SPTools/components/news/home/CategoryNav.vue",
+    "SPTools/components/news/home/FeaturedNews.vue",
+    "SPTools/components/news/home/Hero.vue",
+    "SPTools/components/news/home/LatestNews.vue",
+    "SPTools/components/news/home/Newsletter.vue",
+    "SPTools/components/news/home/Topics.vue",
+    "SPTools/components/news/home/TrendingSidebar.vue",
+    "SPTools/components/news/home/WorldRegions.vue",
+    "SPTools/components/news/post/Header.vue",
+    "SPTools/components/news/search/Controls.vue",
+    "SPTools/components/news/search/Hero.vue",
+    "SPTools/components/news/search/Results.vue",
+    "SPTools/components/news/search/Sidebar.vue",
+    "SPTools/components/news/shared/ArticleCard.vue",
+    "SPTools/components/news/tag/ArticleGrid.vue",
+    "SPTools/components/news/tag/Header.vue",
+    "SPTools/components/site/Footer.vue",
+    "SPTools/components/site/Header.vue",
+    "SPTools/components/tool/Dropzone.vue",
+    "SPTools/components/tool/Faq.vue",
+    "SPTools/components/tool/Hero.vue",
+    "SPTools/components/tool/RelatedTools.vue",
+    "SPTools/components/ui/SectionHeading.vue",
+    "SPTools/nuxt.config.ts",
+    "SPTools/pages/download/facebook-video-download.vue",
+    "SPTools/pages/download/tiktok-download.vue",
+    "SPTools/pages/download/youtube-download.vue",
+    "SPTools/pages/index.vue",
+    "SPTools/pages/news/category/[slug].vue",
+    "SPTools/pages/news/index.vue",
+    "SPTools/pages/news/search.vue",
+    "SPTools/pages/tools/index.vue",
+    "backend/app/Http/Resources/Api/V1/ArticleResource.php",
+    "backend/config/cors.php",
+    "backend/database/seeders/DatabaseSeeder.php",
+    "backend/database/seeders/DemoNewsSeeder.php"
+  ],
+  "notes": [
+    "Downloader right-side platform UI is now the actual interactive workspace, not a fake player mockup.",
+    "TikTok, Facebook and YouTube keep their own visual identity while sharing one interaction system.",
+    "Includes V4 full News theme completion and API bridge fixes.",
+    "Adds DemoNewsSeeder with 24 synthetic development articles and four demo authors.",
+    "DatabaseSeeder now uses DemoNewsSeeder instead of the single ArticleSeeder fixture."
+  ]
+}
