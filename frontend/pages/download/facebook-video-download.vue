@@ -499,7 +499,7 @@ const faqs = [
     <DownloadStudio
       platform="facebook"
       eyebrow="Facebook Downloader"
-      title="Download Facebook videos and reels"
+      title="Free Facebook video downloader"
       :description="tool.description"
       :features="tool.features"
       :loading="loading"
@@ -611,7 +611,7 @@ const faqs = [
       description="Paste a public link, review the available video, then choose a quality."
     />
 
-    <ToolFaq :items="faqs" />
+    <ToolSeoLanding slug="facebook-video-download" />
     <ToolRelatedTools
       exclude="facebook-video-download"
     />

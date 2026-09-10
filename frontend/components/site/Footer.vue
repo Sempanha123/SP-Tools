@@ -19,14 +19,10 @@ const legalLinks = [
       <div class="grid gap-12 lg:grid-cols-[1.45fr_.75fr_.75fr_.75fr]">
         <div>
           <NuxtLink to="/" class="group inline-flex items-center gap-2.5">
-            <span class="relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-[14px] border border-white/10 bg-white text-[#0a0f17] transition duration-300 group-hover:-rotate-3 group-hover:scale-105">
-              <span class="absolute inset-x-0 bottom-0 h-[3px] bg-gradient-to-r from-violet-500 to-cyan-400" />
-              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 3 5 13h6l-1 8 9-12h-6V3Z"/></svg>
-            </span>
-            <span class="text-[19px] font-[740] tracking-[-.04em] text-white">SP<span class="text-violet-300">-Tools</span></span>
+            <SiteBrandLogo inverse />
           </NuxtLink>
 
-          <p class="mt-5 max-w-md text-[13px] leading-6 text-white/48">Practical image and media workflows with a focused global news desk—built as one premium browser workspace.</p>
+          <p class="mt-5 max-w-md text-[13px] leading-6 text-white/48">Free AI image tools, useful media downloaders, and a focused global news desk—built as one clean browser workspace.</p>
 
           <div class="mt-7 max-w-md">
             <p class="text-[8px] font-bold uppercase tracking-[.15em] text-white/28">Weekly product & news briefing</p>

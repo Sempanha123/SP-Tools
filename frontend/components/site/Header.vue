@@ -183,15 +183,7 @@ watch(
           class="group flex shrink-0 items-center gap-2.5 rounded-xl focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/10"
           @click="closeMobileMenu"
         >
-          <span class="relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-[14px] bg-fg text-surface-2 shadow-xs transition duration-300 group-hover:-rotate-3 group-hover:scale-105">
-            <span class="absolute inset-x-0 bottom-0 h-[3px] bg-gradient-to-r from-accent to-accent-2" />
-            <svg class="h-[19px] w-[19px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13 3 5 13h6l-1 8 9-12h-6V3Z" />
-            </svg>
-          </span>
-          <span class="text-[18px] font-[740] tracking-[-0.035em] text-fg">
-            SP<span class="text-accent">-Tools</span>
-          </span>
+          <SiteBrandLogo />
         </NuxtLink>
 
         <nav class="hidden h-[44px] items-center gap-1 rounded-[16px] border border-line bg-elevated/78 p-1 shadow-xs backdrop-blur-xl lg:flex" aria-label="Main navigation">

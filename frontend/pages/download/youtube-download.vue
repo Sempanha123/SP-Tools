@@ -623,7 +623,7 @@ const faqs = [
     <DownloadStudio
       platform="youtube"
       eyebrow="YouTube Downloader"
-      title="Download YouTube video or audio"
+      title="Free YouTube video and audio downloader"
       :description="tool.description"
       :features="tool.features"
       :loading="loading"
@@ -786,7 +786,7 @@ const faqs = [
       description="Paste once, review the available media, then choose the video or audio format you need."
     />
 
-    <ToolFaq :items="faqs" />
+    <ToolSeoLanding slug="youtube-download" />
     <ToolRelatedTools
       exclude="youtube-download"
     />

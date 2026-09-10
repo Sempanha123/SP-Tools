@@ -172,7 +172,7 @@ const faqs = [
     </DownloadStudio>
 
     <DownloadSteps :steps="steps" title="TikTok, from post to file" description="The same workspace handles the real link, real post preview and available downloads." />
-    <ToolFaq :items="faqs" />
+    <ToolSeoLanding slug="tiktok-download" />
     <ToolRelatedTools exclude="tiktok-download" />
   </div>
 </template>

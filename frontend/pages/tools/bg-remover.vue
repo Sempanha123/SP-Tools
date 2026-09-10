@@ -297,7 +297,7 @@ const faqs = [
   <div>
     <ToolHero
       eyebrow="AI Background Remover"
-      title="Remove backgrounds on your device"
+      title="Free AI background remover online"
       :description="tool.description"
       :features="tool.features"
       :accent="tool.accent"
@@ -499,7 +499,7 @@ const faqs = [
       </div>
     </section>
 
-    <ToolFaq :items="faqs" />
+    <ToolSeoLanding slug="bg-remover" />
     <ToolRelatedTools exclude="bg-remover" />
   </div>
 </template>

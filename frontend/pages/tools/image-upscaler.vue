@@ -463,7 +463,7 @@ const faqs = [
   <div>
     <ToolHero
       eyebrow="AI Image Upscaler"
-      title="Upscale images in your browser"
+      title="Free AI image upscaler online"
       :description="tool.description"
       :features="tool.features"
       :accent="tool.accent"
@@ -741,7 +741,7 @@ const faqs = [
       </div>
     </section>
 
-    <ToolFaq :items="faqs" />
+    <ToolSeoLanding slug="image-upscaler" />
     <ToolRelatedTools exclude="image-upscaler" />
   </div>
 </template>

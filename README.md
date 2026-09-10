@@ -1,113 +1,146 @@
-# SP-Tools V39 — Global Sticky Context Header + Mobile Menu Fix
+# SP-Tools V41 — Real Brand Logo + Competitive Free SEO
 
-V39 changes the context header architecture instead of trying to keep the old
-DownloadStudio-local sticky rail alive.
+V41 combines the approved SP-Tools branding direction with a broader,
+high-intent SEO pass for the five main utility pages.
 
-## Why the downloader rail moved away at "How it works"
+## Production logo integration
 
-The old rail lived **inside `DownloadStudio.vue`**.
-
-`DownloadSteps` / "How it works" is rendered **after** `DownloadStudio`, so even
-a correct `position: sticky` element is constrained by the bottom of its own
-parent. When the page reached "How it works", that sticky element had to leave.
-
-V39 moves the context rail to:
+Installed brand assets:
 
 ```text
-layouts/default.vue
+/public/favicon.svg
+/public/favicon-32x32.png
+/public/apple-touch-icon.png
+/public/site.webmanifest
+
+/public/brand/sp-tools-mark.svg
+/public/brand/sp-tools-mark-192.png
+/public/brand/sp-tools-mark-512.png
+/public/brand/sp-tools-logo.svg
+/public/brand/sp-tools-og.png
 ```
 
-directly after:
+The old generic lightning placeholder in the global Header and Footer is
+replaced with one reusable component:
 
 ```text
-<SiteHeader />
+components/site/BrandLogo.vue
 ```
 
-That means its sticky containing block is the whole site layout, not just the
-download studio.
+The word "SP-Tools" remains semantic HTML next to the SVG mark, which is better
+for accessibility and avoids turning the entire brand name into image-only text.
 
-Now it stays available through:
+## Brand SEO
+
+`SiteBrandSeo` adds:
 
 ```text
-download workspace
-How it works
-FAQ
-related tools
+Organization JSON-LD
+WebSite JSON-LD
+brand logo ImageObject
+default Open Graph image
+default Twitter image
 ```
 
-until the user leaves that tool page.
+The five V40 tool pages also receive a `WebApplication` entity with a free
+Offer (`price: 0`) in addition to the existing WebPage and BreadcrumbList data.
 
-## Downloader context
+## More competitive "free" intent
 
-Examples:
+The keyword/content expansion is based on current search-result patterns around
+free online tools. High-ranking pages repeatedly make a few useful promises
+clear near the top:
 
 ```text
-Interactive downloader
-TikTok download studio
-
-Interactive downloader
-Facebook media studio
-
-Interactive downloader
-YouTube stream studio
+free online
+no signup
+no watermark when true
+supported formats
+2x / 4x
+transparent PNG
+public links
+HD when available
+mobile/browser access
 ```
 
-## AI context
+V41 uses those ideas only where SP-Tools can actually support the claim.
 
-V39 adds the same system for AI pages:
+Examples added naturally to the page copy and keyword clusters:
 
 ```text
-AI image workspace
-Background remover studio
+100% free background remover
+free background remover no signup
+remove background free online
 
-AI image workspace
-Image upscaler studio
+100% free image upscaler
+free image upscaler no signup
+upscale image free online
+
+free TikTok downloader online
+TikTok downloader free no signup
+free TikTok MP4 downloader
+
+free Facebook downloader online
+Facebook Reels downloader free
+free FB video downloader
+
+free YouTube downloader online
+YouTube downloader free no signup
+free YouTube audio downloader
+free YouTube MP4 downloader
 ```
 
-It reads the existing tool catalogue from `useTools()` instead of duplicating
-the entire tool configuration.
+There is also a new visible "Free online utility" section on each page rather
+than hiding keyword text from users.
 
-## Mobile menu fix
+## Why the patch does not repeat "free" dozens of times
 
-The V36 smart header uses `pointer-events: none` on the outer floating shell so
-the hidden header does not block page interaction.
+Search engines can treat unnatural repetition as keyword stuffing.
 
-The desktop floating panel re-enabled pointer events, but the mobile dropdown
-lives outside that panel. That is why the menu could open visually but its
-items could not be clicked.
-
-V39 gives the mobile menu its own:
+V41 puts the phrase in useful locations:
 
 ```text
-pointer-events: auto
-z-index above the context rail
+SEO title
+meta description
+main page content
+quick-answer copy
+free-value section
+FAQ/Q&A
+related internal links
+WebApplication Offer
 ```
 
-On mobile it is also positioned as a fixed dropdown below the global header.
+and then uses topic variations rather than copying the exact same phrase over
+and over.
 
-## Z-index order
+## Search infrastructure
+
+V41 also adds a dynamic:
 
 ```text
-mobile/global SiteHeader menu   70+
-global SiteHeader               70
-context rail                    28-32
-page content                    normal
+/robots.txt
 ```
 
-So the context rail cannot block the mobile navigation.
+that uses the current request origin and points crawlers to:
+
+```text
+/sitemap.xml
+```
+
+This avoids hardcoding a development domain into robots.txt.
 
 ## Apply
 
-V36/V38 should already be installed.
+From the SP-Tools repository root:
 
 ```powershell
 Ctrl + C
 
 Set-ExecutionPolicy -Scope Process Bypass
-.\APPLY_V39.ps1
+.\APPLY_V41.ps1
 ```
 
-Then restart:
+Restart:
 
 ```powershell
 cd frontend
@@ -120,26 +153,23 @@ Hard refresh:
 Ctrl + Shift + R
 ```
 
-Test:
-
-```text
-/download/tiktok-download
-/download/facebook-video-download
-/download/youtube-download
-/tools/bg-remover
-/tools/image-upscaler
-```
-
-For downloader pages, scroll all the way into "How it works" and FAQ. The
-context rail should remain sticky.
-
-On mobile, open AI Tools / Downloaders and click menu entries.
+Check the Header/Footer logo, browser tab favicon, and all five utility pages.
 
 ## Verify
 
 ```powershell
-.\VERIFY_V39.ps1
+.\VERIFY_V41.ps1
 ```
 
-The installer makes a timestamped backup of the layout, Header.vue,
-DownloadStudio.vue and main.css before changing them.
+The installer makes a timestamped backup before modifying existing files.
+
+After production deployment:
+
+1. open `/robots.txt`
+2. open `/sitemap.xml`
+3. check page source for canonical and JSON-LD
+4. submit the sitemap in Google Search Console
+5. request re-indexing for the five updated tool URLs
+
+SEO rankings cannot be guaranteed; the goal is to improve relevance,
+crawlability, branding, internal linking, and useful search-intent coverage.
