@@ -151,7 +151,7 @@ useHead(() => ({
 </script>
 
 <template>
-    <main class="min-h-screen overflow-hidden bg-white text-slate-950">
+    <main class="min-h-screen overflow-hidden bg-surface text-fg">
         <!-- ===================================================== -->
         <!-- SEARCH HERO -->
         <!-- ===================================================== -->
@@ -168,8 +168,8 @@ useHead(() => ({
         <!-- SEARCH CONTENT -->
         <!-- ===================================================== -->
 
-        <section class="border-y border-slate-100
-      bg-slate-50 py-16 sm:py-20 lg:py-24">
+        <section class="border-y border-line
+      bg-surface-2 py-16 sm:py-20 lg:py-24">
             <div class="mx-auto max-w-7xl px-6">
 
                 <!-- Filters -->

@@ -14,7 +14,7 @@ const secondaryArticles = computed(() =>
 </script>
 
 <template>
-  <section v-if="mainArticle" id="top-stories" class="scroll-mt-32 bg-white py-16 sm:py-20">
+  <section v-if="mainArticle" id="top-stories" class="scroll-mt-32 bg-surface py-16 sm:py-20">
     <div class="mx-auto max-w-7xl px-6">
       <div class="mb-9 flex flex-col justify-between
         gap-4 sm:flex-row sm:items-end">
@@ -26,36 +26,36 @@ const secondaryArticles = computed(() =>
             Top stories
           </div>
 
-          <h2 class="mt-4 text-3xl font-bold
+          <h2 class="mt-4 text-3xl font-bold text-fg
             tracking-[-0.04em] sm:text-5xl">
             Latest global
-            <span class="text-slate-400">
+            <span class="text-fg-subtle">
               developments.
             </span>
           </h2>
         </div>
 
-        <p class="text-xs text-slate-400">
+        <p class="text-xs text-fg-subtle">
           Updated throughout the day
         </p>
       </div>
 
       <div class="grid gap-5 lg:grid-cols-[1.55fr_0.75fr]">
         <NuxtLink :to="`/news/posts/${mainArticle.slug}`" class="group relative min-h-[510px]
-          overflow-hidden rounded-[34px] bg-slate-950">
+          overflow-hidden rounded-[34px] bg-accent text-accent-fg">
           <img v-if="mainArticle?.image" :src="mainArticle.image" :alt="mainArticle.title" loading="lazy" class="absolute inset-0 h-full w-full
   object-cover transition-transform duration-700
   group-hover:scale-105" />
 
           <div v-else class="absolute inset-0 flex items-center
   justify-center bg-gradient-to-br
-  from-slate-200 via-slate-100 to-slate-300">
+  from-surface-3 via-surface-2 to-surface-3">
             <div class="text-center">
               <span class="text-5xl" aria-hidden="true">
                 📰
               </span>
 
-              <p class="mt-3 text-sm font-semibold text-slate-500">
+              <p class="mt-3 text-sm font-semibold text-fg-muted">
                 No cover image
               </p>
             </div>
@@ -73,7 +73,7 @@ const secondaryArticles = computed(() =>
             </span>
 
             <span v-if="mainArticle.isLive" class="inline-flex items-center gap-2
-              rounded-full bg-white/90 px-3 py-1.5
+              rounded-full bg-surface/90 px-3 py-1.5
               text-[9px] font-bold uppercase
               tracking-wider text-red-600 backdrop-blur">
               <span class="relative flex h-1.5 w-1.5">
@@ -102,12 +102,12 @@ const secondaryArticles = computed(() =>
             </h3>
 
             <p class="mt-4 max-w-2xl text-sm
-              leading-7 text-slate-300 sm:text-base">
+              leading-7 text-fg-subtle sm:text-base">
               {{ mainArticle.excerpt }}
             </p>
 
             <div class="mt-6 flex flex-wrap items-center
-              gap-3 text-xs text-slate-300">
+              gap-3 text-xs text-fg-subtle">
               <span>{{ mainArticle.source }}</span>
               <span>•</span>
               <time :datetime="mainArticle.publishedAt">
@@ -124,7 +124,7 @@ const secondaryArticles = computed(() =>
 
           <div class="absolute right-6 top-6 flex h-12 w-12
             items-center justify-center rounded-2xl
-            border border-white/20 bg-white/10
+            border border-line/20 bg-surface/10
             text-xl text-white backdrop-blur
             transition-transform group-hover:translate-x-1">
             →
@@ -135,7 +135,7 @@ const secondaryArticles = computed(() =>
           <NuxtLink v-for="article in secondaryArticles" :key="article.id" :to="`/news/posts/${article.slug}`" class="group grid min-h-[155px]
             grid-cols-[125px_minmax(0,1fr)]
             overflow-hidden rounded-[26px]
-            border border-slate-200 bg-white
+            border border-line bg-surface
             transition-all hover:-translate-y-0.5
             hover:border-indigo-200
             hover:shadow-lg">
@@ -167,13 +167,13 @@ const secondaryArticles = computed(() =>
               </div>
 
               <h3 class="secondary-title mt-2 text-base
-                font-bold leading-snug text-slate-950
+                font-bold leading-snug text-fg
                 transition-colors group-hover:text-indigo-600">
                 {{ article.title }}
               </h3>
 
               <div class="mt-auto flex items-center gap-2
-                text-[10px] text-slate-400">
+                text-[10px] text-fg-subtle">
                 <time :datetime="article.publishedAt">
                   {{ timeAgo(article.publishedAt) }}
                 </time>

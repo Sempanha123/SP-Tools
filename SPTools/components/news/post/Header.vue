@@ -117,7 +117,7 @@ const handleImageError = () => {
 
 <template>
   <header class="relative overflow-hidden
-    bg-white pb-10 pt-32
+    bg-surface pb-10 pt-32
     sm:pb-14 sm:pt-40">
     <!-- Background decoration -->
 
@@ -149,7 +149,7 @@ const handleImageError = () => {
 
       <nav aria-label="Breadcrumb" class="flex flex-wrap items-center
         gap-2 text-[10px] font-medium
-        text-slate-400">
+        text-fg-subtle">
         <NuxtLink to="/" class="transition-colors
           hover:text-indigo-600">
           Home
@@ -172,7 +172,7 @@ const handleImageError = () => {
         <span>/</span>
 
         <span class="max-w-[240px] truncate
-          text-slate-600 sm:max-w-md">
+          text-fg-muted sm:max-w-md">
           {{ article.title }}
         </span>
       </nav>
@@ -194,12 +194,12 @@ const handleImageError = () => {
               <span class="relative flex h-2 w-2">
                 <span class="absolute inline-flex
                   h-full w-full animate-ping
-                  rounded-full bg-white
+                  rounded-full bg-surface
                   opacity-60" />
 
                 <span class="relative inline-flex
                   h-2 w-2 rounded-full
-                  bg-white" />
+                  bg-surface" />
               </span>
 
               Breaking
@@ -229,10 +229,10 @@ const handleImageError = () => {
             </NuxtLink>
 
             <span class="rounded-full
-              border border-slate-200
-              bg-white px-3.5 py-2
+              border border-line
+              bg-surface px-3.5 py-2
               text-[9px] font-semibold
-              text-slate-500">
+              text-fg-subtle">
               {{ article.region }}
             </span>
           </div>
@@ -242,7 +242,7 @@ const handleImageError = () => {
           <h1 class="mt-7 max-w-5xl
             text-4xl font-bold leading-[1.05]
             tracking-[-0.055em]
-            text-slate-950
+            text-fg
             sm:text-5xl lg:text-6xl">
             {{ article.title }}
           </h1>
@@ -250,7 +250,7 @@ const handleImageError = () => {
           <!-- Excerpt -->
 
           <p class="mt-6 max-w-3xl
-            text-base leading-8 text-slate-500
+            text-base leading-8 text-fg-subtle
             sm:text-lg">
             {{ article.excerpt }}
           </p>
@@ -259,10 +259,10 @@ const handleImageError = () => {
 
           <div v-if="article.tags.length" class="mt-7 flex flex-wrap gap-2">
             <NuxtLink v-for="tag in article.tags.slice(0, 5)" :key="tag" :to="`/news/tag/${tagToSlug(tag)}`" class="rounded-full
-              border border-slate-200
-              bg-white px-3 py-1.5
+              border border-line
+              bg-surface px-3 py-1.5
               text-[9px] font-semibold
-              text-slate-500 transition-all
+              text-fg-subtle transition-all
               hover:-translate-y-0.5
               hover:border-indigo-200
               hover:bg-indigo-50
@@ -275,8 +275,8 @@ const handleImageError = () => {
         <!-- Article quick information -->
 
         <div class="hidden rounded-[26px]
-          border border-slate-200
-          bg-white/80 p-5
+          border border-line
+          bg-surface/80 p-5
           shadow-[0_16px_45px_rgba(15,23,42,0.06)]
           backdrop-blur lg:block">
           <p class="text-[9px] font-bold uppercase
@@ -285,16 +285,16 @@ const handleImageError = () => {
           </p>
 
           <dl class="mt-4 divide-y
-            divide-slate-100">
+            divide-line">
             <div class="flex items-center
               justify-between gap-4 py-3">
               <dt class="text-[10px]
-                text-slate-400">
+                text-fg-subtle">
                 Reading time
               </dt>
 
               <dd class="text-[10px]
-                font-bold text-slate-700">
+                font-bold text-fg-muted">
                 {{ article.readTime }}
               </dd>
             </div>
@@ -302,12 +302,12 @@ const handleImageError = () => {
             <div class="flex items-center
               justify-between gap-4 py-3">
               <dt class="text-[10px]
-                text-slate-400">
+                text-fg-subtle">
                 Views
               </dt>
 
               <dd class="text-[10px]
-                font-bold text-slate-700">
+                font-bold text-fg-muted">
                 {{ formattedViews }}
               </dd>
             </div>
@@ -315,12 +315,12 @@ const handleImageError = () => {
             <div class="flex items-center
               justify-between gap-4 py-3">
               <dt class="text-[10px]
-                text-slate-400">
+                text-fg-subtle">
                 Region
               </dt>
 
               <dd class="text-[10px]
-                font-bold text-slate-700">
+                font-bold text-fg-muted">
                 {{ article.region }}
               </dd>
             </div>
@@ -328,13 +328,13 @@ const handleImageError = () => {
             <div class="flex items-center
               justify-between gap-4 py-3">
               <dt class="text-[10px]
-                text-slate-400">
+                text-fg-subtle">
                 Source
               </dt>
 
               <dd class="max-w-[120px] truncate
                 text-[10px] font-bold
-                text-slate-700">
+                text-fg-muted">
                 {{ article.source }}
               </dd>
             </div>
@@ -343,7 +343,7 @@ const handleImageError = () => {
           <a href="#article-content" class="mt-4 flex w-full
             items-center justify-center
             gap-2 rounded-xl
-            bg-slate-950 px-4 py-3
+            bg-accent text-accent-fg px-4 py-3
             text-[10px] font-bold
             text-white transition-all
             hover:bg-indigo-600">
@@ -358,7 +358,7 @@ const handleImageError = () => {
 
       <div class="mt-10 flex flex-col
         justify-between gap-6
-        border-y border-slate-200
+        border-y border-line
         py-5 sm:flex-row sm:items-center">
         <!-- Author -->
 
@@ -376,20 +376,20 @@ const handleImageError = () => {
           <div class="min-w-0">
             <p class="text-[9px] font-bold
               uppercase tracking-[0.15em]
-              text-slate-400">
+              text-fg-subtle">
               Written by
             </p>
 
             <p class="mt-1 truncate
               text-sm font-bold
-              text-slate-800
+              text-fg
               transition-colors
               group-hover:text-indigo-600">
               {{ article.author }}
             </p>
 
             <p class="mt-0.5 text-[10px]
-              text-slate-400">
+              text-fg-subtle">
               SP-Tools News contributor
             </p>
           </div>
@@ -403,12 +403,12 @@ const handleImageError = () => {
           <div>
             <p class="text-[8px] font-bold
               uppercase tracking-[0.14em]
-              text-slate-400">
+              text-fg-subtle">
               Published
             </p>
 
             <time :datetime="article.publishedAt" class="mt-1 block text-[10px]
-              font-semibold text-slate-700">
+              font-semibold text-fg-muted">
               {{ formattedDate }}
             </time>
           </div>
@@ -416,12 +416,12 @@ const handleImageError = () => {
           <div>
             <p class="text-[8px] font-bold
               uppercase tracking-[0.14em]
-              text-slate-400">
+              text-fg-subtle">
               Time
             </p>
 
             <p class="mt-1 text-[10px]
-              font-semibold text-slate-700">
+              font-semibold text-fg-muted">
               {{ formattedTime }}
             </p>
           </div>
@@ -429,12 +429,12 @@ const handleImageError = () => {
           <div>
             <p class="text-[8px] font-bold
               uppercase tracking-[0.14em]
-              text-slate-400">
+              text-fg-subtle">
               Reading
             </p>
 
             <p class="mt-1 text-[10px]
-              font-semibold text-slate-700">
+              font-semibold text-fg-muted">
               {{ article.readTime }}
             </p>
           </div>
@@ -442,12 +442,12 @@ const handleImageError = () => {
           <div>
             <p class="text-[8px] font-bold
               uppercase tracking-[0.14em]
-              text-slate-400">
+              text-fg-subtle">
               Audience
             </p>
 
             <p class="mt-1 text-[10px]
-              font-semibold text-slate-700">
+              font-semibold text-fg-muted">
               {{ formattedViews }} views
             </p>
           </div>
@@ -459,7 +459,7 @@ const handleImageError = () => {
       <figure class="mt-10">
         <div class="relative min-h-[280px]
           overflow-hidden rounded-[28px]
-          bg-slate-100
+          bg-surface-2
           shadow-[0_24px_70px_rgba(15,23,42,0.14)]
           sm:min-h-[440px]
           lg:min-h-[590px]">
@@ -478,18 +478,18 @@ const handleImageError = () => {
             to-indigo-50 px-6 text-center">
             <div class="flex h-16 w-16
               items-center justify-center
-              rounded-2xl bg-white
+              rounded-2xl bg-surface
               text-2xl shadow-sm">
               📰
             </div>
 
             <p class="mt-4 text-sm font-bold
-              text-slate-700">
+              text-fg-muted">
               Article image unavailable
             </p>
 
             <p class="mt-2 text-xs
-              text-slate-400">
+              text-fg-subtle">
               The story content remains available below.
             </p>
           </div>
@@ -512,8 +512,8 @@ const handleImageError = () => {
             flex flex-wrap items-center
             gap-2 sm:left-7 sm:top-7">
             <span class="rounded-full
-              border border-white/20
-              bg-slate-950/65
+              border border-line/20
+              bg-accent text-accent-fg/65
               px-3 py-2 text-[9px]
               font-bold uppercase
               tracking-[0.14em] text-white
@@ -522,10 +522,10 @@ const handleImageError = () => {
             </span>
 
             <span class="rounded-full
-              border border-white/20
-              bg-white/85 px-3 py-2
+              border border-line/20
+              bg-surface/85 px-3 py-2
               text-[9px] font-semibold
-              text-slate-700 backdrop-blur-md">
+              text-fg-muted backdrop-blur-md">
               {{ article.region }}
             </span>
           </div>
@@ -536,12 +536,12 @@ const handleImageError = () => {
             left-1/2 flex h-11 w-11
             -translate-x-1/2 items-center
             justify-center rounded-2xl
-            border border-white/20
-            bg-slate-950/60 text-white
+            border border-line/20
+            bg-accent text-accent-fg/60 text-white
             backdrop-blur-md
             transition-all
             hover:-translate-y-1
-            hover:bg-slate-950">
+            hover:bg-accent text-accent-fg">
             ↓
           </a>
         </div>
@@ -551,7 +551,7 @@ const handleImageError = () => {
         <figcaption class="mt-3 flex flex-col
           justify-between gap-2 px-1
           text-[9px] leading-5
-          text-slate-400 sm:flex-row">
+          text-fg-subtle sm:flex-row">
           <span>
             Image accompanying:
             {{ article.title }}

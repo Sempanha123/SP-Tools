@@ -1,28 +1,43 @@
-from fastapi import FastAPI, File, UploadFile, Form, Query, BackgroundTasks
-from fastapi.responses import StreamingResponse, FileResponse, JSONResponse, HTMLResponse
-from app.model.remove_background.u2net import U2NET
-from PIL import Image
-import torch
-import numpy as np
-from torchvision import transforms
-import os
 import io
-import uuid
-from fastapi.middleware.cors import CORSMiddleware
-from app.model.upscale.upscale import Upscale 
-import requests
-from bs4 import BeautifulSoup
-import yt_dlp
+import os
 import subprocess
-from pytubefix import YouTube
+import uuid
+
+from bs4 import BeautifulSoup
+from fastapi import BackgroundTasks, FastAPI, File, Form, HTTPException, Query, UploadFile
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse, HTMLResponse, JSONResponse, StreamingResponse
 import httpx
-from fastapi import FastAPI, HTTPException
-from fastapi.responses import StreamingResponse
+from PIL import Image
+from pytubefix import YouTube
+import requests
+import yt_dlp
+
+try:
+    import numpy as np
+    import torch
+    from torchvision import transforms
+    from app.model.remove_background.u2net import U2NET
+    from app.model.upscale.upscale import Upscale
+
+    TORCH_AVAILABLE = True
+    upscale_model = Upscale()
+except Exception as e:
+    TORCH_AVAILABLE = False
+    U2NET = None
+    upscale_model = None
+    print(f"Warning: PyTorch models not initialized: {e}")
+
 app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=[
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        "http://localhost:3001",
+        "http://127.0.0.1:3001",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -30,8 +45,13 @@ app.add_middleware(
 )
 
 
-
-upscale_model = Upscale()
+@app.get("/health")
+def health():
+    return {
+        "status": "ok",
+        "service": "SP-Tools Media API",
+        "ai_models_available": TORCH_AVAILABLE,
+    }
 
 
 def preprocess(image: Image.Image):
@@ -56,6 +76,12 @@ def postprocess(mask_tensor, original_image):
 
 @app.post("/remove-bg/")
 async def remove_bg(file: UploadFile = File(...)):
+    if not TORCH_AVAILABLE:
+        raise HTTPException(
+            status_code=503,
+            detail="AI image models are unavailable. Run this service with Python 3.10-3.12 and install torch and torchvision.",
+        )
+
     model_path = "saved_models/u2net/u2net.pth"
     model = U2NET(3, 1)
     model.load_state_dict(torch.load(model_path, map_location="cpu"))
@@ -83,6 +109,12 @@ async def remove_bg(file: UploadFile = File(...)):
 
 @app.post("/upscale")
 async def upscale(file: UploadFile = File(...), scale: int = Form(...)):
+    if not TORCH_AVAILABLE or upscale_model is None:
+        raise HTTPException(
+            status_code=503,
+            detail="AI image models are unavailable. Run this service with Python 3.10-3.12 and install torch and torchvision.",
+        )
+
     contents = await file.read()
     
     # ✅ Save the uploaded image before processing

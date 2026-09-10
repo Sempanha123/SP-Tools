@@ -26,7 +26,7 @@ const articleLabel = computed(() => {
 <template>
   <header
     class="relative overflow-hidden
-    bg-slate-950 pb-20 pt-36
+    bg-accent text-accent-fg pb-20 pt-36
     text-white sm:pb-24 sm:pt-44"
   >
     <!-- Background effects -->
@@ -75,7 +75,7 @@ const articleLabel = computed(() => {
       <nav
         class="flex flex-wrap items-center
         justify-center gap-2
-        text-[10px] text-slate-400"
+        text-[10px] text-fg-subtle"
       >
         <NuxtLink
           to="/"
@@ -97,7 +97,7 @@ const articleLabel = computed(() => {
 
         <span>/</span>
 
-        <span class="text-slate-300">
+        <span class="text-fg-subtle">
           {{ tagName }}
         </span>
       </nav>
@@ -107,8 +107,8 @@ const articleLabel = computed(() => {
       <div
         class="mt-8 inline-flex
         items-center gap-2 rounded-full
-        border border-white/10
-        bg-white/[0.06] px-4 py-2
+        border border-line/10
+        bg-surface/[0.06] px-4 py-2
         text-[9px] font-bold uppercase
         tracking-[0.18em]
         text-indigo-200 backdrop-blur"
@@ -144,7 +144,7 @@ const articleLabel = computed(() => {
 
       <p
         class="mx-auto mt-6 max-w-2xl
-        text-sm leading-7 text-slate-400
+        text-sm leading-7 text-fg-subtle
         sm:text-base"
       >
         Follow the latest reports, developments,
@@ -159,12 +159,12 @@ const articleLabel = computed(() => {
       <div
         class="mt-8 flex flex-wrap
         items-center justify-center gap-3
-        text-[10px] text-slate-400"
+        text-[10px] text-fg-subtle"
       >
         <span
           class="inline-flex items-center
           gap-2 rounded-full border
-          border-white/10 bg-white/[0.04]
+          border-line/10 bg-surface/[0.04]
           px-4 py-2"
         >
           <span
@@ -178,7 +178,7 @@ const articleLabel = computed(() => {
         <span
           class="inline-flex items-center
           gap-2 rounded-full border
-          border-white/10 bg-white/[0.04]
+          border-line/10 bg-surface/[0.04]
           px-4 py-2"
         >
           <span
@@ -193,7 +193,7 @@ const articleLabel = computed(() => {
           v-if="latestPublishedAt"
           class="inline-flex items-center
           gap-2 rounded-full border
-          border-white/10 bg-white/[0.04]
+          border-line/10 bg-surface/[0.04]
           px-4 py-2"
         >
           Updated
@@ -207,8 +207,8 @@ const articleLabel = computed(() => {
         href="#tag-stories"
         class="group mt-9 inline-flex
         items-center gap-2 rounded-2xl
-        bg-white px-6 py-3.5
-        text-xs font-bold text-slate-950
+        bg-surface px-6 py-3.5
+        text-xs font-bold text-fg
         shadow-[0_16px_40px_rgba(0,0,0,0.24)]
         transition-all hover:-translate-y-0.5"
       >

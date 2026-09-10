@@ -107,7 +107,7 @@ useHead(() => ({
 
 <template>
   <main class="min-h-screen overflow-hidden
-  bg-white text-slate-950">
+  bg-surface text-fg">
     <div v-if="pending" class="mx-auto min-h-[70vh]
     max-w-7xl px-6 py-32 text-center">
       Loading author...
@@ -120,7 +120,7 @@ useHead(() => ({
       </h1>
 
       <button type="button" class="mt-6 rounded-xl
-      bg-slate-950 px-5 py-3
+      bg-accent text-accent-fg px-5 py-3
       text-sm font-bold text-white" @click="retryLoad">
         Try again
       </button>
@@ -134,7 +134,7 @@ useHead(() => ({
       <NewsHomeCategoryNav />
 
       <!-- Featured article -->
-      <section v-if="featuredArticle" class="bg-white py-16 sm:py-20">
+      <section v-if="featuredArticle" class="bg-surface py-16 sm:py-20">
         <div class="mx-auto max-w-7xl px-6">
           <div class="mb-8 flex flex-col
           justify-between gap-4
@@ -148,20 +148,20 @@ useHead(() => ({
               <h2 class="mt-3 text-3xl font-bold
               tracking-[-0.035em]">
                 Featured article by
-                <span class="text-slate-400">
+                <span class="text-fg-subtle">
                   {{ author.name }}
                 </span>
               </h2>
             </div>
 
-            <span class="text-xs text-slate-400">
+            <span class="text-xs text-fg-subtle">
               Most recent publication
             </span>
           </div>
 
           <NuxtLink :to="`/news/posts/${featuredArticle.slug}`" class="group grid overflow-hidden
           rounded-[34px] border
-          border-slate-200 bg-white
+          border-line bg-surface
           shadow-[0_20px_60px_rgba(15,23,42,0.08)]
           lg:grid-cols-[1.15fr_0.85fr]">
             <div class="relative min-h-[360px]
@@ -194,7 +194,7 @@ useHead(() => ({
                   Breaking
                 </span>
 
-                <span v-if="featuredArticle.isLive" class="rounded-full bg-white/90
+                <span v-if="featuredArticle.isLive" class="rounded-full bg-surface/90
                 px-3 py-1.5 text-[9px]
                 font-bold uppercase tracking-wider
                 text-red-600">
@@ -214,17 +214,17 @@ useHead(() => ({
 
               <h2 class="mt-5 text-3xl font-bold
               leading-tight tracking-[-0.04em]
-              text-slate-950 sm:text-4xl">
+              text-fg sm:text-4xl">
                 {{ featuredArticle.title }}
               </h2>
 
               <p class="mt-5 text-sm leading-7
-              text-slate-500 sm:text-base">
+              text-fg-subtle sm:text-base">
                 {{ featuredArticle.excerpt }}
               </p>
 
               <div class="mt-7 flex flex-wrap items-center
-              gap-3 text-xs text-slate-400">
+              gap-3 text-xs text-fg-subtle">
                 <time :datetime="featuredArticle.publishedAt">
                   {{
                     new Date(
@@ -270,8 +270,8 @@ useHead(() => ({
       </section>
 
       <!-- Article archive -->
-      <section class="border-y border-slate-100
-      bg-slate-50 py-20 sm:py-28">
+      <section class="border-y border-line
+      bg-surface-2 py-20 sm:py-28">
         <div class="mx-auto grid max-w-7xl
         items-start gap-10 px-6
         lg:grid-cols-[minmax(0,1fr)_340px]">

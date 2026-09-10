@@ -104,8 +104,8 @@ const getCategoryShortName = (
 
 <template>
   <section class="sticky top-[76px] z-30
-    border-b border-slate-200
-    bg-white/95 shadow-sm
+    border-b border-line
+    bg-surface/95 shadow-sm
     backdrop-blur-xl">
     <div class="mx-auto flex max-w-7xl
       flex-col gap-4 px-6 py-4
@@ -119,8 +119,8 @@ const getCategoryShortName = (
           border px-4 py-2.5
           text-xs font-bold
           transition-all duration-200" :class="route.path === '/news'
-            ? 'border-slate-950 bg-slate-950 text-white shadow-md'
-            : 'border-slate-200 bg-white text-slate-600 hover:border-indigo-200 hover:bg-indigo-50 hover:text-indigo-600'
+            ? 'border-accent bg-accent text-accent-fg shadow-md'
+            : 'border-line bg-surface text-fg-muted hover:border-accent/40 hover:bg-accent-soft hover:text-accent'
             ">
           Latest
         </NuxtLink>
@@ -131,8 +131,8 @@ const getCategoryShortName = (
           border px-3.5 py-2.5
           text-xs font-semibold
           transition-all duration-200" :class="isCategoryActive(category.slug)
-            ? 'border-slate-950 bg-slate-950 text-white shadow-md'
-            : 'border-slate-200 bg-white text-slate-600 hover:border-indigo-200 hover:bg-indigo-50 hover:text-indigo-600'
+            ? 'border-accent bg-accent text-accent-fg shadow-md'
+            : 'border-line bg-surface text-fg-muted hover:border-accent/40 hover:bg-accent-soft hover:text-accent'
             ">
           <span class="flex h-6 w-6
   items-center justify-center
@@ -155,7 +155,7 @@ const getCategoryShortName = (
         <svg class="pointer-events-none
           absolute left-4 top-1/2
           h-4 w-4 -translate-y-1/2
-          text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          text-fg-subtle" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
           <circle cx="11" cy="11" r="7" />
 
           <path d="m20 20-3.5-3.5" />
@@ -163,28 +163,28 @@ const getCategoryShortName = (
 
         <input id="news-nav-search" v-model="navSearchQuery" type="search" placeholder="Search world news..."
           autocomplete="off" class="h-11 w-full rounded-xl
-          border border-slate-200
-          bg-slate-50 pl-11 pr-12
-          text-sm text-slate-900
+          border border-line
+          bg-surface-2 pl-11 pr-12
+          text-sm text-fg
           outline-none transition-all
-          placeholder:text-slate-400
-          hover:border-slate-300
-          focus:border-indigo-400
-          focus:bg-white
+          placeholder:text-fg-subtle
+          hover:border-line-strong
+          focus:border-accent
+          focus:bg-surface
           focus:ring-4
-          focus:ring-indigo-500/10" />
+          focus:ring-accent/10" />
 
         <button type="submit" class="absolute right-1.5 top-1/2
           flex h-8 w-8
           -translate-y-1/2
           items-center justify-center
-          rounded-lg text-slate-500
+          rounded-lg text-fg-muted
           transition-all
-          hover:bg-indigo-50
-          hover:text-indigo-600
+          hover:bg-accent-soft
+          hover:text-accent
           focus:outline-none
           focus:ring-2
-          focus:ring-indigo-500/30" aria-label="Submit news search">
+          focus:ring-accent/30" aria-label="Submit news search">
           <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
             aria-hidden="true">
             <circle cx="11" cy="11" r="7" />

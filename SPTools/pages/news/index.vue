@@ -48,25 +48,25 @@ useHead({
 </script>
 
 <template>
-  <main class="min-h-screen overflow-hidden bg-white text-slate-950">
+  <main class="min-h-screen overflow-hidden bg-surface text-fg">
     <!-- Main news hero -->
     <NewsHomeHero />
 
     <div v-if="errorMessage" class="mx-auto mt-6 max-w-7xl px-6">
       <div
-        class="flex flex-col gap-4 rounded-2xl border border-red-200 bg-red-50 p-5 sm:flex-row sm:items-center sm:justify-between">
+        class="flex flex-col gap-4 rounded-2xl border border-danger/30 bg-danger-soft p-5 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <p class="font-semibold text-red-900">
+          <p class="font-semibold text-fg">
             News could not be loaded
           </p>
 
-          <p class="mt-1 text-sm text-red-700">
+          <p class="mt-1 text-sm text-fg-muted">
             {{ errorMessage }}
           </p>
         </div>
 
         <button type="button"
-          class="inline-flex items-center justify-center rounded-xl bg-red-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-800 disabled:cursor-not-allowed disabled:opacity-60"
+          class="inline-flex items-center justify-center rounded-xl bg-danger px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
           :disabled="isLoading" @click="refreshHomeNews">
           {{
             isLoading
@@ -87,8 +87,8 @@ useHead({
     <NewsHomeFeaturedNews />
 
     <!-- Latest news and trending sidebar -->
-    <section class="border-y border-slate-100
-  bg-slate-50 py-20 sm:py-28">
+    <section class="border-y border-line
+  bg-surface-2 py-20 sm:py-28">
       <div class="mx-auto max-w-7xl px-6">
         <div class="grid items-start gap-8
       lg:grid-cols-[minmax(0,1fr)_360px]

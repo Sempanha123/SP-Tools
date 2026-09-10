@@ -425,11 +425,11 @@ const retryLoad = async (): Promise<void> => {
 
 <template>
     <main class="min-h-screen overflow-x-hidden
-    bg-white text-slate-950">
+    bg-surface text-fg">
         <!-- Reading progress -->
 
         <div class="fixed inset-x-0 top-0
-      z-[90] h-1 bg-slate-200/60
+      z-[90] h-1 bg-surface-3/60
       print:hidden">
             <div class="h-full bg-gradient-to-r
         from-indigo-600 via-violet-500
@@ -445,29 +445,29 @@ const retryLoad = async (): Promise<void> => {
       max-w-7xl px-6 py-20">
             <div class="animate-pulse">
                 <div class="h-4 w-36 rounded-full
-          bg-slate-200" />
+          bg-surface-3" />
 
                 <div class="mt-7 h-14 max-w-4xl
-          rounded-2xl bg-slate-200" />
+          rounded-2xl bg-surface-3" />
 
                 <div class="mt-4 h-7 max-w-2xl
-          rounded-xl bg-slate-100" />
+          rounded-xl bg-surface-2" />
 
                 <div class="mt-10 aspect-[16/8]
-          rounded-[32px] bg-slate-200" />
+          rounded-[32px] bg-surface-3" />
 
                 <div class="mt-12 grid gap-12
           lg:grid-cols-[minmax(0,1fr)_340px]">
                     <div class="space-y-4">
                         <div v-for="index in 7" :key="index" class="h-5 rounded
-              bg-slate-100" :class="index % 3 === 0
+              bg-surface-2" :class="index % 3 === 0
                 ? 'w-4/5'
                 : 'w-full'
                 " />
                     </div>
 
                     <div class="hidden h-96 rounded-3xl
-            bg-slate-100 lg:block" />
+            bg-surface-2 lg:block" />
                 </div>
             </div>
         </section>
@@ -485,7 +485,7 @@ const retryLoad = async (): Promise<void> => {
         sm:p-12">
                 <div class="mx-auto flex h-16 w-16
           items-center justify-center
-          rounded-2xl bg-white
+          rounded-2xl bg-surface
           text-3xl shadow-md">
                     📰
                 </div>
@@ -515,7 +515,7 @@ const retryLoad = async (): Promise<void> => {
                     </button>
 
                     <NuxtLink to="/news" class="rounded-xl border
-            border-red-200 bg-white
+            border-red-200 bg-surface
             px-5 py-3 text-sm font-bold
             text-red-800 transition
             hover:bg-red-100">
@@ -535,8 +535,8 @@ const retryLoad = async (): Promise<void> => {
             <!-- Reader toolbar -->
 
             <section class="sticky top-0 z-40
-        border-y border-slate-200/80
-        bg-white/90 shadow-sm
+        border-y border-line/80
+        bg-surface/90 shadow-sm
         backdrop-blur-xl print:hidden">
                 <div class="mx-auto flex max-w-7xl
           items-center justify-between
@@ -556,13 +556,13 @@ const retryLoad = async (): Promise<void> => {
                         <div class="min-w-0">
                             <p class="text-[9px] font-bold
                 uppercase tracking-[0.16em]
-                text-slate-400">
+                text-fg-subtle">
                                 Reading progress
                             </p>
 
                             <p class="max-w-[320px] truncate
                 text-xs font-semibold
-                text-slate-700">
+                text-fg-muted">
                                 {{ article.title }}
                             </p>
                         </div>
@@ -577,14 +577,14 @@ const retryLoad = async (): Promise<void> => {
 
                         <div class="flex items-center
               rounded-xl border
-              border-slate-200
-              bg-slate-50 p-1">
+              border-line
+              bg-surface-2 p-1">
                             <button type="button" aria-label="Use smaller article text" class="flex h-8 w-8
                 items-center justify-center
                 rounded-lg text-[10px]
                 font-bold transition" :class="textSize === 'small'
-                    ? 'bg-white text-indigo-600 shadow-sm'
-                    : 'text-slate-500 hover:text-slate-950'
+                    ? 'bg-surface text-indigo-600 shadow-sm'
+                    : 'text-fg-subtle hover:text-fg'
                     " @click="textSize = 'small'">
                                 A
                             </button>
@@ -593,8 +593,8 @@ const retryLoad = async (): Promise<void> => {
                 items-center justify-center
                 rounded-lg text-xs
                 font-bold transition" :class="textSize === 'normal'
-                    ? 'bg-white text-indigo-600 shadow-sm'
-                    : 'text-slate-500 hover:text-slate-950'
+                    ? 'bg-surface text-indigo-600 shadow-sm'
+                    : 'text-fg-subtle hover:text-fg'
                     " @click="textSize = 'normal'">
                                 A
                             </button>
@@ -603,8 +603,8 @@ const retryLoad = async (): Promise<void> => {
                 items-center justify-center
                 rounded-lg text-base
                 font-bold transition" :class="textSize === 'large'
-                    ? 'bg-white text-indigo-600 shadow-sm'
-                    : 'text-slate-500 hover:text-slate-950'
+                    ? 'bg-surface text-indigo-600 shadow-sm'
+                    : 'text-fg-subtle hover:text-fg'
                     " @click="textSize = 'large'">
                                 A
                             </button>
@@ -617,7 +617,7 @@ const retryLoad = async (): Promise<void> => {
               border px-3 text-xs font-bold
               transition sm:px-4" :class="isSaved
                 ? 'border-indigo-200 bg-indigo-50 text-indigo-600'
-                : 'border-slate-200 bg-white text-slate-600 hover:border-indigo-200 hover:text-indigo-600'
+                : 'border-line bg-surface text-fg-muted hover:border-indigo-200 hover:text-indigo-600'
                 " @click="toggleSavedArticle">
                             <svg class="h-4 w-4" :fill="isSaved
                                 ? 'currentColor'
@@ -641,8 +641,8 @@ const retryLoad = async (): Promise<void> => {
                         <button type="button" aria-label="Copy article link" class="flex h-10 w-10
               items-center justify-center
               rounded-xl border
-              border-slate-200 bg-white
-              text-slate-600 transition
+              border-line bg-surface
+              text-fg-muted transition
               hover:border-indigo-200
               hover:text-indigo-600" @click="copyArticleLink">
                             <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
@@ -658,8 +658,8 @@ const retryLoad = async (): Promise<void> => {
                         <button type="button" aria-label="Share article" class="flex h-10 w-10
               items-center justify-center
               rounded-xl border
-              border-slate-200 bg-white
-              text-slate-600 transition
+              border-line bg-surface
+              text-fg-muted transition
               hover:border-indigo-200
               hover:text-indigo-600" @click="shareArticle">
                             <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
@@ -681,8 +681,8 @@ const retryLoad = async (): Promise<void> => {
                         <button type="button" aria-label="Print article" class="hidden h-10 w-10
               items-center justify-center
               rounded-xl border
-              border-slate-200 bg-white
-              text-slate-600 transition
+              border-line bg-surface
+              text-fg-muted transition
               hover:border-indigo-200
               hover:text-indigo-600 sm:flex" @click="printArticle">
                             <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
@@ -700,7 +700,7 @@ const retryLoad = async (): Promise<void> => {
 
             <!-- Article content -->
 
-            <section id="article-content" ref="articleContainer" class="bg-white py-12
+            <section id="article-content" ref="articleContainer" class="bg-surface py-12
         sm:py-16 lg:py-20">
                 <div class="mx-auto grid max-w-7xl
           items-start gap-10 px-6
@@ -719,8 +719,8 @@ const retryLoad = async (): Promise<void> => {
 
             <!-- Continue reading -->
 
-            <section v-if="continueReadingArticles.length" class="border-y border-slate-100
-        bg-slate-50 py-12 print:hidden">
+            <section v-if="continueReadingArticles.length" class="border-y border-line
+        bg-surface-2 py-12 print:hidden">
                 <div class="mx-auto max-w-7xl px-6">
                     <div class="mb-6 flex items-end
             justify-between gap-4">
@@ -732,7 +732,7 @@ const retryLoad = async (): Promise<void> => {
                             </p>
 
                             <h2 class="mt-2 text-2xl font-black
-                tracking-tight text-slate-950">
+                tracking-tight text-fg">
                                 More from this category
                             </h2>
                         </div>
@@ -749,14 +749,14 @@ const retryLoad = async (): Promise<void> => {
                         <NuxtLink v-for="relatedArticle in continueReadingArticles" :key="relatedArticle.id" :to="`/news/posts/${relatedArticle.slug}`
                             " class="group grid overflow-hidden
               rounded-3xl border
-              border-slate-200 bg-white
+              border-line bg-surface
               shadow-sm transition
               hover:-translate-y-1
               hover:border-indigo-200
               hover:shadow-xl
               sm:grid-cols-[150px_minmax(0,1fr)]">
                             <div class="relative min-h-44
-                overflow-hidden bg-slate-200
+                overflow-hidden bg-surface-3
                 sm:min-h-full">
                                 <img v-if="relatedArticle.image" :src="relatedArticle.image" :alt="relatedArticle.title"
                                     loading="lazy" class="absolute inset-0
@@ -786,7 +786,7 @@ const retryLoad = async (): Promise<void> => {
 
                                 <h3 class="mt-3 line-clamp-2
                   text-lg font-black
-                  leading-7 text-slate-900
+                  leading-7 text-fg
                   transition
                   group-hover:text-indigo-700">
                                     {{ relatedArticle.title }}
@@ -794,7 +794,7 @@ const retryLoad = async (): Promise<void> => {
 
                                 <p class="mt-3 line-clamp-2
                   text-sm leading-6
-                  text-slate-600">
+                  text-fg-muted">
                                     {{ relatedArticle.excerpt }}
                                 </p>
                             </div>
@@ -831,7 +831,7 @@ const retryLoad = async (): Promise<void> => {
             <div v-if="toastMessage" role="status" aria-live="polite" class="fixed bottom-6 left-1/2
         z-[100] -translate-x-1/2
         whitespace-nowrap rounded-2xl
-        bg-slate-950 px-5 py-3
+        bg-accent text-accent-fg px-5 py-3
         text-xs font-semibold
         text-white shadow-2xl
         print:hidden">

@@ -55,8 +55,8 @@ const authorLocation = computed(() => {
     <!-- Coverage areas -->
 
     <section class="rounded-[28px]
-      border border-slate-200
-      bg-white p-6">
+      border border-line
+      bg-surface p-6">
       <div class="flex items-center
         justify-between gap-4">
         <div>
@@ -67,7 +67,7 @@ const authorLocation = computed(() => {
           </span>
 
           <h2 class="mt-2 text-xl font-bold
-            text-slate-950">
+            text-fg">
             Coverage areas
           </h2>
         </div>
@@ -83,15 +83,15 @@ const authorLocation = computed(() => {
 
       <div v-if="coverageAreas.length" class="mt-6 flex flex-wrap gap-2">
         <span v-for="topic in coverageAreas" :key="topic" class="rounded-full border
-          border-slate-200 bg-slate-50
+          border-line bg-surface-2
           px-3.5 py-2 text-[10px]
-          font-semibold text-slate-600">
+          font-semibold text-fg-muted">
           {{ topic }}
         </span>
       </div>
 
       <p v-else class="mt-6 text-sm
-        leading-6 text-slate-500">
+        leading-6 text-fg-subtle">
         Coverage areas will appear after
         this author publishes articles.
       </p>
@@ -99,10 +99,10 @@ const authorLocation = computed(() => {
       <!-- Categories -->
 
       <div v-if="author.categories.length" class="mt-6 border-t
-        border-slate-100 pt-5">
+        border-line pt-5">
         <p class="text-[10px] font-bold
           uppercase tracking-wider
-          text-slate-400">
+          text-fg-subtle">
           Categories
         </p>
 
@@ -123,10 +123,10 @@ const authorLocation = computed(() => {
       <!-- Regions -->
 
       <div v-if="author.regions.length" class="mt-5 border-t
-        border-slate-100 pt-5">
+        border-line pt-5">
         <p class="text-[10px] font-bold
           uppercase tracking-wider
-          text-slate-400">
+          text-fg-subtle">
           Regions
         </p>
 
@@ -144,8 +144,8 @@ const authorLocation = computed(() => {
     <!-- Popular articles -->
 
     <section v-if="popularArticles.length" class="rounded-[28px]
-      border border-slate-200
-      bg-white p-6">
+      border border-line
+      bg-surface p-6">
       <span class="text-[10px] font-bold
         uppercase tracking-[0.18em]
         text-red-600">
@@ -153,12 +153,12 @@ const authorLocation = computed(() => {
       </span>
 
       <h2 class="mt-2 text-xl font-bold
-        text-slate-950">
+        text-fg">
         Most-read articles
       </h2>
 
       <div class="mt-6 divide-y
-        divide-slate-100">
+        divide-line">
         <NuxtLink v-for="(
 article,
               index
@@ -184,7 +184,7 @@ article,
 
             <h3 class="popular-title mt-1.5
               text-sm font-bold leading-6
-              text-slate-800
+              text-fg
               transition-colors
               group-hover:text-indigo-600">
               {{ article.title }}
@@ -192,7 +192,7 @@ article,
 
             <div class="mt-2 flex flex-wrap
               items-center gap-2
-              text-[10px] text-slate-400">
+              text-[10px] text-fg-subtle">
               <time :datetime="article.publishedAt
                 ">
                 {{
@@ -221,8 +221,8 @@ article,
     <!-- Author information -->
 
     <section class="rounded-[28px]
-      border border-slate-200
-      bg-white p-6">
+      border border-line
+      bg-surface p-6">
       <span class="text-[10px] font-bold
         uppercase tracking-[0.18em]
         text-indigo-600">
@@ -230,7 +230,7 @@ article,
       </span>
 
       <h2 class="mt-2 text-xl font-bold
-        text-slate-950">
+        text-fg">
         Author information
       </h2>
 
@@ -238,15 +238,15 @@ article,
         <div class="flex items-center
           justify-between gap-4
           rounded-xl border
-          border-slate-200
-          bg-slate-50 px-4 py-3">
+          border-line
+          bg-surface-2 px-4 py-3">
           <span class="text-xs font-medium
-            text-slate-500">
+            text-fg-subtle">
             Role
           </span>
 
           <span class="text-right text-xs
-            font-bold text-slate-800">
+            font-bold text-fg">
             {{ authorRole }}
           </span>
         </div>
@@ -254,15 +254,15 @@ article,
         <div class="flex items-center
           justify-between gap-4
           rounded-xl border
-          border-slate-200
-          bg-slate-50 px-4 py-3">
+          border-line
+          bg-surface-2 px-4 py-3">
           <span class="text-xs font-medium
-            text-slate-500">
+            text-fg-subtle">
             Location
           </span>
 
           <span class="text-right text-xs
-            font-bold text-slate-800">
+            font-bold text-fg">
             {{ authorLocation }}
           </span>
         </div>
@@ -270,15 +270,15 @@ article,
         <div class="flex items-center
           justify-between gap-4
           rounded-xl border
-          border-slate-200
-          bg-slate-50 px-4 py-3">
+          border-line
+          bg-surface-2 px-4 py-3">
           <span class="text-xs font-medium
-            text-slate-500">
+            text-fg-subtle">
             Articles
           </span>
 
           <span class="text-right text-xs
-            font-bold text-slate-800">
+            font-bold text-fg">
             {{
               author.articlesCount
                 .toLocaleString('en-US')
@@ -289,15 +289,15 @@ article,
         <div class="flex items-center
           justify-between gap-4
           rounded-xl border
-          border-slate-200
-          bg-slate-50 px-4 py-3">
+          border-line
+          bg-surface-2 px-4 py-3">
           <span class="text-xs font-medium
-            text-slate-500">
+            text-fg-subtle">
             Total views
           </span>
 
           <span class="text-right text-xs
-            font-bold text-slate-800">
+            font-bold text-fg">
             {{
               formatViews(
                 author.totalViews,
@@ -309,10 +309,10 @@ article,
         <div class="flex items-center
           justify-between gap-4
           rounded-xl border
-          border-slate-200
-          bg-slate-50 px-4 py-3">
+          border-line
+          bg-surface-2 px-4 py-3">
           <span class="text-xs font-medium
-            text-slate-500">
+            text-fg-subtle">
             Status
           </span>
 
@@ -341,7 +341,7 @@ article,
     <!-- Standards -->
 
     <section class="relative overflow-hidden
-      rounded-[28px] bg-slate-950
+      rounded-[28px] bg-accent text-accent-fg
       p-7 text-white">
       <div class="pointer-events-none
         absolute -right-16 -top-16
@@ -351,7 +351,7 @@ article,
       <div class="relative">
         <div class="flex h-11 w-11
           items-center justify-center
-          rounded-xl bg-white/10">
+          rounded-xl bg-surface/10">
           ✓
         </div>
 
@@ -367,7 +367,7 @@ article,
         </h3>
 
         <p class="mt-3 text-sm leading-7
-          text-slate-400">
+          text-fg-subtle">
           Published articles clearly display
           their author, source, publication
           time, category, region, and relevant

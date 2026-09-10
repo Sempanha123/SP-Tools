@@ -75,12 +75,13 @@ const groups = [
             v-for="tool in group.items"
             :key="tool.slug"
             :to="tool.href"
-            class="sp-card sp-card-interactive group flex gap-5 p-6"
+            class="sp-card sp-card-interactive sp-luminous group flex gap-5 overflow-hidden p-6"
           >
             <span
-              class="flex h-14 w-14 shrink-0 items-center justify-center
-                rounded-2xl border border-line bg-surface-2"
-              :style="{ color: tool.accent }"
+              class="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl
+                border border-white/20 text-white shadow-glow transition duration-300
+                group-hover:rotate-3 group-hover:scale-110"
+              :style="{ background: `linear-gradient(135deg, ${tool.accent}, color-mix(in oklab, ${tool.accent} 55%, #d946ef))` }"
             >
               <svg
                 class="h-6 w-6"

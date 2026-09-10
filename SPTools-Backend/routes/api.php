@@ -3,6 +3,8 @@
 use App\Http\Controllers\Api\V1\ArticleController;
 use App\Http\Controllers\Api\V1\AuthorController;
 use App\Http\Controllers\Api\V1\CategoryController;
+use App\Http\Controllers\Api\V1\ContactController;
+use App\Http\Controllers\Api\V1\NewsletterController;
 use App\Http\Controllers\Api\V1\TagController;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Route;
@@ -148,4 +150,19 @@ Route::prefix('v1')
                 '[A-Za-z0-9-]+',
             )
             ->name('authors.news');
+
+        Route::post(
+            '/contact',
+            [ContactController::class, 'store'],
+        )->name('contact.store');
+
+        Route::post(
+            '/newsletter/subscribe',
+            [NewsletterController::class, 'subscribe'],
+        )->name('newsletter.subscribe');
+
+        Route::get(
+            '/newsletter/unsubscribe',
+            [NewsletterController::class, 'unsubscribe'],
+        )->name('newsletter.unsubscribe');
     });

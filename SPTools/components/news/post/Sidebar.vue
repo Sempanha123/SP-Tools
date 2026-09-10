@@ -620,11 +620,11 @@ onBeforeUnmount(() => {
     <!-- ===================================================== -->
 
     <section class="overflow-hidden rounded-[28px]
-      border border-slate-200 bg-white
+      border border-line bg-surface
       shadow-[0_14px_40px_rgba(15,23,42,0.05)]">
       <header class="flex items-start
         justify-between gap-4
-        border-b border-slate-100
+        border-b border-line
         px-6 py-5">
         <div>
           <p class="text-[9px] font-bold
@@ -635,12 +635,12 @@ onBeforeUnmount(() => {
 
           <h2 class="mt-2 text-xl font-bold
             tracking-[-0.03em]
-            text-slate-950">
+            text-fg">
             Article contents
           </h2>
 
           <p class="mt-2 text-xs
-            leading-5 text-slate-500">
+            leading-5 text-fg-subtle">
             Jump directly to a section.
           </p>
         </div>
@@ -666,14 +666,14 @@ onBeforeUnmount(() => {
           rounded-2xl px-3 py-3
           text-left transition-all" :class="activeSectionId === item.id
             ? 'bg-indigo-50 text-indigo-700'
-            : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
+            : 'text-fg-subtle hover:bg-surface-2 hover:text-fg'
             " @click="scrollToSection(item.id)">
           <span class="flex h-7 min-w-7
             items-center justify-center
             rounded-xl text-[8px]
             font-bold transition-colors" :class="activeSectionId === item.id
               ? 'bg-indigo-600 text-white'
-              : 'bg-slate-100 text-slate-400 group-hover:bg-white'
+              : 'bg-surface-2 text-fg-subtle group-hover:bg-surface'
               ">
             {{
               String(index + 1)
@@ -695,11 +695,11 @@ onBeforeUnmount(() => {
       </nav>
 
       <div class="border-t
-        border-slate-100 px-5 py-4">
+        border-line px-5 py-4">
         <div class="flex items-center
           justify-between gap-4">
           <span class="text-[9px]
-            font-semibold text-slate-400">
+            font-semibold text-fg-subtle">
             Reading time
           </span>
 
@@ -718,11 +718,11 @@ onBeforeUnmount(() => {
     <!-- ===================================================== -->
 
     <section class="overflow-hidden rounded-[28px]
-      border border-slate-200 bg-white
+      border border-line bg-surface
       shadow-[0_14px_40px_rgba(15,23,42,0.05)]">
       <header class="flex items-center
         justify-between gap-4
-        border-b border-slate-100
+        border-b border-line
         px-6 py-5">
         <div>
           <p class="text-[9px] font-bold
@@ -732,24 +732,24 @@ onBeforeUnmount(() => {
           </p>
 
           <h2 class="mt-2 text-lg font-bold
-            text-slate-950">
+            text-fg">
             Report information
           </h2>
         </div>
 
         <div class="flex h-10 w-10
           items-center justify-center
-          rounded-xl bg-slate-50
-          text-slate-500">
+          rounded-xl bg-surface-2
+          text-fg-subtle">
           i
         </div>
       </header>
 
       <dl class="divide-y
-        divide-slate-100 px-5">
+        divide-line px-5">
         <div class="flex items-center
           justify-between gap-4 py-4">
-          <dt class="text-[10px] text-slate-400">
+          <dt class="text-[10px] text-fg-subtle">
             Category
           </dt>
 
@@ -764,86 +764,86 @@ onBeforeUnmount(() => {
 
         <div class="flex items-center
           justify-between gap-4 py-4">
-          <dt class="text-[10px] text-slate-400">
+          <dt class="text-[10px] text-fg-subtle">
             Region
           </dt>
 
           <dd class="text-right text-[10px]
-            font-bold text-slate-700">
+            font-bold text-fg-muted">
             {{ article.region }}
           </dd>
         </div>
 
         <div v-if="article.location" class="flex items-center
           justify-between gap-4 py-4">
-          <dt class="text-[10px] text-slate-400">
+          <dt class="text-[10px] text-fg-subtle">
             Location
           </dt>
 
           <dd class="text-right text-[10px]
-            font-bold text-slate-700">
+            font-bold text-fg-muted">
             {{ article.location }}
           </dd>
         </div>
 
         <div class="flex items-center
           justify-between gap-4 py-4">
-          <dt class="text-[10px] text-slate-400">
+          <dt class="text-[10px] text-fg-subtle">
             Publisher
           </dt>
 
           <dd class="max-w-[170px]
             truncate text-right
             text-[10px] font-bold
-            text-slate-700">
+            text-fg-muted">
             {{ article.source }}
           </dd>
         </div>
 
         <div class="flex items-center
           justify-between gap-4 py-4">
-          <dt class="text-[10px] text-slate-400">
+          <dt class="text-[10px] text-fg-subtle">
             Published
           </dt>
 
           <dd class="text-right text-[10px]
-            font-bold text-slate-700">
+            font-bold text-fg-muted">
             {{ formattedPublishedDate }}
           </dd>
         </div>
 
         <div class="flex items-center
           justify-between gap-4 py-4">
-          <dt class="text-[10px] text-slate-400">
+          <dt class="text-[10px] text-fg-subtle">
             Updated
           </dt>
 
           <dd class="text-right text-[10px]
-            font-bold text-slate-700">
+            font-bold text-fg-muted">
             {{ formattedUpdatedDate }}
           </dd>
         </div>
 
         <div class="flex items-center
           justify-between gap-4 py-4">
-          <dt class="text-[10px] text-slate-400">
+          <dt class="text-[10px] text-fg-subtle">
             Reading time
           </dt>
 
           <dd class="text-right text-[10px]
-            font-bold text-slate-700">
+            font-bold text-fg-muted">
             {{ article.readTime }}
           </dd>
         </div>
 
         <div class="flex items-center
           justify-between gap-4 py-4">
-          <dt class="text-[10px] text-slate-400">
+          <dt class="text-[10px] text-fg-subtle">
             Article views
           </dt>
 
           <dd class="text-right text-[10px]
-            font-bold text-slate-700">
+            font-bold text-fg-muted">
             {{ formatViews(article.views) }}
           </dd>
         </div>
@@ -853,13 +853,13 @@ onBeforeUnmount(() => {
 
       <div class="grid grid-cols-3
         gap-2 border-t
-        border-slate-100 p-4">
+        border-line p-4">
         <button type="button" class="flex flex-col
           items-center justify-center
           gap-2 rounded-xl
-          bg-slate-50 px-2 py-3
+          bg-surface-2 px-2 py-3
           text-[9px] font-bold
-          text-slate-600
+          text-fg-muted
           transition-all
           hover:bg-indigo-50
           hover:text-indigo-600" @click="copyArticleLink">
@@ -875,9 +875,9 @@ onBeforeUnmount(() => {
         <button type="button" class="flex flex-col
           items-center justify-center
           gap-2 rounded-xl
-          bg-slate-50 px-2 py-3
+          bg-surface-2 px-2 py-3
           text-[9px] font-bold
-          text-slate-600
+          text-fg-muted
           transition-all
           hover:bg-indigo-50
           hover:text-indigo-600" @click="shareArticle">
@@ -895,9 +895,9 @@ onBeforeUnmount(() => {
         <button type="button" class="flex flex-col
           items-center justify-center
           gap-2 rounded-xl
-          bg-slate-50 px-2 py-3
+          bg-surface-2 px-2 py-3
           text-[9px] font-bold
-          text-slate-600
+          text-fg-muted
           transition-all
           hover:bg-indigo-50
           hover:text-indigo-600" @click="printArticle">
@@ -934,7 +934,7 @@ onBeforeUnmount(() => {
         <div class="flex h-11 w-11
           shrink-0 items-center
           justify-center rounded-2xl
-          bg-white text-emerald-600
+          bg-surface text-emerald-600
           shadow-sm">
           <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
             <path d="M12 3 5 6v5c0 4.6 2.9 8 7 10 4.1-2 7-5.4 7-10V6l-7-3Z" />
@@ -951,12 +951,12 @@ onBeforeUnmount(() => {
           </p>
 
           <h2 class="mt-2 text-base
-            font-bold text-slate-900">
+            font-bold text-fg">
             {{ sourceStatusLabel }}
           </h2>
 
           <p class="mt-2 text-xs
-            leading-6 text-slate-500">
+            leading-6 text-fg-subtle">
             Source and reporting information
             is displayed so readers can better
             evaluate this article.
@@ -994,10 +994,10 @@ onBeforeUnmount(() => {
     <!-- ===================================================== -->
 
     <section v-if="visibleMostRead.length" class="overflow-hidden rounded-[28px]
-      border border-slate-200 bg-white
+      border border-line bg-surface
       shadow-[0_16px_45px_rgba(15,23,42,0.06)]">
       <header class="relative overflow-hidden
-        bg-slate-950 px-6 py-6
+        bg-accent text-accent-fg px-6 py-6
         text-white">
         <div class="pointer-events-none
           absolute -right-16 -top-16
@@ -1030,7 +1030,7 @@ onBeforeUnmount(() => {
           </h2>
 
           <p class="mt-2 text-xs
-            leading-5 text-slate-400">
+            leading-5 text-fg-subtle">
             Popular reports readers
             are following now.
           </p>
@@ -1038,13 +1038,13 @@ onBeforeUnmount(() => {
       </header>
 
       <div class="divide-y
-        divide-slate-100 px-4">
+        divide-line px-4">
         <NuxtLink v-for="(item, index) in visibleMostRead" :key="item.id" :to="`/news/posts/${item.slug}`" class="group grid
           grid-cols-[70px_minmax(0,1fr)]
           gap-3 py-4">
           <div class="relative h-[70px]
             overflow-hidden rounded-2xl
-            bg-slate-100">
+            bg-surface-2">
             <img v-if="item.image" :src="item.image" :alt="item.title" loading="lazy" class="h-full w-full
   object-cover transition-transform
   duration-500
@@ -1063,7 +1063,7 @@ onBeforeUnmount(() => {
               top-1.5 flex h-6
               min-w-6 items-center
               justify-center rounded-lg
-              bg-slate-950/85
+              bg-accent text-accent-fg/85
               px-1.5 text-[8px]
               font-bold text-white
               backdrop-blur">
@@ -1083,14 +1083,14 @@ onBeforeUnmount(() => {
 
             <h3 class="story-title mt-1.5
               text-xs font-bold
-              leading-5 text-slate-800
+              leading-5 text-fg
               transition-colors
               group-hover:text-indigo-600">
               {{ item.title }}
             </h3>
 
             <p class="mt-1.5 text-[8px]
-              text-slate-400">
+              text-fg-subtle">
               {{ timeAgo(item.publishedAt) }}
               ·
               {{ formatViews(item.views) }}
@@ -1101,7 +1101,7 @@ onBeforeUnmount(() => {
       </div>
 
       <div class="border-t
-        border-slate-100 p-4">
+        border-line p-4">
         <NuxtLink :to="{
           path: '/news/search',
           query: {
@@ -1110,9 +1110,9 @@ onBeforeUnmount(() => {
         }" class="group flex w-full
           items-center justify-center
           gap-2 rounded-xl
-          bg-slate-50 px-4 py-3
+          bg-surface-2 px-4 py-3
           text-[10px] font-bold
-          text-slate-600
+          text-fg-muted
           transition-all
           hover:bg-indigo-50
           hover:text-indigo-600">
@@ -1158,8 +1158,8 @@ onBeforeUnmount(() => {
         <div class="flex h-11 w-11
           items-center justify-center
           rounded-2xl border
-          border-white/10
-          bg-white/[0.08]
+          border-line/10
+          bg-surface/[0.08]
           text-indigo-300">
           ✦
         </div>
@@ -1177,7 +1177,7 @@ onBeforeUnmount(() => {
         </h2>
 
         <p class="mt-3 text-xs
-          leading-6 text-slate-400">
+          leading-6 text-fg-subtle">
           Receive selected world news,
           developing stories and major updates.
         </p>
@@ -1192,19 +1192,19 @@ onBeforeUnmount(() => {
           <input id="sidebar-newsletter-email" v-model="email" type="email" autocomplete="email"
             placeholder="Email address" class="h-11 w-full
             rounded-xl border
-            border-white/10
-            bg-white/[0.08]
+            border-line/10
+            bg-surface/[0.08]
             px-4 text-xs text-white
             outline-none
-            placeholder:text-slate-500
+            placeholder:text-fg-subtle
             focus:border-indigo-400
-            focus:bg-white/[0.12]" />
+            focus:bg-surface/[0.12]" />
 
           <button type="submit" :disabled="newsletterLoading" class="flex h-11 w-full
             items-center justify-center
-            gap-2 rounded-xl bg-white
+            gap-2 rounded-xl bg-surface
             px-4 text-[10px]
-            font-bold text-slate-950
+            font-bold text-fg
             transition-all
             hover:bg-indigo-100
             disabled:cursor-wait
@@ -1237,7 +1237,7 @@ onBeforeUnmount(() => {
         </form>
 
         <p class="mt-3 text-[8px]
-          leading-4 text-slate-500">
+          leading-4 text-fg-subtle">
           Demo subscription is stored locally.
           Connect this form to your API before production.
         </p>
@@ -1253,7 +1253,7 @@ onBeforeUnmount(() => {
         left-1/2 z-[100]
         -translate-x-1/2
         whitespace-nowrap
-        rounded-2xl bg-slate-950
+        rounded-2xl bg-accent text-accent-fg
         px-5 py-3 text-xs
         font-semibold text-white
         shadow-2xl">

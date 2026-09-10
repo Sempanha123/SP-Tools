@@ -742,8 +742,8 @@ onBeforeUnmount(() => {
     <!-- ===================================================== -->
 
     <section class="mb-9 rounded-[24px]
-      border border-slate-200
-      bg-slate-50 p-5 lg:hidden">
+      border border-line
+      bg-surface-2 p-5 lg:hidden">
       <div class="flex items-center
         justify-between gap-4">
         <div>
@@ -754,14 +754,14 @@ onBeforeUnmount(() => {
           </p>
 
           <h2 class="mt-2 text-base
-            font-bold text-slate-950">
+            font-bold text-fg">
             Article contents
           </h2>
         </div>
 
         <div class="flex h-10 w-10
           items-center justify-center
-          rounded-xl bg-white
+          rounded-xl bg-surface
           text-indigo-600 shadow-sm">
           ≡
         </div>
@@ -775,7 +775,7 @@ onBeforeUnmount(() => {
           text-left text-[10px]
           font-semibold transition-all" :class="activeSectionId === item.id
             ? 'border-indigo-200 bg-indigo-50 text-indigo-600'
-            : 'border-slate-200 bg-white text-slate-600'
+            : 'border-line bg-surface text-fg-muted'
             " @click="scrollToSection(item.id)">
           <span>
             {{ item.title }}
@@ -791,7 +791,7 @@ onBeforeUnmount(() => {
     <!-- ===================================================== -->
 
     <section class="mb-10 rounded-[26px]
-      border border-slate-200
+      border border-line
       bg-gradient-to-br
       from-white to-slate-50 p-6
       sm:p-7">
@@ -809,7 +809,7 @@ onBeforeUnmount(() => {
             articleLead
             && articleLead !== article.excerpt
           " class="article-lead article-copy
-  mb-11 text-slate-600">
+  mb-11 text-fg-muted">
             {{ articleLead }}
           </p>
         </div>
@@ -817,16 +817,16 @@ onBeforeUnmount(() => {
         <div class="grid grid-cols-2 gap-3
           sm:grid-cols-1">
           <div class="rounded-2xl
-            border border-slate-200
-            bg-white px-4 py-3">
+            border border-line
+            bg-surface px-4 py-3">
             <p class="text-[8px] font-bold
               uppercase tracking-[0.14em]
-              text-slate-400">
+              text-fg-subtle">
               Estimated words
             </p>
 
             <p class="mt-1 text-lg
-              font-bold text-slate-950">
+              font-bold text-fg">
               {{
                 estimatedWordCount
                   .toLocaleString('en-US')
@@ -835,16 +835,16 @@ onBeforeUnmount(() => {
           </div>
 
           <div class="rounded-2xl
-            border border-slate-200
-            bg-white px-4 py-3">
+            border border-line
+            bg-surface px-4 py-3">
             <p class="text-[8px] font-bold
               uppercase tracking-[0.14em]
-              text-slate-400">
+              text-fg-subtle">
               Reading estimate
             </p>
 
             <p class="mt-1 text-lg
-              font-bold text-slate-950">
+              font-bold text-fg">
               {{ estimatedReadingMinutes }}
               min
             </p>
@@ -861,7 +861,7 @@ onBeforeUnmount(() => {
       articleLead
       && articleLead !== article.excerpt
     " class="article-lead article-copy
-  mb-11 text-slate-600">
+  mb-11 text-fg-muted">
       {{ articleLead }}
     </p>
 
@@ -878,7 +878,7 @@ onBeforeUnmount(() => {
           justify-between gap-4">
           <h2 class="text-2xl font-bold
             tracking-[-0.035em]
-            text-slate-950 sm:text-3xl">
+            text-fg sm:text-3xl">
             {{ section.title }}
           </h2>
 
@@ -886,8 +886,8 @@ onBeforeUnmount(() => {
             " class="flex h-9 w-9 shrink-0
             items-center justify-center
             rounded-xl border
-            border-slate-200 bg-white
-            text-slate-400 opacity-0
+            border-line bg-surface
+            text-fg-subtle opacity-0
             transition-all
             hover:border-indigo-200
             hover:text-indigo-600
@@ -927,7 +927,7 @@ onBeforeUnmount(() => {
             || section.imageCredit
           " class="mt-3 flex flex-wrap
             justify-between gap-2
-            text-xs leading-5 text-slate-500">
+            text-xs leading-5 text-fg-subtle">
             <span v-if="section.imageCaption">
               {{ section.imageCaption }}
             </span>
@@ -944,7 +944,7 @@ onBeforeUnmount(() => {
           <p v-for="(
 paragraph,
   paragraphIndex
-            ) in section.paragraphs" :key="paragraphIndex" class="article-copy text-slate-600">
+            ) in section.paragraphs" :key="paragraphIndex" class="article-copy text-fg-muted">
             {{ paragraph }}
           </p>
         </div>
@@ -963,7 +963,7 @@ paragraph,
             </span>
 
             <span class="article-copy
-              text-slate-600">
+              text-fg-muted">
               {{ bullet }}
             </span>
           </li>
@@ -978,7 +978,7 @@ paragraph,
             <div class="flex h-9 w-9
               shrink-0 items-center
               justify-center rounded-xl
-              bg-white text-indigo-600
+              bg-surface text-indigo-600
               shadow-sm">
               i
             </div>
@@ -1043,7 +1043,7 @@ paragraph,
             || section.imageCredit
           " class="mt-3 flex flex-wrap
             justify-between gap-2
-            text-xs leading-5 text-slate-500">
+            text-xs leading-5 text-fg-subtle">
             <span v-if="section.imageCaption">
               {{ section.imageCaption }}
             </span>
@@ -1067,8 +1067,8 @@ paragraph,
       " id="key-points" data-article-section class="article-section
         scroll-mt-36">
         <div class="rounded-[28px]
-          border border-slate-200
-          bg-slate-50 p-6 sm:p-8">
+          border border-line
+          bg-surface-2 p-6 sm:p-8">
           <div class="flex items-start
             justify-between gap-5">
             <div>
@@ -1081,12 +1081,12 @@ paragraph,
 
               <h2 class="mt-2 text-2xl
                 font-bold tracking-[-0.035em]
-                text-slate-950">
+                text-fg">
                 Key points
               </h2>
 
               <p class="mt-2 text-xs
-                leading-6 text-slate-500">
+                leading-6 text-fg-subtle">
                 The most important information
                 from this report.
               </p>
@@ -1108,7 +1108,7 @@ point,
   index
               ) in keyPoints" :key="point" class="flex items-start gap-3
               rounded-2xl border
-              border-slate-200 bg-white
+              border-line bg-surface
               p-4">
               <span class="flex h-7 min-w-7
                 items-center justify-center
@@ -1122,7 +1122,7 @@ point,
               </span>
 
               <span class="text-sm leading-6
-                text-slate-600">
+                text-fg-muted">
                 {{ point }}
               </span>
             </li>
@@ -1188,7 +1188,7 @@ point,
 
           <h2 class="mt-2 text-2xl
             font-bold tracking-[-0.035em]
-            text-slate-950 sm:text-3xl">
+            text-fg sm:text-3xl">
             Story timeline
           </h2>
         </div>
@@ -1205,7 +1205,7 @@ point,
       <ol class="relative mt-8">
         <div class="absolute bottom-4
           left-[15px] top-4 w-px
-          bg-slate-200" />
+          bg-surface-3" />
 
         <li v-for="(
 item,
@@ -1228,8 +1228,8 @@ item,
 
           <div class="min-w-0 flex-1
             rounded-2xl border
-            border-slate-200
-            bg-white p-5">
+            border-line
+            bg-surface p-5">
             <time v-if="item.time" class="text-[9px]
               font-bold uppercase
               tracking-[0.14em]
@@ -1238,12 +1238,12 @@ item,
             </time>
 
             <h3 class="mt-1 text-base
-              font-bold text-slate-900">
+              font-bold text-fg">
               {{ item.title }}
             </h3>
 
             <p class="mt-2 text-sm
-              leading-7 text-slate-500">
+              leading-7 text-fg-subtle">
               {{ item.description }}
             </p>
           </div>
@@ -1258,8 +1258,8 @@ item,
     <section v-if="articleSources.length" id="article-sources" data-article-section
       class="article-section scroll-mt-36">
       <div class="rounded-[28px]
-    border border-slate-200
-    bg-white p-6 sm:p-8">
+    border border-line
+    bg-surface p-6 sm:p-8">
         <!-- Header -->
 
         <div class="flex flex-col
@@ -1274,12 +1274,12 @@ item,
 
             <h2 class="mt-2 text-2xl
           font-bold tracking-[-0.035em]
-          text-slate-950">
+          text-fg">
               Sources used
             </h2>
 
             <p class="mt-2 text-xs
-          leading-6 text-slate-500">
+          leading-6 text-fg-subtle">
               Sources referenced while
               preparing this article.
             </p>
@@ -1308,8 +1308,8 @@ item,
             <a v-if="source.url" :href="source.url" target="_blank" rel="noopener noreferrer" class="group flex items-start
           justify-between gap-4
           rounded-2xl border
-          border-slate-200
-          bg-slate-50 p-4
+          border-line
+          bg-surface-2 p-4
           transition-all duration-200
           hover:-translate-y-0.5
           hover:border-indigo-200
@@ -1322,7 +1322,7 @@ item,
                 <div class="flex h-10 w-10
               shrink-0 items-center
               justify-center rounded-xl
-              bg-white text-indigo-600
+              bg-surface text-indigo-600
               shadow-sm transition
               group-hover:bg-indigo-600
               group-hover:text-white">
@@ -1343,24 +1343,24 @@ item,
                 items-center gap-2">
                     <h3 class="break-words
                   text-sm font-bold
-                  text-slate-800
+                  text-fg
                   transition-colors
                   group-hover:text-indigo-600">
                       {{ source.name }}
                     </h3>
 
                     <span v-if="source.type" class="rounded-full
-                  border border-slate-200
-                  bg-white px-2 py-1
+                  border border-line
+                  bg-surface px-2 py-1
                   text-[8px] font-bold
                   uppercase tracking-wider
-                  text-slate-400">
+                  text-fg-subtle">
                       {{ source.type }}
                     </span>
                   </div>
 
                   <p v-if="source.description" class="mt-1.5 text-xs
-                leading-5 text-slate-500">
+                leading-5 text-fg-subtle">
                     {{ source.description }}
                   </p>
 
@@ -1376,7 +1376,7 @@ item,
               <!-- External arrow -->
 
               <span class="mt-2 shrink-0
-            text-slate-400
+            text-fg-subtle
             transition-all
             group-hover:translate-x-1
             group-hover:text-indigo-600" aria-hidden="true">
@@ -1389,8 +1389,8 @@ item,
             <div v-else class="flex items-start
           justify-between gap-4
           rounded-2xl border
-          border-slate-200
-          bg-slate-50 p-4">
+          border-line
+          bg-surface-2 p-4">
               <div class="flex min-w-0
             items-start gap-3">
                 <!-- Icon -->
@@ -1398,7 +1398,7 @@ item,
                 <div class="flex h-10 w-10
               shrink-0 items-center
               justify-center rounded-xl
-              bg-white text-slate-500
+              bg-surface text-fg-subtle
               shadow-sm">
                   <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"
                     aria-hidden="true">
@@ -1417,36 +1417,36 @@ item,
                 items-center gap-2">
                     <h3 class="break-words
                   text-sm font-bold
-                  text-slate-800">
+                  text-fg">
                       {{ source.name }}
                     </h3>
 
                     <span v-if="source.type" class="rounded-full
-                  border border-slate-200
-                  bg-white px-2 py-1
+                  border border-line
+                  bg-surface px-2 py-1
                   text-[8px] font-bold
                   uppercase tracking-wider
-                  text-slate-400">
+                  text-fg-subtle">
                       {{ source.type }}
                     </span>
 
                     <span class="rounded-full
-                  bg-slate-200/70
+                  bg-surface-3/70
                   px-2 py-1
                   text-[8px] font-bold
                   uppercase tracking-wider
-                  text-slate-500">
+                  text-fg-subtle">
                       No link
                     </span>
                   </div>
 
                   <p v-if="source.description" class="mt-1.5 text-xs
-                leading-5 text-slate-500">
+                leading-5 text-fg-subtle">
                     {{ source.description }}
                   </p>
 
                   <p v-else class="mt-1.5 text-xs
-                leading-5 text-slate-400">
+                leading-5 text-fg-subtle">
                     No additional source description
                     is available.
                   </p>
@@ -1461,10 +1461,10 @@ item,
         <button v-if="hasMoreSources || showAllSources" type="button" class="mt-5 flex w-full
       items-center justify-center
       gap-2 rounded-xl
-      border border-slate-200
-      bg-slate-50 px-4 py-3
+      border border-line
+      bg-surface-2 px-4 py-3
       text-[10px] font-bold
-      text-slate-600
+      text-fg-muted
       transition-all
       hover:border-indigo-200
       hover:bg-indigo-50
@@ -1495,13 +1495,13 @@ item,
       scroll-mt-36">
       <div class="overflow-hidden
         rounded-[28px]
-        border border-slate-200
-        bg-slate-50">
+        border border-line
+        bg-surface-2">
         <div class="grid gap-6 p-6
           sm:p-8 md:grid-cols-[56px_minmax(0,1fr)]">
           <div class="flex h-14 w-14
             items-center justify-center
-            rounded-2xl bg-white
+            rounded-2xl bg-surface
             text-indigo-600 shadow-sm">
             <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
               <path d="M12 3 5 6v5c0 4.6 2.9 8 7 10 4.1-2 7-5.4 7-10V6l-7-3Z" />
@@ -1518,14 +1518,14 @@ item,
             </p>
 
             <h2 class="mt-2 text-xl
-              font-bold text-slate-950">
+              font-bold text-fg">
               About this report
             </h2>
 
             <p class="mt-3 text-sm
-              leading-7 text-slate-500">
+              leading-7 text-fg-subtle">
               This story was published by
-              <strong class="text-slate-700">
+              <strong class="text-fg-muted">
                 {{ article.author }}
               </strong>
               for {{ article.source }}.
@@ -1535,16 +1535,16 @@ item,
             </p>
 
             <p v-if="methodologyNote" class="mt-4 text-sm
-              leading-7 text-slate-500">
+              leading-7 text-fg-subtle">
               {{ methodologyNote }}
             </p>
 
             <div class="mt-5 flex flex-wrap
               gap-2 text-[9px]">
               <span class="rounded-full
-                border border-slate-200
-                bg-white px-3 py-2
-                font-semibold text-slate-500">
+                border border-line
+                bg-surface px-3 py-2
+                font-semibold text-fg-subtle">
                 Published:
                 {{
                   formatDate(
@@ -1554,9 +1554,9 @@ item,
               </span>
 
               <span class="rounded-full
-                border border-slate-200
-                bg-white px-3 py-2
-                font-semibold text-slate-500">
+                border border-line
+                bg-surface px-3 py-2
+                font-semibold text-fg-subtle">
                 Updated:
                 {{
                   formatDate(
@@ -1571,8 +1571,8 @@ item,
 
         <!-- Correction note -->
 
-        <div class="border-t border-slate-200
-          bg-white px-6 py-5 sm:px-8">
+        <div class="border-t border-line
+          bg-surface px-6 py-5 sm:px-8">
           <div class="flex items-start gap-3">
             <div class="flex h-9 w-9
               shrink-0 items-center
@@ -1584,12 +1584,12 @@ item,
 
             <div>
               <p class="text-xs font-bold
-                text-slate-800">
+                text-fg">
                 Corrections and updates
               </p>
 
               <p class="mt-1.5 text-xs
-                leading-6 text-slate-500">
+                leading-6 text-fg-subtle">
                 {{
                   correctionNote ||
                   'No correction notice is currently attached to this article.'
@@ -1606,24 +1606,24 @@ item,
     <!-- ===================================================== -->
 
     <section v-if="article.tags.length" class="article-section
-      border-t border-slate-200 pt-8">
+      border-t border-line pt-8">
       <div class="flex flex-col
         justify-between gap-5
         sm:flex-row sm:items-center">
         <div>
           <p class="text-[9px] font-bold
             uppercase tracking-[0.17em]
-            text-slate-400">
+            text-fg-subtle">
             Topics
           </p>
 
           <div class="mt-3 flex flex-wrap gap-2">
             <NuxtLink v-for="tag in article.tags" :key="tag" :to="`/news/tag/${tagToSlug(tag)}`
               " class="rounded-full
-              border border-slate-200
-              bg-white px-3.5 py-2
+              border border-line
+              bg-surface px-3.5 py-2
               text-[10px] font-semibold
-              text-slate-600 transition-all
+              text-fg-muted transition-all
               hover:-translate-y-0.5
               hover:border-indigo-200
               hover:bg-indigo-50
@@ -1636,7 +1636,7 @@ item,
         <NuxtLink :to="`/news/category/${article.category}`
           " class="group inline-flex w-fit
           items-center gap-2 rounded-xl
-          bg-slate-950 px-5 py-3
+          bg-accent text-accent-fg px-5 py-3
           text-[10px] font-bold
           text-white transition-all
           hover:bg-indigo-600">

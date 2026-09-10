@@ -10,20 +10,10 @@ const isScrolled = ref(false)
 const headerRef = ref<HTMLElement | null>(null)
 let closeTimer: ReturnType<typeof setTimeout> | null = null
 
-/* ---------------------------------------------------------------- scroll */
-
 const onScroll = () => {
-  isScrolled.value = window.scrollY > 16
+  isScrolled.value = window.scrollY > 20
 }
 
-/* ------------------------------------------------------- desktop menus */
-
-/**
- * Menus open on hover but stay controlled by state rather than CSS
- * `group-hover`, so they also work via keyboard and close on Escape.
- * The small close delay stops the panel vanishing while the pointer
- * crosses the gap between trigger and panel.
- */
 const openMenu = (id: string) => {
   if (closeTimer) clearTimeout(closeTimer)
   openDesktopMenu.value = id
@@ -33,7 +23,7 @@ const scheduleCloseMenu = () => {
   if (closeTimer) clearTimeout(closeTimer)
   closeTimer = setTimeout(() => {
     openDesktopMenu.value = null
-  }, 140)
+  }, 120)
 }
 
 const closeMenuNow = () => {
@@ -44,8 +34,6 @@ const closeMenuNow = () => {
 const toggleMenu = (id: string) => {
   openDesktopMenu.value = openDesktopMenu.value === id ? null : id
 }
-
-/* -------------------------------------------------------- mobile menu */
 
 const toggleMobileMenu = () => {
   isMobileMenuOpen.value = !isMobileMenuOpen.value
@@ -60,8 +48,6 @@ const closeMobileMenu = () => {
 const toggleMobileSection = (id: string) => {
   activeMobileSection.value = activeMobileSection.value === id ? null : id
 }
-
-/* ------------------------------------------------------------- helpers */
 
 const isActive = (href: string) => route.path === href
 const isSectionActive = (prefix: string) => route.path.startsWith(prefix)
@@ -90,13 +76,11 @@ onUnmounted(() => {
   if (closeTimer) clearTimeout(closeTimer)
 })
 
-// Route change closes everything.
 watch(() => route.fullPath, () => {
   closeMenuNow()
   closeMobileMenu()
 })
 
-// Lock body scroll while the mobile sheet is open.
 watch(isMobileMenuOpen, (open) => {
   if (!import.meta.client) return
   document.body.style.overflow = open ? 'hidden' : ''
@@ -110,65 +94,44 @@ onUnmounted(() => {
 <template>
   <header
     ref="headerRef"
-    class="sticky top-0 z-50 transition-all duration-300"
-    :class="isScrolled ? 'pt-0' : 'pt-3'"
+    class="sticky top-0 z-50 transition-all duration-200"
+    :class="isScrolled ? 'bg-surface/90 backdrop-blur-md border-b border-line shadow-xs' : 'bg-surface/60 backdrop-blur-sm border-b border-transparent'"
   >
-    <div
-      class="mx-auto transition-all duration-300"
-      :class="isScrolled ? 'max-w-none px-0' : 'max-w-[1320px] px-3 sm:px-5'"
-    >
-      <div
-        class="relative flex h-16 items-center justify-between border
-          px-2 transition-all duration-300 sm:px-3"
-        :class="
-          isScrolled
-            ? 'sp-glass rounded-none border-x-0 border-t-0 shadow-soft'
-            : 'sp-glass rounded-2xl shadow-lift'
-        "
-      >
+    <div class="sp-container">
+      <div class="flex h-16 items-center justify-between">
         <!-- ============================================ LOGO -->
-
         <NuxtLink
           to="/"
-          class="group flex shrink-0 items-center gap-2.5 rounded-xl px-2 py-1.5
-            transition-colors hover:bg-surface-2"
+          class="flex items-center gap-2.5 rounded-lg py-1 transition-opacity hover:opacity-85"
           @click="closeMobileMenu"
         >
           <span
-            class="relative flex h-9 w-9 items-center justify-center
-              overflow-hidden rounded-xl bg-accent text-accent-fg
-              shadow-glow transition-transform duration-300
-              group-hover:scale-105"
+            class="flex h-8 w-8 items-center justify-center rounded-lg bg-accent text-accent-fg shadow-xs"
           >
             <svg
-              class="h-5 w-5 transition-transform duration-500 group-hover:rotate-12"
+              class="h-4 w-4"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="1.8"
+              stroke-width="2.2"
               aria-hidden="true"
             >
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                d="M12 3l1.25 5.75L19 10l-5.75 1.25L12 17l-1.25-5.75L5 10l5.75-1.25L12 3z"
+                d="M13 10V3L4 14h7v7l9-11h-7z"
               />
             </svg>
           </span>
 
-          <span class="flex items-center gap-1.5">
-            <span
-              class="font-display text-[19px] font-bold tracking-tight text-fg"
-            >
-              SP<span class="text-fg-subtle">-Tools</span>
-            </span>
+          <span class="text-[17px] font-semibold tracking-tight text-fg">
+            SP<span class="text-accent font-bold">-Tools</span>
           </span>
         </NuxtLink>
 
         <!-- ================================= DESKTOP NAV -->
-
-        <nav class="hidden items-center gap-1 lg:flex" aria-label="Main">
-          <!-- Tools -->
+        <nav class="hidden items-center gap-1 lg:flex" aria-label="Main navigation">
+          <!-- Tools Dropdown -->
           <div
             class="relative"
             @mouseenter="openMenu('tools')"
@@ -176,21 +139,20 @@ onUnmounted(() => {
           >
             <button
               type="button"
-              class="flex items-center gap-1.5 rounded-xl px-3.5 py-2.5 text-sm
-                font-medium transition-colors"
+              class="flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition-colors"
               :class="
                 isSectionActive('/tools')
-                  ? 'bg-accent-soft text-accent'
-                  : 'text-fg-muted hover:bg-surface-2 hover:text-fg'
+                  ? 'text-accent bg-accent-soft'
+                  : 'text-fg-muted hover:text-fg hover:bg-surface-3'
               "
               :aria-expanded="openDesktopMenu === 'tools'"
               aria-haspopup="true"
               @click="toggleMenu('tools')"
             >
-              Tools
+              AI Tools
               <svg
-                class="h-3.5 w-3.5 transition-transform duration-300"
-                :class="openDesktopMenu === 'tools' ? 'rotate-180' : ''"
+                class="h-3.5 w-3.5 transition-transform duration-200"
+                :class="openDesktopMenu === 'tools' ? 'rotate-180 text-accent' : 'text-fg-subtle'"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -202,24 +164,22 @@ onUnmounted(() => {
             </button>
 
             <Transition
-              enter-active-class="transition duration-200 ease-out"
-              enter-from-class="opacity-0 -translate-y-1.5 scale-[0.98]"
-              leave-active-class="transition duration-150 ease-in"
-              leave-to-class="opacity-0 -translate-y-1.5 scale-[0.98]"
+              enter-active-class="transition duration-150 ease-out"
+              enter-from-class="opacity-0 translate-y-1"
+              leave-active-class="transition duration-100 ease-in"
+              leave-to-class="opacity-0 translate-y-1"
             >
               <div
                 v-if="openDesktopMenu === 'tools'"
-                class="absolute left-0 top-full w-[430px] pt-2.5"
+                class="absolute left-0 top-full w-[380px] pt-2"
               >
                 <div
-                  class="overflow-hidden rounded-panel border border-line
-                    bg-elevated p-2 shadow-pop"
+                  class="overflow-hidden rounded-xl border border-line bg-surface-2 p-2 shadow-pop"
                 >
                   <p
-                    class="px-3 pb-2 pt-2 text-[11px] font-bold uppercase
-                      tracking-[0.16em] text-accent"
+                    class="px-3 pb-1.5 pt-2 text-[11px] font-semibold uppercase tracking-wider text-fg-subtle"
                   >
-                    AI Image Tools
+                    Image Enhancement
                   </p>
 
                   <SiteNavToolItem
@@ -229,23 +189,22 @@ onUnmounted(() => {
                     @navigate="closeMenuNow"
                   />
 
-                  <NuxtLink
-                    to="/tools"
-                    class="mt-1.5 flex items-center justify-between rounded-xl
-                      bg-surface-2 px-4 py-3 text-xs font-semibold
-                      text-fg-muted transition-colors hover:bg-surface-3
-                      hover:text-fg"
-                    @click="closeMenuNow"
-                  >
-                    Browse all tools
-                    <span aria-hidden="true">→</span>
-                  </NuxtLink>
+                  <div class="mt-1.5 border-t border-line/60 pt-1.5">
+                    <NuxtLink
+                      to="/tools"
+                      class="flex items-center justify-between rounded-lg px-3 py-2 text-xs font-medium text-accent transition-colors hover:bg-accent-soft"
+                      @click="closeMenuNow"
+                    >
+                      Browse all tools
+                      <span aria-hidden="true">→</span>
+                    </NuxtLink>
+                  </div>
                 </div>
               </div>
             </Transition>
           </div>
 
-          <!-- Downloaders -->
+          <!-- Downloaders Dropdown -->
           <div
             class="relative"
             @mouseenter="openMenu('downloads')"
@@ -253,12 +212,11 @@ onUnmounted(() => {
           >
             <button
               type="button"
-              class="flex items-center gap-1.5 rounded-xl px-3.5 py-2.5 text-sm
-                font-medium transition-colors"
+              class="flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition-colors"
               :class="
                 isSectionActive('/download')
-                  ? 'bg-accent-soft text-accent'
-                  : 'text-fg-muted hover:bg-surface-2 hover:text-fg'
+                  ? 'text-accent bg-accent-soft'
+                  : 'text-fg-muted hover:text-fg hover:bg-surface-3'
               "
               :aria-expanded="openDesktopMenu === 'downloads'"
               aria-haspopup="true"
@@ -266,8 +224,8 @@ onUnmounted(() => {
             >
               Downloaders
               <svg
-                class="h-3.5 w-3.5 transition-transform duration-300"
-                :class="openDesktopMenu === 'downloads' ? 'rotate-180' : ''"
+                class="h-3.5 w-3.5 transition-transform duration-200"
+                :class="openDesktopMenu === 'downloads' ? 'rotate-180 text-accent' : 'text-fg-subtle'"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -279,24 +237,22 @@ onUnmounted(() => {
             </button>
 
             <Transition
-              enter-active-class="transition duration-200 ease-out"
-              enter-from-class="opacity-0 -translate-y-1.5 scale-[0.98]"
-              leave-active-class="transition duration-150 ease-in"
-              leave-to-class="opacity-0 -translate-y-1.5 scale-[0.98]"
+              enter-active-class="transition duration-150 ease-out"
+              enter-from-class="opacity-0 translate-y-1"
+              leave-active-class="transition duration-100 ease-in"
+              leave-to-class="opacity-0 translate-y-1"
             >
               <div
                 v-if="openDesktopMenu === 'downloads'"
-                class="absolute left-1/2 top-full w-[420px] -translate-x-1/2 pt-2.5"
+                class="absolute left-0 top-full w-[380px] pt-2"
               >
                 <div
-                  class="overflow-hidden rounded-panel border border-line
-                    bg-elevated p-2 shadow-pop"
+                  class="overflow-hidden rounded-xl border border-line bg-surface-2 p-2 shadow-pop"
                 >
                   <p
-                    class="px-3 pb-2 pt-2 text-[11px] font-bold uppercase
-                      tracking-[0.16em] text-accent"
+                    class="px-3 pb-1.5 pt-2 text-[11px] font-semibold uppercase tracking-wider text-fg-subtle"
                   >
-                    Media Downloaders
+                    Social Media Grabbers
                   </p>
 
                   <SiteNavToolItem
@@ -313,34 +269,30 @@ onUnmounted(() => {
           <!-- News -->
           <NuxtLink
             to="/news"
-            class="flex items-center gap-2 rounded-xl px-3.5 py-2.5 text-sm
-              font-medium transition-colors"
+            class="rounded-md px-3 py-1.5 text-sm font-medium transition-colors"
             :class="
               isSectionActive('/news')
-                ? 'bg-accent-soft text-accent'
-                : 'text-fg-muted hover:bg-surface-2 hover:text-fg'
+                ? 'text-accent bg-accent-soft'
+                : 'text-fg-muted hover:text-fg hover:bg-surface-3'
             "
           >
-            News
+            News & Articles
           </NuxtLink>
         </nav>
 
         <!-- ============================= DESKTOP ACTIONS -->
-
-        <div class="hidden items-center gap-2 lg:flex">
+        <div class="hidden items-center gap-2.5 lg:flex">
           <NuxtLink
             to="/news/search"
-            class="flex h-9 w-9 items-center justify-center rounded-xl border
-              border-line bg-surface-2 text-fg-muted transition-colors
-              hover:bg-surface-3 hover:text-fg"
+            class="flex h-8 w-8 items-center justify-center rounded-lg border border-line bg-surface-2 text-fg-muted transition-colors hover:border-line-strong hover:text-fg"
             aria-label="Search news"
           >
             <svg
-              class="h-4 w-4"
+              class="h-3.5 w-3.5"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="1.9"
+              stroke-width="2"
               aria-hidden="true"
             >
               <circle cx="11" cy="11" r="6.5" />
@@ -351,48 +303,48 @@ onUnmounted(() => {
           <ClientOnly>
             <UiThemeToggle />
             <template #fallback>
-              <div class="h-9 w-9 rounded-xl border border-line bg-surface-2" />
+              <div class="h-8 w-8 rounded-lg border border-line bg-surface-2" />
             </template>
           </ClientOnly>
 
-          <UiButton to="/tools" size="sm" class="ml-1">
-            Explore tools
+          <NuxtLink
+            to="/tools"
+            class="inline-flex items-center justify-center gap-1.5 rounded-lg bg-accent px-3.5 py-1.5 text-xs font-semibold text-accent-fg shadow-xs transition hover:bg-accent-hover active:scale-95"
+          >
+            Explore Tools
             <span aria-hidden="true">→</span>
-          </UiButton>
+          </NuxtLink>
         </div>
 
         <!-- ============================== MOBILE TRIGGER -->
-
         <div class="flex items-center gap-2 lg:hidden">
           <ClientOnly>
             <UiThemeToggle />
             <template #fallback>
-              <div class="h-9 w-9 rounded-xl border border-line bg-surface-2" />
+              <div class="h-8 w-8 rounded-lg border border-line bg-surface-2" />
             </template>
           </ClientOnly>
 
           <button
             type="button"
-            class="flex h-10 w-10 items-center justify-center rounded-xl border
-              border-line bg-surface-2 text-fg transition-colors
-              hover:bg-surface-3"
+            class="flex h-8 w-8 items-center justify-center rounded-lg border border-line bg-surface-2 text-fg transition hover:border-line-strong"
             :aria-expanded="isMobileMenuOpen"
             aria-label="Toggle navigation menu"
             @click="toggleMobileMenu"
           >
             <svg
-              class="h-5 w-5"
+              class="h-4 w-4"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="1.8"
+              stroke-width="2"
               aria-hidden="true"
             >
               <path
                 v-if="!isMobileMenuOpen"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                d="M4 7h16M4 12h16M4 17h16"
+                d="M4 6h16M4 12h16M4 18h16"
               />
               <path
                 v-else
@@ -407,125 +359,112 @@ onUnmounted(() => {
     </div>
 
     <!-- ================================== MOBILE SHEET -->
-
     <Transition
-      enter-active-class="transition duration-300 ease-out"
-      enter-from-class="opacity-0 -translate-y-3"
-      leave-active-class="transition duration-200 ease-in"
-      leave-to-class="opacity-0 -translate-y-3"
+      enter-active-class="transition duration-200 ease-out"
+      enter-from-class="opacity-0 -translate-y-2"
+      leave-active-class="transition duration-150 ease-in"
+      leave-to-class="opacity-0 -translate-y-2"
     >
       <div
         v-if="isMobileMenuOpen"
-        class="fixed inset-x-3 top-[76px] max-h-[calc(100vh-92px)]
-          overflow-y-auto rounded-panel border border-line bg-elevated p-3
-          shadow-pop lg:hidden"
+        class="border-b border-line bg-surface-2 px-4 py-4 shadow-pop lg:hidden"
       >
-        <!-- Tools -->
-        <div class="border-b border-line">
-          <button
-            type="button"
-            class="flex w-full items-center justify-between px-3 py-4 text-sm
-              font-semibold text-fg"
-            :aria-expanded="activeMobileSection === 'tools'"
-            @click="toggleMobileSection('tools')"
-          >
-            AI Tools
-            <svg
-              class="h-4 w-4 text-fg-subtle transition-transform duration-300"
-              :class="activeMobileSection === 'tools' ? 'rotate-180' : ''"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              aria-hidden="true"
+        <div class="space-y-1">
+          <!-- Tools Accordion -->
+          <div class="border-b border-line/60 pb-2">
+            <button
+              type="button"
+              class="flex w-full items-center justify-between rounded-md px-3 py-2 text-sm font-medium text-fg hover:bg-surface-3"
+              :aria-expanded="activeMobileSection === 'tools'"
+              @click="toggleMobileSection('tools')"
             >
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6" />
-            </svg>
-          </button>
+              <span>AI Tools</span>
+              <svg
+                class="h-4 w-4 text-fg-subtle transition-transform"
+                :class="activeMobileSection === 'tools' ? 'rotate-180 text-accent' : ''"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6" />
+              </svg>
+            </button>
 
-          <div v-show="activeMobileSection === 'tools'" class="space-y-1 pb-3">
-            <NuxtLink
-              v-for="tool in imageTools"
-              :key="tool.slug"
-              :to="tool.href"
-              class="flex items-center justify-between rounded-xl px-3 py-3
-                text-sm font-medium transition-colors"
-              :class="
-                isActive(tool.href)
-                  ? 'bg-accent-soft text-accent'
-                  : 'text-fg-muted hover:bg-surface-2 hover:text-fg'
-              "
-              @click="closeMobileMenu"
-            >
-              {{ tool.shortName }}
-              <span aria-hidden="true">→</span>
-            </NuxtLink>
+            <div v-show="activeMobileSection === 'tools'" class="mt-1 space-y-1 pl-3">
+              <NuxtLink
+                v-for="tool in imageTools"
+                :key="tool.slug"
+                :to="tool.href"
+                class="flex items-center justify-between rounded-md px-3 py-2 text-xs font-medium text-fg-muted hover:bg-surface-3 hover:text-fg"
+                @click="closeMobileMenu"
+              >
+                {{ tool.name }}
+                <span aria-hidden="true">→</span>
+              </NuxtLink>
+            </div>
           </div>
+
+          <!-- Downloaders Accordion -->
+          <div class="border-b border-line/60 pb-2">
+            <button
+              type="button"
+              class="flex w-full items-center justify-between rounded-md px-3 py-2 text-sm font-medium text-fg hover:bg-surface-3"
+              :aria-expanded="activeMobileSection === 'downloads'"
+              @click="toggleMobileSection('downloads')"
+            >
+              <span>Downloaders</span>
+              <svg
+                class="h-4 w-4 text-fg-subtle transition-transform"
+                :class="activeMobileSection === 'downloads' ? 'rotate-180 text-accent' : ''"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6" />
+              </svg>
+            </button>
+
+            <div v-show="activeMobileSection === 'downloads'" class="mt-1 space-y-1 pl-3">
+              <NuxtLink
+                v-for="tool in downloadTools"
+                :key="tool.slug"
+                :to="tool.href"
+                class="flex items-center justify-between rounded-md px-3 py-2 text-xs font-medium text-fg-muted hover:bg-surface-3 hover:text-fg"
+                @click="closeMobileMenu"
+              >
+                {{ tool.name }}
+                <span aria-hidden="true">→</span>
+              </NuxtLink>
+            </div>
+          </div>
+
+          <NuxtLink
+            to="/news"
+            class="flex items-center justify-between rounded-md px-3 py-2 text-sm font-medium text-fg hover:bg-surface-3"
+            @click="closeMobileMenu"
+          >
+            News & Articles
+            <span aria-hidden="true">→</span>
+          </NuxtLink>
         </div>
 
-        <!-- Downloaders -->
-        <div class="border-b border-line">
-          <button
-            type="button"
-            class="flex w-full items-center justify-between px-3 py-4 text-sm
-              font-semibold text-fg"
-            :aria-expanded="activeMobileSection === 'downloads'"
-            @click="toggleMobileSection('downloads')"
+        <div class="mt-4 grid grid-cols-2 gap-2 pt-2 border-t border-line">
+          <NuxtLink
+            to="/news/search"
+            class="flex items-center justify-center rounded-lg border border-line bg-surface py-2 text-xs font-semibold text-fg"
+            @click="closeMobileMenu"
           >
-            Downloaders
-            <svg
-              class="h-4 w-4 text-fg-subtle transition-transform duration-300"
-              :class="activeMobileSection === 'downloads' ? 'rotate-180' : ''"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              aria-hidden="true"
-            >
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6" />
-            </svg>
-          </button>
-
-          <div
-            v-show="activeMobileSection === 'downloads'"
-            class="space-y-1 pb-3"
+            Search News
+          </NuxtLink>
+          <NuxtLink
+            to="/tools"
+            class="flex items-center justify-center rounded-lg bg-accent py-2 text-xs font-semibold text-accent-fg"
+            @click="closeMobileMenu"
           >
-            <NuxtLink
-              v-for="tool in downloadTools"
-              :key="tool.slug"
-              :to="tool.href"
-              class="flex items-center justify-between rounded-xl px-3 py-3
-                text-sm font-medium transition-colors"
-              :class="
-                isActive(tool.href)
-                  ? 'bg-accent-soft text-accent'
-                  : 'text-fg-muted hover:bg-surface-2 hover:text-fg'
-              "
-              @click="closeMobileMenu"
-            >
-              {{ tool.shortName }}
-              <span aria-hidden="true">→</span>
-            </NuxtLink>
-          </div>
-        </div>
-
-        <NuxtLink
-          to="/news"
-          class="flex items-center justify-between border-b border-line px-3
-            py-4 text-sm font-semibold text-fg"
-          @click="closeMobileMenu"
-        >
-          News
-          <span aria-hidden="true">→</span>
-        </NuxtLink>
-
-        <div class="grid grid-cols-2 gap-2 pt-4">
-          <UiButton to="/news/search" variant="secondary" block @click="closeMobileMenu">
-            Search
-          </UiButton>
-          <UiButton to="/tools" block @click="closeMobileMenu">
-            All tools
-          </UiButton>
+            All Tools
+          </NuxtLink>
         </div>
       </div>
     </Transition>

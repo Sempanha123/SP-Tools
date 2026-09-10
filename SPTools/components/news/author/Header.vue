@@ -48,7 +48,7 @@ const authorBio = computed(() => {
 <template>
   <section
     class="relative overflow-hidden
-    bg-slate-950 pb-20 pt-32
+    bg-accent text-accent-fg pb-20 pt-32
     text-white sm:pb-24 sm:pt-40"
   >
     <!-- Grid -->
@@ -99,7 +99,7 @@ const authorBio = computed(() => {
         aria-label="Breadcrumb"
         class="flex flex-wrap items-center
         gap-2 text-xs font-medium
-        text-slate-400"
+        text-fg-subtle"
       >
         <NuxtLink
           to="/"
@@ -200,8 +200,8 @@ const authorBio = computed(() => {
           >
             <span
               class="rounded-full
-              border border-white/10
-              bg-white/[0.06]
+              border border-line/10
+              bg-surface/[0.06]
               px-4 py-2
               text-[10px] font-bold
               uppercase tracking-[0.18em]
@@ -244,7 +244,7 @@ const authorBio = computed(() => {
           <p
             class="mt-6 max-w-3xl
             text-base leading-8
-            text-slate-400 sm:text-lg"
+            text-fg-subtle sm:text-lg"
           >
             {{ authorBio }}
           </p>
@@ -254,7 +254,7 @@ const authorBio = computed(() => {
           <div
             class="mt-7 flex flex-wrap
             gap-x-7 gap-y-3
-            text-xs text-slate-400"
+            text-xs text-fg-subtle"
           >
             <span
               v-if="author.location"
@@ -308,8 +308,8 @@ const authorBio = computed(() => {
           >
             <div
               class="rounded-2xl
-              border border-white/10
-              bg-white/[0.05]
+              border border-line/10
+              bg-surface/[0.05]
               p-4 backdrop-blur"
             >
               <p class="text-2xl font-bold">
@@ -322,7 +322,7 @@ const authorBio = computed(() => {
               <p
                 class="mt-1 text-[10px]
                 uppercase tracking-wider
-                text-slate-500"
+                text-fg-subtle"
               >
                 Articles
               </p>
@@ -330,8 +330,8 @@ const authorBio = computed(() => {
 
             <div
               class="rounded-2xl
-              border border-white/10
-              bg-white/[0.05]
+              border border-line/10
+              bg-surface/[0.05]
               p-4 backdrop-blur"
             >
               <p class="text-2xl font-bold">
@@ -345,7 +345,7 @@ const authorBio = computed(() => {
               <p
                 class="mt-1 text-[10px]
                 uppercase tracking-wider
-                text-slate-500"
+                text-fg-subtle"
               >
                 Total views
               </p>
@@ -353,8 +353,8 @@ const authorBio = computed(() => {
 
             <div
               class="rounded-2xl
-              border border-white/10
-              bg-white/[0.05]
+              border border-line/10
+              bg-surface/[0.05]
               p-4 backdrop-blur"
             >
               <p class="text-2xl font-bold">
@@ -364,7 +364,7 @@ const authorBio = computed(() => {
               <p
                 class="mt-1 text-[10px]
                 uppercase tracking-wider
-                text-slate-500"
+                text-fg-subtle"
               >
                 Categories
               </p>
@@ -372,8 +372,8 @@ const authorBio = computed(() => {
 
             <div
               class="rounded-2xl
-              border border-white/10
-              bg-white/[0.05]
+              border border-line/10
+              bg-surface/[0.05]
               p-4 backdrop-blur"
             >
               <p class="text-2xl font-bold">
@@ -383,7 +383,7 @@ const authorBio = computed(() => {
               <p
                 class="mt-1 text-[10px]
                 uppercase tracking-wider
-                text-slate-500"
+                text-fg-subtle"
               >
                 Regions
               </p>

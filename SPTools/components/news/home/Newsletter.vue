@@ -31,7 +31,7 @@ const subscribe = () => {
     <div
       class="relative mx-auto max-w-6xl
       overflow-hidden rounded-[40px]
-      bg-slate-950 px-6 py-16
+      bg-accent text-accent-fg px-6 py-16
       text-center text-white sm:px-12 sm:py-20"
     >
       <div
@@ -83,7 +83,7 @@ const subscribe = () => {
 
         <p
           class="mx-auto mt-6 max-w-xl
-          text-sm leading-7 text-slate-400
+          text-sm leading-7 text-fg-subtle
           sm:text-base"
         >
           Receive selected world news, breaking updates,
@@ -108,10 +108,10 @@ const subscribe = () => {
             type="email"
             placeholder="Enter your email address"
             class="h-14 min-w-0 flex-1
-            rounded-2xl border border-white/10
-            bg-white/[0.07] px-5 text-sm
+            rounded-2xl border border-line/10
+            bg-surface/[0.07] px-5 text-sm
             text-white outline-none
-            placeholder:text-slate-500
+            placeholder:text-fg-subtle
             focus:border-indigo-400
             focus:ring-4 focus:ring-indigo-500/10"
           />
@@ -119,8 +119,8 @@ const subscribe = () => {
           <button
             type="submit"
             class="group h-14 rounded-2xl
-            bg-white px-7 text-sm font-bold
-            text-slate-950 transition-all
+            bg-surface px-7 text-sm font-bold
+            text-fg transition-all
             hover:-translate-y-0.5 hover:bg-indigo-50"
           >
             Subscribe
@@ -147,7 +147,7 @@ const subscribe = () => {
           {{ message }}
         </p>
 
-        <p class="mt-4 text-[10px] text-slate-500">
+        <p class="mt-4 text-[10px] text-fg-subtle">
           One useful briefing. No unnecessary messages.
         </p>
       </div>

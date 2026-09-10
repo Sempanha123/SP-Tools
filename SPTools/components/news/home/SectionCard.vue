@@ -46,13 +46,13 @@ const toneClasses = computed(() => {
 <template>
   <section
     class="overflow-hidden rounded-[30px]
-    border border-slate-200 bg-white
+    border border-line bg-surface
     shadow-[0_18px_50px_rgba(15,23,42,0.06)]"
   >
     <!-- Section heading -->
     <header
       class="flex flex-col justify-between gap-4
-      border-b border-slate-100 px-5 py-5
+      border-b border-line px-5 py-5
       sm:flex-row sm:items-center sm:px-7"
     >
       <div class="flex items-center gap-4">
@@ -76,14 +76,14 @@ const toneClasses = computed(() => {
 
           <h2
             class="mt-1 text-xl font-bold
-            tracking-[-0.02em] text-slate-950"
+            tracking-[-0.02em] text-fg"
           >
             {{ title }}
           </h2>
 
           <p
             v-if="description"
-            class="mt-1 text-xs leading-5 text-slate-500"
+            class="mt-1 text-xs leading-5 text-fg-subtle"
           >
             {{ description }}
           </p>

@@ -41,11 +41,9 @@ const handleImageError = () => {
   imageFailed.value = true
 }
 
-const hasImage = computed(() => {
-  return Boolean(
-    props.article.image?.trim(),
-  ) && !imageFailed.value
-})
+const hasSourceImage = computed(() => Boolean(props.article.image?.trim()))
+
+const hasImage = computed(() => hasSourceImage.value && !imageFailed.value)
 
 watch(
   () => props.article.image,
@@ -59,39 +57,31 @@ watch(
 </script>
 
 <template>
-  <article class="group h-full overflow-hidden
-    rounded-[26px] border border-slate-200
-    bg-white transition-all duration-300
-    hover:-translate-y-1
-    hover:border-indigo-200
-    hover:shadow-[0_20px_55px_rgba(15,23,42,0.09)]">
+  <article class="sp-card sp-card-interactive sp-luminous group h-full overflow-hidden rounded-[26px]">
     <NuxtLink :to="articleUrl" :aria-label="`Read article: ${article.title}`" class="grid h-full outline-none
       focus-visible:ring-2
-      focus-visible:ring-indigo-500
+      focus-visible:ring-accent
       focus-visible:ring-offset-2" :class="horizontal
         ? 'sm:grid-cols-[220px_minmax(0,1fr)]'
         : 'grid-rows-[auto_minmax(0,1fr)]'
         ">
       <!-- Article image -->
 
-      <div class="relative overflow-hidden bg-slate-100" :class="horizontal
+      <div class="relative overflow-hidden bg-surface-3" :class="horizontal
         ? 'aspect-[16/10] sm:aspect-auto sm:h-full sm:min-h-[240px]'
         : 'aspect-[16/10]'
         ">
         <!-- Loading state -->
 
-        <div v-if="!imageLoaded && !imageFailed" class="absolute inset-0 animate-pulse
-          bg-gradient-to-br
-          from-slate-100 via-slate-200 to-slate-100" />
+        <div v-if="hasSourceImage && !imageLoaded && !imageFailed" class="sp-skeleton absolute inset-0" />
 
         <!-- Image fallback -->
 
         <div v-if="imageFailed" class="absolute inset-0 flex
           flex-col items-center justify-center
-          bg-gradient-to-br
-          from-slate-100 to-indigo-50
+          bg-gradient-to-br from-surface-3 via-accent-soft to-surface-2
           px-5 text-center">
-          <svg class="h-8 w-8 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6">
+          <svg class="h-8 w-8 text-fg-subtle" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6">
             <path
               d="M4 5.75A1.75 1.75 0 0 1 5.75 4h12.5A1.75 1.75 0 0 1 20 5.75v12.5A1.75 1.75 0 0 1 18.25 20H5.75A1.75 1.75 0 0 1 4 18.25V5.75Z" />
 
@@ -101,7 +91,7 @@ watch(
           </svg>
 
           <p class="mt-2 text-[10px]
-            font-semibold text-slate-500">
+            font-semibold text-fg-muted">
             Image unavailable
           </p>
         </div>
@@ -112,13 +102,13 @@ watch(
             : 'opacity-0'
             " @load="imageLoaded = true" @error="imageFailed = true">
 
-        <div v-else class="flex h-full min-h-48 items-center justify-center bg-slate-100 px-6 text-center">
+        <div v-else class="flex h-full min-h-48 items-center justify-center bg-surface-3 px-6 text-center">
           <div>
-            <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-white text-xl shadow-sm">
+            <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-surface text-xl shadow-sm">
               📰
             </div>
 
-            <p class="mt-3 text-sm font-medium text-slate-500">
+            <p class="mt-3 text-sm font-medium text-fg-muted">
               No cover image
             </p>
           </div>
@@ -142,17 +132,17 @@ watch(
             <span class="relative flex h-1.5 w-1.5">
               <span class="absolute inline-flex
                 h-full w-full animate-ping
-                rounded-full bg-white opacity-60" />
+                rounded-full bg-surface opacity-60" />
 
               <span class="relative inline-flex
-                h-1.5 w-1.5 rounded-full bg-white" />
+                h-1.5 w-1.5 rounded-full bg-surface" />
             </span>
 
             Breaking
           </span>
 
           <span v-if="article.isLive" class="inline-flex items-center gap-1.5
-            rounded-full bg-white/90
+            rounded-full bg-surface/90
             px-3 py-1.5 text-[9px]
             font-bold uppercase tracking-wider
             text-red-600 shadow-sm backdrop-blur">
@@ -174,8 +164,8 @@ watch(
         <div class="absolute bottom-4 right-4
           flex h-10 w-10 translate-y-2
           items-center justify-center
-          rounded-xl border border-white/20
-          bg-slate-950/60 text-white
+          rounded-xl border border-line/20
+          bg-accent text-accent-fg/60 text-white
           opacity-0 backdrop-blur
           transition-all duration-300
           group-hover:translate-y-0
@@ -202,7 +192,7 @@ watch(
 
           <span class="inline-flex items-center
             gap-1.5 text-[10px]
-            text-slate-400">
+            text-fg-subtle">
             <span class="h-1 w-1 rounded-full
               bg-slate-300" />
 
@@ -215,7 +205,7 @@ watch(
         <h3 class="article-clamp-2 mt-4
           text-xl font-bold leading-snug
           tracking-[-0.025em]
-          text-slate-950 transition-colors
+          text-fg transition-colors
           group-hover:text-indigo-600">
           {{ article.title }}
         </h3>
@@ -223,7 +213,7 @@ watch(
         <!-- Excerpt -->
 
         <p class="article-clamp-3 mt-3
-          text-sm leading-7 text-slate-500">
+          text-sm leading-7 text-fg-muted">
           {{ article.excerpt }}
         </p>
 
@@ -231,16 +221,16 @@ watch(
 
         <div class="mt-auto flex min-w-0
           items-end justify-between gap-4
-          border-t border-slate-100 pt-5">
+          border-t border-line pt-5">
           <div class="min-w-0">
             <p class="truncate text-xs
-              font-semibold text-slate-700">
+              font-semibold text-fg-muted">
               {{ publisherName }}
             </p>
 
             <div class="mt-1 flex flex-wrap
               items-center gap-x-2 gap-y-1
-              text-[10px] text-slate-400">
+              text-[10px] text-fg-subtle">
               <time :datetime="article.publishedAt">
                 {{ timeAgo(article.publishedAt) }}
               </time>
@@ -261,7 +251,7 @@ watch(
           </div>
 
           <span aria-hidden="true" class="shrink-0 text-lg
-            text-slate-300 transition-all
+            text-fg-subtle transition-all
             group-hover:translate-x-1
             group-hover:text-indigo-600">
             →

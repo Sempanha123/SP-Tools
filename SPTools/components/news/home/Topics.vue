@@ -92,7 +92,7 @@ const getCategoryIcon = (
 </script>
 
 <template>
-  <section class="bg-slate-50 py-24 sm:py-28">
+  <section class="bg-surface-2 py-24 sm:py-28">
     <div class="mx-auto max-w-7xl px-6">
       <div class="mx-auto max-w-3xl text-center">
         <span class="text-xs font-bold uppercase
@@ -103,13 +103,13 @@ const getCategoryIcon = (
         <h2 class="mt-5 text-4xl font-bold
           tracking-[-0.04em] sm:text-5xl">
           News for every
-          <span class="text-slate-400">
+          <span class="text-fg-subtle">
             major topic.
           </span>
         </h2>
 
         <p class="mx-auto mt-5 max-w-2xl
-          text-sm leading-7 text-slate-500 sm:text-base">
+          text-sm leading-7 text-fg-subtle sm:text-base">
           Browse international news, markets, technology,
           health, science, climate and regional developments.
         </p>
@@ -118,8 +118,8 @@ const getCategoryIcon = (
       <div class="mt-14 grid gap-4
         sm:grid-cols-2 lg:grid-cols-5">
         <NuxtLink v-for="category in categories" :key="category.slug" :to="`/news/category/${category.slug}`" class="group relative overflow-hidden
-          rounded-[26px] border border-slate-200
-          bg-white p-6 transition-all duration-300
+          rounded-[26px] border border-line
+          bg-surface p-6 transition-all duration-300
           hover:-translate-y-1 hover:border-indigo-200
           hover:shadow-[0_18px_45px_rgba(15,23,42,0.08)]">
           <div class="pointer-events-none absolute
@@ -136,18 +136,18 @@ const getCategoryIcon = (
           </div>
 
           <h3 class="relative mt-6 text-base font-bold
-            text-slate-900 transition-colors
+            text-fg transition-colors
             group-hover:text-indigo-600">
             {{ category.name }}
           </h3>
 
           <p class="relative mt-2 text-xs
-            leading-6 text-slate-500">
+            leading-6 text-fg-subtle">
             {{ category.description }}
           </p>
 
           <div class="relative mt-5 flex items-center
-            gap-2 text-xs font-bold text-slate-800">
+            gap-2 text-xs font-bold text-fg">
             View coverage
 
             <span class="transition-transform

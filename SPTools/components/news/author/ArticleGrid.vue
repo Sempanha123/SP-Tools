@@ -148,7 +148,7 @@ const clearFilters = (): void => {
     <!-- Header -->
 
     <div class="flex flex-col justify-between
-      gap-6 border-b border-slate-200
+      gap-6 border-b border-line
       pb-7 xl:flex-row xl:items-end">
       <div>
         <span class="text-xs font-bold uppercase
@@ -160,12 +160,12 @@ const clearFilters = (): void => {
           tracking-[-0.035em]">
           Articles by
 
-          <span class="text-slate-400">
+          <span class="text-fg-subtle">
             {{ authorName }}
           </span>
         </h2>
 
-        <p class="mt-3 text-sm text-slate-500">
+        <p class="mt-3 text-sm text-fg-subtle">
           {{ filteredArticles.length }}
 
           {{
@@ -183,7 +183,7 @@ const clearFilters = (): void => {
         <div class="relative sm:w-72">
           <svg class="pointer-events-none absolute
             left-4 top-1/2 h-4 w-4
-            -translate-y-1/2 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+            -translate-y-1/2 text-fg-subtle" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
             aria-hidden="true">
             <circle cx="11" cy="11" r="7" />
 
@@ -191,29 +191,29 @@ const clearFilters = (): void => {
           </svg>
 
           <input v-model="searchQuery" type="search" placeholder="Search author articles..." class="h-12 w-full rounded-xl
-            border border-slate-200 bg-white
+            border border-line bg-surface
             pl-11 pr-4 text-sm outline-none
             transition-all
-            placeholder:text-slate-400
+            placeholder:text-fg-subtle
             focus:border-indigo-400
             focus:ring-4
             focus:ring-indigo-500/10">
         </div>
 
         <div class="flex items-center rounded-xl
-          border border-slate-200 bg-white p-1">
+          border border-line bg-surface p-1">
           <button type="button" class="flex-1 rounded-lg px-4 py-2.5
             text-xs font-semibold transition-all" :class="sortMode === 'latest'
-                ? 'bg-slate-950 text-white shadow-sm'
-                : 'text-slate-500 hover:text-slate-950'
+                ? 'bg-accent text-accent-fg text-white shadow-sm'
+                : 'text-fg-subtle hover:text-fg'
               " @click="sortMode = 'latest'">
             Latest
           </button>
 
           <button type="button" class="flex-1 rounded-lg px-4 py-2.5
             text-xs font-semibold transition-all" :class="sortMode === 'popular'
-                ? 'bg-slate-950 text-white shadow-sm'
-                : 'text-slate-500 hover:text-slate-950'
+                ? 'bg-accent text-accent-fg text-white shadow-sm'
+                : 'text-fg-subtle hover:text-fg'
               " @click="sortMode = 'popular'">
             Popular
           </button>
@@ -230,7 +230,7 @@ const clearFilters = (): void => {
         uppercase tracking-wider
         transition-all" :class="selectedCategory === category
             ? 'border-indigo-600 bg-indigo-600 text-white'
-            : 'border-slate-200 bg-white text-slate-500 hover:border-indigo-200 hover:text-indigo-600'
+            : 'border-line bg-surface text-fg-subtle hover:border-indigo-200 hover:text-indigo-600'
           " @click="
           selectedCategory = category
           ">
@@ -247,7 +247,7 @@ const clearFilters = (): void => {
     <div v-if="hasActiveFilters" class="mt-5 flex flex-wrap
       items-center gap-3">
       <span class="text-xs font-medium
-        text-slate-500">
+        text-fg-subtle">
         Showing filtered results
       </span>
 
@@ -268,11 +268,11 @@ const clearFilters = (): void => {
 
     <div v-else class="mt-8 rounded-[28px]
       border border-dashed
-      border-slate-300 bg-white
+      border-line-strong bg-surface
       px-6 py-16 text-center">
       <div class="mx-auto flex h-14 w-14
         items-center justify-center
-        rounded-2xl bg-slate-100
+        rounded-2xl bg-surface-2
         text-xl">
         ⌕
       </div>
@@ -282,14 +282,14 @@ const clearFilters = (): void => {
       </h3>
 
       <p class="mx-auto mt-2 max-w-md
-        text-sm leading-6 text-slate-500">
+        text-sm leading-6 text-fg-subtle">
         No articles by {{ authorName }}
         matched your current search
         and category filters.
       </p>
 
       <button v-if="hasActiveFilters" type="button" class="mt-6 rounded-xl
-        bg-slate-950 px-5 py-3
+        bg-accent text-accent-fg px-5 py-3
         text-xs font-bold text-white" @click="clearFilters">
         Clear filters
       </button>

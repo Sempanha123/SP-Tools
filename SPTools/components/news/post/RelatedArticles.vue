@@ -12,8 +12,8 @@ defineProps<Props>()
 <template>
   <section
     v-if="articles.length"
-    class="border-t border-slate-100
-    bg-slate-50 py-24 sm:py-28"
+    class="border-t border-line
+    bg-surface-2 py-24 sm:py-28"
   >
     <div class="mx-auto max-w-7xl px-6">
       <div
@@ -33,7 +33,7 @@ defineProps<Props>()
             tracking-[-0.04em] sm:text-5xl"
           >
             More from
-            <span class="text-slate-400">
+            <span class="text-fg-subtle">
               {{ categoryName }}.
             </span>
           </h2>
@@ -42,7 +42,7 @@ defineProps<Props>()
         <NuxtLink
           to="/news"
           class="group inline-flex items-center gap-2
-          text-sm font-bold text-slate-800"
+          text-sm font-bold text-fg"
         >
           Browse all news
 

@@ -90,7 +90,7 @@ const featuredTagLinks = computed(() => {
 
 <template>
     <main class="min-h-screen overflow-hidden
-    bg-white text-slate-950">
+    bg-surface text-fg">
         <!-- Tag hero -->
 
         <NewsTagHeader :tag-name="tagName" :article-count="tagArticles.length"
@@ -104,7 +104,7 @@ const featuredTagLinks = computed(() => {
         <!-- FEATURED TAG STORY -->
         <!-- ===================================================== -->
 
-        <section v-if="featuredArticle" class="bg-white py-16 sm:py-20 lg:py-24">
+        <section v-if="featuredArticle" class="bg-surface py-16 sm:py-20 lg:py-24">
             <div class="mx-auto max-w-7xl px-6">
                 <div class="mb-7 flex flex-col
           justify-between gap-4
@@ -120,7 +120,7 @@ const featuredTagLinks = computed(() => {
 
                         <h2 class="mt-3 text-3xl font-bold
               tracking-[-0.04em]
-              text-slate-950">
+              text-fg">
                             Featured under
                             <span class="text-indigo-500">
                                 #{{ tagName }}
@@ -130,9 +130,9 @@ const featuredTagLinks = computed(() => {
 
                     <div class="inline-flex w-fit items-center
             gap-2 rounded-full border
-            border-slate-200 bg-slate-50
+            border-line bg-surface-2
             px-4 py-2 text-[10px]
-            font-semibold text-slate-500">
+            font-semibold text-fg-subtle">
                         <span class="h-1.5 w-1.5 rounded-full
               bg-emerald-500" />
 
@@ -146,7 +146,7 @@ const featuredTagLinks = computed(() => {
 
                     <NuxtLink :to="`/news/posts/${featuredArticle.slug}`" class="group relative min-h-[430px]
             overflow-hidden rounded-[32px]
-            bg-slate-950 shadow-[0_24px_70px_rgba(15,23,42,0.18)]">
+            bg-accent text-accent-fg shadow-[0_24px_70px_rgba(15,23,42,0.18)]">
                         <img v-if="featuredArticle.image" :src="featuredArticle.image" :alt="featuredArticle.title"
                             class="absolute inset-0 h-full w-full
               object-cover transition-transform
@@ -190,7 +190,7 @@ const featuredTagLinks = computed(() => {
                                 </span>
 
                                 <span v-if="featuredArticle.isLive" class="inline-flex items-center gap-1.5
-                  rounded-full bg-white/90
+                  rounded-full bg-surface/90
                   px-3 py-1.5 text-[9px]
                   font-bold uppercase
                   tracking-wider text-red-600
@@ -205,7 +205,7 @@ const featuredTagLinks = computed(() => {
                             <span class="flex h-11 w-11
                 items-center justify-center
                 rounded-2xl border
-                border-white/15 bg-white/10
+                border-line/15 bg-surface/10
                 text-white backdrop-blur
                 transition-transform
                 group-hover:translate-x-1">
@@ -225,12 +225,12 @@ const featuredTagLinks = computed(() => {
 
                                 <NuxtLink v-for="tag in featuredTagLinks" :key="tag.slug" :to="`/news/tag/${tag.slug}`"
                                     class="relative z-20 rounded-full
-  border border-white/15
-  bg-white/10 px-3 py-1.5
+  border border-line/15
+  bg-surface/10 px-3 py-1.5
   text-[9px] font-semibold
   text-white backdrop-blur
   transition-colors
-  hover:bg-white/20" @click.stop>
+  hover:bg-surface/20" @click.stop>
                                     #{{ tag.name }}
                                 </NuxtLink>
                             </div>
@@ -243,13 +243,13 @@ const featuredTagLinks = computed(() => {
                             </h3>
 
                             <p class="mt-4 max-w-2xl
-                text-sm leading-7 text-slate-300">
+                text-sm leading-7 text-fg-subtle">
                                 {{ featuredArticle.excerpt }}
                             </p>
 
                             <div class="mt-6 flex flex-wrap
                 items-center gap-3
-                text-[10px] text-slate-300">
+                text-[10px] text-fg-subtle">
                                 <time :datetime="featuredArticle.publishedAt">
                                     {{ timeAgo(featuredArticle.publishedAt) }}
                                 </time>
@@ -275,8 +275,8 @@ const featuredTagLinks = computed(() => {
                     <div class="grid gap-4 sm:grid-cols-3
             lg:grid-cols-1">
                         <div class="rounded-[26px]
-              border border-slate-200
-              bg-slate-50 p-6">
+              border border-line
+              bg-surface-2 p-6">
                             <span class="text-[9px] font-bold
                 uppercase tracking-[0.16em]
                 text-indigo-600">
@@ -285,20 +285,20 @@ const featuredTagLinks = computed(() => {
 
                             <p class="mt-3 text-4xl font-bold
                 tracking-[-0.04em]
-                text-slate-950">
+                text-fg">
                                 {{ tagArticles.length }}
                             </p>
 
                             <p class="mt-2 text-xs
-                leading-5 text-slate-500">
+                leading-5 text-fg-subtle">
                                 Reports currently connected
                                 to #{{ tagName }}.
                             </p>
                         </div>
 
                         <div class="rounded-[26px]
-              border border-slate-200
-              bg-white p-6">
+              border border-line
+              bg-surface p-6">
                             <span class="text-[9px] font-bold
                 uppercase tracking-[0.16em]
                 text-emerald-600">
@@ -306,19 +306,19 @@ const featuredTagLinks = computed(() => {
                             </span>
 
                             <p class="mt-3 text-xl font-bold
-                text-slate-950">
+                text-fg">
                                 {{ timeAgo(featuredArticle.publishedAt) }}
                             </p>
 
                             <p class="mt-2 text-xs
-                leading-5 text-slate-500">
+                leading-5 text-fg-subtle">
                                 New reports are ordered
                                 by publication time.
                             </p>
                         </div>
 
                         <div class="relative overflow-hidden
-              rounded-[26px] bg-slate-950
+              rounded-[26px] bg-accent text-accent-fg
               p-6 text-white">
                             <div class="pointer-events-none
                 absolute -right-12 -top-12
@@ -340,9 +340,9 @@ const featuredTagLinks = computed(() => {
 
                                 <a href="#tag-stories" class="mt-5 inline-flex
                   items-center gap-2 rounded-xl
-                  bg-white px-4 py-2.5
+                  bg-surface px-4 py-2.5
                   text-[10px] font-bold
-                  text-slate-950">
+                  text-fg">
                                     Browse stories
 
                                     <span>↓</span>
@@ -359,7 +359,7 @@ const featuredTagLinks = computed(() => {
         <!-- ===================================================== -->
 
         <section id="tag-stories" class="scroll-mt-32 border-y
-      border-slate-100 bg-slate-50
+      border-line bg-surface-2
       py-16 sm:py-20 lg:py-24">
             <div class="mx-auto max-w-7xl px-6">
                 <div class="grid items-start gap-8

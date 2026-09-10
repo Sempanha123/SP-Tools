@@ -344,30 +344,30 @@ useHead(() => ({
 
 <template>
   <main class="min-h-screen overflow-x-hidden
-    bg-white text-slate-950">
+    bg-surface text-fg">
     <!-- Loading -->
 
     <section v-if="pending" class="mx-auto min-h-[75vh]
       max-w-7xl px-6 py-24">
       <div class="animate-pulse">
         <div class="mx-auto h-16 w-16
-          rounded-2xl bg-slate-200" />
+          rounded-2xl bg-surface-3" />
 
         <div class="mx-auto mt-8 h-14
           max-w-xl rounded-2xl
-          bg-slate-200" />
+          bg-surface-3" />
 
         <div class="mx-auto mt-5 h-5
           max-w-2xl rounded
-          bg-slate-100" />
+          bg-surface-2" />
 
         <div class="mt-16 aspect-[16/7]
-          rounded-[34px] bg-slate-200" />
+          rounded-[34px] bg-surface-3" />
 
         <div class="mt-12 grid gap-7
           md:grid-cols-2 lg:grid-cols-3">
           <div v-for="index in 6" :key="index" class="h-80 rounded-3xl
-            bg-slate-100" />
+            bg-surface-2" />
         </div>
       </div>
     </section>
@@ -383,7 +383,7 @@ useHead(() => ({
         sm:p-12">
         <div class="mx-auto flex h-16 w-16
           items-center justify-center
-          rounded-2xl bg-white
+          rounded-2xl bg-surface
           text-3xl shadow-sm">
           📰
         </div>
@@ -410,7 +410,7 @@ useHead(() => ({
           </button>
 
           <NuxtLink to="/news" class="rounded-xl border
-            border-red-200 bg-white
+            border-red-200 bg-surface
             px-5 py-3 text-sm font-bold
             text-red-800">
             Back to news
@@ -423,7 +423,7 @@ useHead(() => ({
       <!-- Category hero -->
 
       <section class="relative overflow-hidden
-        bg-slate-950 pb-20 pt-32
+        bg-accent text-accent-fg pb-20 pt-32
         text-white sm:pb-24 sm:pt-40">
         <div class="pointer-events-none
           absolute inset-0 opacity-[0.07]" style="
@@ -457,7 +457,7 @@ useHead(() => ({
           <nav aria-label="Breadcrumb" class="flex flex-wrap
             items-center justify-center
             gap-2 text-xs font-medium
-            text-slate-400">
+            text-fg-subtle">
             <NuxtLink to="/" class="hover:text-white">
               Home
             </NuxtLink>
@@ -487,8 +487,8 @@ useHead(() => ({
 
             <div class="mt-7 inline-flex
               items-center gap-2 rounded-full
-              border border-white/10
-              bg-white/[0.06] px-4 py-2
+              border border-line/10
+              bg-surface/[0.06] px-4 py-2
               backdrop-blur-xl">
               <span class="h-2 w-2 rounded-full
                 bg-indigo-400" />
@@ -509,7 +509,7 @@ useHead(() => ({
 
             <p class="mx-auto mt-7
               max-w-2xl text-base
-              leading-8 text-slate-400
+              leading-8 text-fg-subtle
               sm:text-lg">
               {{ categoryDescription }}
             </p>
@@ -517,7 +517,7 @@ useHead(() => ({
             <div class="mt-10 flex flex-wrap
               items-center justify-center
               gap-x-8 gap-y-3 text-xs
-              font-medium text-slate-500">
+              font-medium text-fg-subtle">
               <span class="flex items-center gap-2">
                 <span class="h-1.5 w-1.5
                   rounded-full bg-indigo-400" />
@@ -553,8 +553,8 @@ useHead(() => ({
       <!-- Filters -->
 
       <section class="sticky top-0 z-30
-        border-b border-slate-200
-        bg-white/95 shadow-sm
+        border-b border-line
+        bg-surface/95 shadow-sm
         backdrop-blur">
         <div class="mx-auto max-w-7xl
           px-6 py-5">
@@ -562,24 +562,24 @@ useHead(() => ({
             md:grid-cols-[minmax(0,1fr)_190px_170px_auto]" @submit.prevent="submitFilters()">
             <input v-model="searchInput" type="search" :placeholder="`Search ${categoryName} news...`
               " class="h-12 rounded-xl
-              border border-slate-200
-              bg-slate-50 px-4 text-sm
+              border border-line
+              bg-surface-2 px-4 text-sm
               outline-none transition
               focus:border-indigo-400
-              focus:bg-white
+              focus:bg-surface
               focus:ring-4
               focus:ring-indigo-500/10">
 
             <input v-model="regionInput" type="text" placeholder="Region" class="h-12 rounded-xl
-              border border-slate-200
-              bg-slate-50 px-4 text-sm
+              border border-line
+              bg-surface-2 px-4 text-sm
               outline-none transition
               focus:border-indigo-400
-              focus:bg-white">
+              focus:bg-surface">
 
             <select v-model="sortInput" class="h-12 rounded-xl
-              border border-slate-200
-              bg-slate-50 px-4 text-sm
+              border border-line
+              bg-surface-2 px-4 text-sm
               font-semibold outline-none" @change="submitFilters()">
               <option value="latest">
                 Latest
@@ -595,7 +595,7 @@ useHead(() => ({
             </select>
 
             <button type="submit" class="h-12 rounded-xl
-              bg-slate-950 px-6
+              bg-accent text-accent-fg px-6
               text-sm font-bold text-white
               hover:bg-indigo-600">
               Search
@@ -604,7 +604,7 @@ useHead(() => ({
 
           <div v-if="hasActiveFilters" class="mt-3 flex flex-wrap
             items-center gap-2">
-            <span class="text-xs text-slate-500">
+            <span class="text-xs text-fg-subtle">
               Filters active
             </span>
 
@@ -617,16 +617,16 @@ useHead(() => ({
           <div v-if="categoryTags.length" class="category-tags mt-4
             flex gap-2 overflow-x-auto">
             <NuxtLink v-for="tag in categoryTags" :key="tag.slug" :to="`/news/tag/${tag.slug}`" class="shrink-0 rounded-full
-              border border-slate-200
-              bg-slate-50 px-4 py-2
+              border border-line
+              bg-surface-2 px-4 py-2
               text-[10px] font-semibold
-              text-slate-600 transition
+              text-fg-muted transition
               hover:border-indigo-200
               hover:bg-indigo-50
               hover:text-indigo-600">
               #{{ tag.name }}
 
-              <span class="ml-1 text-slate-400">
+              <span class="ml-1 text-fg-subtle">
                 {{ tag.count }}
               </span>
             </NuxtLink>
@@ -636,7 +636,7 @@ useHead(() => ({
 
       <!-- Featured article -->
 
-      <section v-if="featuredArticle" class="bg-white py-16 sm:py-20">
+      <section v-if="featuredArticle" class="bg-surface py-16 sm:py-20">
         <div class="mx-auto max-w-7xl px-6">
           <div class="mb-8 flex flex-col
             justify-between gap-4
@@ -651,13 +651,13 @@ useHead(() => ({
               <h2 class="mt-3 text-3xl
                 font-bold tracking-[-0.035em]">
                 Latest from
-                <span class="text-slate-400">
+                <span class="text-fg-subtle">
                   {{ categoryName }}
                 </span>
               </h2>
             </div>
 
-            <span class="text-xs text-slate-400">
+            <span class="text-xs text-fg-subtle">
               Updated throughout the day
             </span>
           </div>
@@ -665,7 +665,7 @@ useHead(() => ({
           <NuxtLink :to="`/news/posts/${featuredArticle.slug}`
             " class="group relative block
             min-h-[500px] overflow-hidden
-            rounded-[34px] bg-slate-950">
+            rounded-[34px] bg-accent text-accent-fg">
             <img v-if="featuredArticle.image" :src="featuredArticle.image" :alt="featuredArticle.title" class="absolute inset-0
               h-full w-full object-cover
               transition-transform
@@ -705,7 +705,7 @@ useHead(() => ({
               </span>
 
               <span v-if="featuredArticle.isLive" class="rounded-full
-                bg-white/90 px-3 py-1.5
+                bg-surface/90 px-3 py-1.5
                 text-[9px] font-bold
                 uppercase text-red-600">
                 Live
@@ -736,13 +736,13 @@ useHead(() => ({
 
               <p class="mt-4 max-w-2xl
                 text-sm leading-7
-                text-slate-300 sm:text-base">
+                text-fg-subtle sm:text-base">
                 {{ featuredArticle.excerpt }}
               </p>
 
               <div class="mt-6 flex flex-wrap
                 items-center gap-3 text-xs
-                text-slate-300">
+                text-fg-subtle">
                 <span>
                   {{
                     featuredArticle.source
@@ -785,15 +785,15 @@ useHead(() => ({
 
       <!-- Articles and sidebar -->
 
-      <section class="border-y border-slate-100
-        bg-slate-50 py-20">
+      <section class="border-y border-line
+        bg-surface-2 py-20">
         <div class="mx-auto grid max-w-7xl
           items-start gap-10 px-6
           lg:grid-cols-[minmax(0,1fr)_340px]">
           <section>
             <div class="flex items-end
               justify-between gap-4
-              border-b border-slate-200
+              border-b border-line
               pb-6">
               <div>
                 <span class="text-xs font-bold
@@ -808,7 +808,7 @@ useHead(() => ({
                 </h2>
               </div>
 
-              <p class="text-xs text-slate-400">
+              <p class="text-xs text-fg-subtle">
                 {{ totalArticles }} results
               </p>
             </div>
@@ -821,8 +821,8 @@ item in remainingArticles
             </div>
 
             <div v-else-if="featuredArticle" class="mt-8 rounded-[28px]
-              border border-slate-200
-              bg-white px-6 py-14
+              border border-line
+              bg-surface px-6 py-14
               text-center">
               <p class="font-bold">
                 You are viewing the latest
@@ -832,20 +832,20 @@ item in remainingArticles
 
             <div v-else class="mt-8 rounded-[28px]
               border border-dashed
-              border-slate-300 bg-white
+              border-line-strong bg-surface
               px-6 py-16 text-center">
               <h3 class="text-xl font-bold">
                 No matching stories
               </h3>
 
               <p class="mt-2 text-sm
-                text-slate-500">
+                text-fg-subtle">
                 Clear the search or select
                 another category.
               </p>
 
               <button v-if="hasActiveFilters" type="button" class="mt-6 rounded-xl
-                bg-slate-950 px-5 py-3
+                bg-accent text-accent-fg px-5 py-3
                 text-xs font-bold text-white" @click="resetFilters()">
                 Clear filters
               </button>
@@ -859,7 +859,7 @@ item in remainingArticles
             " class="mt-12 flex flex-wrap
               justify-center gap-2" aria-label="Category pagination">
               <button type="button" class="rounded-xl border
-                border-slate-300 bg-white
+                border-line-strong bg-surface
                 px-4 py-2.5 text-sm
                 font-semibold disabled:opacity-40" :disabled="page <= 1" @click="goToPage(page - 1)">
                 Previous
@@ -870,8 +870,8 @@ pageNumber in visiblePages
                 " :key="pageNumber" type="button" class="h-10 min-w-10
                 rounded-xl border px-3
                 text-sm font-bold" :class="pageNumber === page
-                    ? 'border-slate-950 bg-slate-950 text-white'
-                    : 'border-slate-300 bg-white text-slate-700'
+                    ? 'border-accent bg-accent text-accent-fg'
+                    : 'border-line-strong bg-surface text-fg-muted'
                   " @click="
                   goToPage(pageNumber)
                   ">
@@ -879,7 +879,7 @@ pageNumber in visiblePages
               </button>
 
               <button type="button" class="rounded-xl border
-                border-slate-300 bg-white
+                border-line-strong bg-surface
                 px-4 py-2.5 text-sm
                 font-semibold disabled:opacity-40" :disabled="page >= pagination.last_page
                   " @click="goToPage(page + 1)">
@@ -892,7 +892,7 @@ pageNumber in visiblePages
 
           <aside class="space-y-7">
             <section v-if="categoryTags.length" class="rounded-3xl border
-              border-slate-200 bg-white
+              border-line bg-surface
               p-6">
               <h2 class="text-lg font-black">
                 Popular topics
@@ -902,11 +902,11 @@ pageNumber in visiblePages
                 gap-2">
                 <NuxtLink v-for="tag in categoryTags" :key="tag.slug" :to="`/news/tag/${tag.slug}`
                   " class="rounded-full
-                  border border-slate-200
-                  bg-slate-50 px-3 py-2
+                  border border-line
+                  bg-surface-2 px-3 py-2
                   text-xs font-bold
-                  text-slate-600
-                  hover:bg-slate-950
+                  text-fg-muted
+                  hover:bg-accent text-accent-fg
                   hover:text-white">
                   #{{ tag.name }}
                 </NuxtLink>
@@ -914,14 +914,14 @@ pageNumber in visiblePages
             </section>
 
             <section class="rounded-3xl border
-              border-slate-200 bg-white
+              border-line bg-surface
               p-6">
               <h2 class="text-lg font-black">
                 Most read
               </h2>
 
               <div class="mt-5 divide-y
-                divide-slate-200">
+                divide-line">
                 <NuxtLink v-for="(
 item,
                       index
@@ -929,7 +929,7 @@ item,
                     " class="group flex gap-4
                   py-4 first:pt-0">
                   <span class="text-2xl font-black
-                    text-slate-300">
+                    text-fg-subtle">
                     {{
                       String(index + 1)
                         .padStart(2, '0')
@@ -945,7 +945,7 @@ item,
                     </h3>
 
                     <p class="mt-2 text-xs
-                      text-slate-500">
+                      text-fg-subtle">
                       {{
                         formatViews(item.views)
                       }}

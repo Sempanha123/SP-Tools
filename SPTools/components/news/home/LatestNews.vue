@@ -108,7 +108,7 @@ const clearFilters = () => {
 
     <div
       class="flex flex-col justify-between gap-5
-      border-b border-slate-200 pb-6
+      border-b border-line pb-6
       sm:flex-row sm:items-end"
     >
       <div>
@@ -135,7 +135,7 @@ const clearFilters = () => {
 
         <h2
           class="mt-3 text-3xl font-bold
-          tracking-[-0.04em] text-slate-950
+          tracking-[-0.04em] text-fg
           sm:text-4xl"
         >
           News as it happens
@@ -143,7 +143,7 @@ const clearFilters = () => {
 
         <p
           class="mt-3 max-w-xl text-sm
-          leading-7 text-slate-500"
+          leading-7 text-fg-subtle"
         >
           New stories, breaking updates and analysis
           from around the world.
@@ -154,7 +154,7 @@ const clearFilters = () => {
 
       <div
         class="flex w-fit items-center rounded-xl
-        border border-slate-200 bg-white p-1"
+        border border-line bg-surface p-1"
       >
         <button
           type="button"
@@ -162,8 +162,8 @@ const clearFilters = () => {
           text-xs font-semibold transition-all"
           :class="
             sortMode === 'latest'
-              ? 'bg-slate-950 text-white shadow-sm'
-              : 'text-slate-500 hover:text-slate-950'
+              ? 'bg-accent text-accent-fg text-white shadow-sm'
+              : 'text-fg-subtle hover:text-fg'
           "
           @click="sortMode = 'latest'"
         >
@@ -176,8 +176,8 @@ const clearFilters = () => {
           text-xs font-semibold transition-all"
           :class="
             sortMode === 'popular'
-              ? 'bg-slate-950 text-white shadow-sm'
-              : 'text-slate-500 hover:text-slate-950'
+              ? 'bg-accent text-accent-fg text-white shadow-sm'
+              : 'text-fg-subtle hover:text-fg'
           "
           @click="sortMode = 'popular'"
         >
@@ -202,7 +202,7 @@ const clearFilters = () => {
         :class="
           selectedRegion === region
             ? 'border-indigo-600 bg-indigo-600 text-white shadow-sm'
-            : 'border-slate-200 bg-white text-slate-500 hover:border-indigo-200 hover:bg-indigo-50 hover:text-indigo-600'
+            : 'border-line bg-surface text-fg-subtle hover:border-indigo-200 hover:bg-indigo-50 hover:text-indigo-600'
         "
         @click="selectedRegion = region"
       >
@@ -216,7 +216,7 @@ const clearFilters = () => {
       class="mt-6 flex items-center
       justify-between gap-4"
     >
-      <p class="text-xs text-slate-400">
+      <p class="text-xs text-fg-subtle">
         {{ filteredArticles.length }}
         {{
           filteredArticles.length === 1
@@ -253,14 +253,14 @@ const clearFilters = () => {
     <div
       v-else
       class="mt-7 rounded-[28px]
-      border border-dashed border-slate-300
-      bg-white px-6 py-16 text-center"
+      border border-dashed border-line-strong
+      bg-surface px-6 py-16 text-center"
     >
       <div
         class="mx-auto flex h-14 w-14
         items-center justify-center
-        rounded-2xl bg-slate-100
-        text-xl text-slate-500"
+        rounded-2xl bg-surface-2
+        text-xl text-fg-subtle"
       >
         <svg
           class="h-6 w-6"
@@ -277,14 +277,14 @@ const clearFilters = () => {
 
       <h3
         class="mt-5 text-xl font-bold
-        text-slate-950"
+        text-fg"
       >
         No news found
       </h3>
 
       <p
         class="mx-auto mt-2 max-w-md
-        text-sm leading-6 text-slate-500"
+        text-sm leading-6 text-fg-subtle"
       >
         No stories are currently available for
         {{ formatRegion(selectedRegion) }}.
@@ -293,7 +293,7 @@ const clearFilters = () => {
       <button
         type="button"
         class="mt-6 rounded-xl
-        bg-slate-950 px-5 py-3
+        bg-accent text-accent-fg px-5 py-3
         text-xs font-bold text-white
         transition-all hover:bg-indigo-600"
         @click="clearFilters"
@@ -311,9 +311,9 @@ const clearFilters = () => {
       <button
         type="button"
         class="rounded-2xl border
-        border-slate-200 bg-white
+        border-line bg-surface
         px-7 py-3.5 text-sm font-bold
-        text-slate-700 transition-all
+        text-fg-muted transition-all
         hover:-translate-y-0.5
         hover:border-indigo-300
         hover:text-indigo-600

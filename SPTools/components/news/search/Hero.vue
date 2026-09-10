@@ -40,7 +40,7 @@ const clearSearch = () => {
 
 <template>
     <section class="relative overflow-hidden
-    bg-slate-950 pb-20 pt-32
+    bg-accent text-accent-fg pb-20 pt-32
     text-white sm:pb-24 sm:pt-40">
         <!-- Background pattern -->
 
@@ -88,7 +88,7 @@ const clearSearch = () => {
             <nav aria-label="Breadcrumb" class="flex flex-wrap
         items-center justify-center
         gap-2 text-xs font-medium
-        text-slate-400">
+        text-fg-subtle">
                 <NuxtLink to="/" class="transition-colors
           hover:text-white">
                     Home
@@ -113,8 +113,8 @@ const clearSearch = () => {
                 <div class="inline-flex
           items-center gap-2
           rounded-full
-          border border-white/10
-          bg-white/[0.06]
+          border border-line/10
+          bg-surface/[0.06]
           px-4 py-2
           backdrop-blur-xl">
                     <span class="text-[10px]
@@ -145,7 +145,7 @@ const clearSearch = () => {
                 <p class="mx-auto mt-7
           max-w-2xl
           text-base leading-8
-          text-slate-400 sm:text-lg">
+          text-fg-subtle sm:text-lg">
                     Search world news,
                     breaking developments,
                     business, technology,
@@ -167,7 +167,7 @@ const clearSearch = () => {
               absolute left-5 top-1/2
               h-5 w-5
               -translate-y-1/2
-              text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              text-fg-subtle" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <circle cx="11" cy="11" r="7" />
 
                             <path d="m20 20-3.5-3.5" />
@@ -176,16 +176,16 @@ const clearSearch = () => {
                         <input :value="modelValue" type="search" autofocus
                             placeholder="Search stories, topics, authors or regions..." class="h-16 w-full
               rounded-2xl
-              border border-white/10
-              bg-white/[0.08]
+              border border-line/10
+              bg-surface/[0.08]
               pl-14 pr-14
               text-base text-white
               outline-none
               backdrop-blur-xl
               transition-all
-              placeholder:text-slate-500
+              placeholder:text-fg-subtle
               focus:border-indigo-400
-              focus:bg-white/[0.11]
+              focus:bg-surface/[0.11]
               focus:ring-4
               focus:ring-indigo-500/10" @input="updateValue" />
 
@@ -195,9 +195,9 @@ const clearSearch = () => {
               -translate-y-1/2
               items-center justify-center
               rounded-lg
-              text-lg text-slate-400
+              text-lg text-fg-subtle
               transition-all
-              hover:bg-white/10
+              hover:bg-surface/10
               hover:text-white" @click="clearSearch">
                             ×
                         </button>
@@ -205,9 +205,9 @@ const clearSearch = () => {
 
                     <button type="submit" class="h-16
             rounded-2xl
-            bg-white px-8
+            bg-surface px-8
             text-sm font-bold
-            text-slate-950
+            text-fg
             transition-all
             hover:-translate-y-0.5
             hover:bg-indigo-50">
@@ -216,7 +216,7 @@ const clearSearch = () => {
                 </form>
 
                 <p class="mt-5 text-xs
-          text-slate-500">
+          text-fg-subtle">
                     <template v-if="modelValue.trim()">
                         {{ resultCount }}
 

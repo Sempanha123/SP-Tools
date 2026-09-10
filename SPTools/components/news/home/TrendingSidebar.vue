@@ -32,13 +32,13 @@ const tagToSlug = (tag: string) => {
     <!-- ===================================================== -->
 
     <section class="overflow-hidden rounded-[28px]
-      border border-slate-200 bg-white
+      border border-line bg-surface
       shadow-[0_16px_45px_rgba(15,23,42,0.06)]">
       <!-- Header -->
 
       <header class="relative overflow-hidden
-        border-b border-white/10
-        bg-slate-950 px-6 py-6 text-white">
+        border-b border-line/10
+        bg-accent text-accent-fg px-6 py-6 text-white">
         <div class="pointer-events-none absolute
           -right-16 -top-16 h-44 w-44
           rounded-full bg-red-500/20 blur-3xl" />
@@ -69,7 +69,7 @@ const tagToSlug = (tag: string) => {
               Most-read stories
             </h2>
 
-            <p class="mt-2 text-xs leading-5 text-slate-400">
+            <p class="mt-2 text-xs leading-5 text-fg-subtle">
               Popular reports readers are following now.
             </p>
           </div>
@@ -81,9 +81,9 @@ const tagToSlug = (tag: string) => {
             },
           }" aria-label="View popular news" class="flex h-10 w-10 shrink-0
             items-center justify-center rounded-xl
-            border border-white/10 bg-white/[0.07]
+            border border-line/10 bg-surface/[0.07]
             text-white transition-all
-            hover:bg-white/15">
+            hover:bg-surface/15">
             ↗
           </NuxtLink>
         </div>
@@ -93,7 +93,7 @@ const tagToSlug = (tag: string) => {
 
       <div v-if="leadTrendingArticle" class="p-4">
         <NuxtLink :to="`/news/posts/${leadTrendingArticle.slug}`" class="group relative block min-h-[230px]
-          overflow-hidden rounded-[22px] bg-slate-950">
+          overflow-hidden rounded-[22px] bg-accent text-accent-fg">
           <img v-if="leadTrendingArticle.image" :src="leadTrendingArticle.image" :alt="leadTrendingArticle.title"
             loading="lazy" class="absolute inset-0 h-full w-full
   object-cover transition-transform
@@ -107,7 +107,7 @@ const tagToSlug = (tag: string) => {
                 📰
               </span>
 
-              <p class="mt-3 text-sm font-semibold text-slate-500">
+              <p class="mt-3 text-sm font-semibold text-fg-subtle">
                 No cover image
               </p>
             </div>
@@ -126,7 +126,7 @@ const tagToSlug = (tag: string) => {
               01
             </span>
 
-            <span v-if="leadTrendingArticle.isBreaking" class="rounded-full bg-white/90
+            <span v-if="leadTrendingArticle.isBreaking" class="rounded-full bg-surface/90
               px-3 py-1.5 text-[8px] font-bold
               uppercase tracking-wider text-red-600
               backdrop-blur">
@@ -147,7 +147,7 @@ const tagToSlug = (tag: string) => {
             </h3>
 
             <div class="mt-4 flex flex-wrap items-center
-              gap-2 text-[10px] text-slate-300">
+              gap-2 text-[10px] text-fg-subtle">
               <time :datetime="leadTrendingArticle.publishedAt">
                 {{ timeAgo(leadTrendingArticle.publishedAt) }}
               </time>
@@ -164,14 +164,14 @@ const tagToSlug = (tag: string) => {
 
       <!-- Remaining stories -->
 
-      <div v-if="remainingTrendingArticles.length" class="divide-y divide-slate-100 px-4 pb-4">
+      <div v-if="remainingTrendingArticles.length" class="divide-y divide-line px-4 pb-4">
         <NuxtLink v-for="(article, index) in remainingTrendingArticles" :key="article.id"
           :to="`/news/posts/${article.slug}`" class="group grid grid-cols-[72px_minmax(0,1fr)]
           gap-4 py-4 first:pt-2">
           <!-- Thumbnail -->
 
           <div class="relative h-[72px] overflow-hidden
-            rounded-2xl bg-slate-100">
+            rounded-2xl bg-surface-2">
             <img v-if="article.image" :src="article.image" :alt="article.title" loading="lazy" class="h-full w-full object-cover
   transition-transform duration-500
   group-hover:scale-105" />
@@ -187,7 +187,7 @@ const tagToSlug = (tag: string) => {
             <span class="absolute left-1.5 top-1.5
               flex h-6 min-w-6 items-center
               justify-center rounded-lg
-              bg-slate-950/85 px-1.5
+              bg-accent text-accent-fg/85 px-1.5
               text-[8px] font-bold text-white
               backdrop-blur">
               {{ String(index + 2).padStart(2, '0') }}
@@ -214,13 +214,13 @@ const tagToSlug = (tag: string) => {
 
             <h3 class="trending-title mt-1.5
               text-sm font-bold leading-5
-              text-slate-800 transition-colors
+              text-fg transition-colors
               group-hover:text-indigo-600">
               {{ article.title }}
             </h3>
 
             <div class="mt-2 flex flex-wrap items-center
-              gap-2 text-[9px] text-slate-400">
+              gap-2 text-[9px] text-fg-subtle">
               <time :datetime="article.publishedAt">
                 {{ timeAgo(article.publishedAt) }}
               </time>
@@ -235,7 +235,7 @@ const tagToSlug = (tag: string) => {
         </NuxtLink>
       </div>
 
-      <div class="border-t border-slate-100 p-4">
+      <div class="border-t border-line p-4">
         <NuxtLink :to="{
           path: '/news/search',
           query: {
@@ -243,8 +243,8 @@ const tagToSlug = (tag: string) => {
           },
         }" class="group flex w-full items-center
           justify-center gap-2 rounded-xl
-          bg-slate-50 px-5 py-3
-          text-xs font-bold text-slate-700
+          bg-surface-2 px-5 py-3
+          text-xs font-bold text-fg-muted
           transition-all hover:bg-indigo-50
           hover:text-indigo-600">
           View all popular stories
@@ -262,7 +262,7 @@ const tagToSlug = (tag: string) => {
     <!-- ===================================================== -->
 
     <section class="rounded-[28px]
-      border border-slate-200 bg-white p-6
+      border border-line bg-surface p-6
       shadow-[0_14px_40px_rgba(15,23,42,0.05)]">
       <div class="flex items-start justify-between gap-4">
         <div>
@@ -271,11 +271,11 @@ const tagToSlug = (tag: string) => {
             Popular topics
           </span>
 
-          <h2 class="mt-2 text-xl font-bold text-slate-950">
+          <h2 class="mt-2 text-xl font-bold text-fg">
             Trending tags
           </h2>
 
-          <p class="mt-2 text-xs leading-5 text-slate-500">
+          <p class="mt-2 text-xs leading-5 text-fg-subtle">
             Topics appearing across today's coverage.
           </p>
         </div>
@@ -289,18 +289,18 @@ const tagToSlug = (tag: string) => {
 
       <div class="mt-6 flex flex-wrap gap-2">
         <NuxtLink v-for="tag in trendingTags" :key="tag.name" :to="`/news/tag/${tagToSlug(tag.name)}`" class="group inline-flex items-center gap-1.5
-          rounded-full border border-slate-200
-          bg-slate-50 px-3.5 py-2
-          text-[10px] font-semibold text-slate-600
+          rounded-full border border-line
+          bg-surface-2 px-3.5 py-2
+          text-[10px] font-semibold text-fg-muted
           transition-all hover:-translate-y-0.5
           hover:border-indigo-200
           hover:bg-indigo-50
           hover:text-indigo-600">
           <span>#{{ tag.name }}</span>
 
-          <span class="rounded-full bg-white
+          <span class="rounded-full bg-surface
             px-1.5 py-0.5 text-[8px]
-            text-slate-400 shadow-sm
+            text-fg-subtle shadow-sm
             group-hover:text-indigo-500">
             {{ tag.count }}
           </span>
@@ -324,7 +324,7 @@ const tagToSlug = (tag: string) => {
       <div class="relative flex items-start gap-4">
         <div class="flex h-11 w-11 shrink-0
           items-center justify-center rounded-2xl
-          border border-white/10 bg-white/[0.08]
+          border border-line/10 bg-surface/[0.08]
           text-emerald-300">
           ✓
         </div>
@@ -339,7 +339,7 @@ const tagToSlug = (tag: string) => {
             Clear and transparent reporting
           </h3>
 
-          <p class="mt-2 text-xs leading-6 text-slate-400">
+          <p class="mt-2 text-xs leading-6 text-fg-subtle">
             Stories include visible sources, authors,
             publication times, categories and relevant topics.
           </p>

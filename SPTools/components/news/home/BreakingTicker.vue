@@ -17,7 +17,7 @@ const tickerArticles = computed(() => {
   <section
     v-if="tickerArticles.length"
     class="relative z-20 overflow-hidden
-    border-b border-red-900/30 bg-slate-950 text-white"
+    border-b border-red-900/30 bg-accent text-accent-fg text-white"
   >
     <div class="mx-auto flex max-w-7xl items-stretch px-6">
       <div
@@ -28,12 +28,12 @@ const tickerArticles = computed(() => {
         <span class="relative flex h-2 w-2">
           <span
             class="absolute inline-flex h-full w-full
-            animate-ping rounded-full bg-white opacity-50"
+            animate-ping rounded-full bg-surface opacity-50"
           />
 
           <span
             class="relative inline-flex h-2 w-2
-            rounded-full bg-white"
+            rounded-full bg-surface"
           />
         </span>
 
@@ -52,20 +52,20 @@ const tickerArticles = computed(() => {
             :key="`${article.id}-${index}`"
             :to="`/news/posts/${article.slug}`"
             class="flex shrink-0 items-center gap-3
-            px-7 py-3 text-xs text-slate-300
+            px-7 py-3 text-xs text-fg-subtle
             transition-colors hover:text-white"
           >
             <span class="font-semibold">
               {{ article.title }}
             </span>
 
-            <span class="text-slate-600">
+            <span class="text-fg-muted">
               •
             </span>
 
             <time
               :datetime="article.publishedAt"
-              class="text-[10px] text-slate-500"
+              class="text-[10px] text-fg-subtle"
             >
               {{ timeAgo(article.publishedAt) }}
             </time>

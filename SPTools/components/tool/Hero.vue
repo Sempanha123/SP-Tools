@@ -13,21 +13,29 @@ defineProps<{
 </script>
 
 <template>
-  <section class="relative overflow-hidden border-b border-line bg-surface">
-    <div class="sp-grid-bg pointer-events-none absolute inset-0" />
+  <section class="sp-mesh-bg relative overflow-hidden border-b border-line">
+    <div class="sp-grid-bg pointer-events-none absolute inset-0 opacity-60" />
 
     <div
-      class="pointer-events-none absolute left-1/2 top-0 h-[320px] w-[760px]
-        -translate-x-1/2 rounded-full opacity-[0.16] blur-[110px]"
+      class="animate-blob pointer-events-none absolute left-1/2 -top-24 h-[420px] w-[780px]
+        -translate-x-1/2 rounded-full opacity-20 blur-[120px]"
       :style="{ background: accent ?? 'var(--sp-accent)' }"
     />
+    <div
+      class="animation-delay-2000 animate-blob pointer-events-none absolute -left-28 top-12
+        h-64 w-64 rounded-full bg-fuchsia-500/15 blur-[100px]"
+    />
+    <div
+      class="animation-delay-4000 animate-blob pointer-events-none absolute -right-28 top-24
+        h-64 w-64 rounded-full bg-cyan-400/15 blur-[100px]"
+    />
 
-    <div class="sp-container relative py-14 text-center sm:py-20">
+    <div class="sp-container relative py-16 text-center sm:py-24">
       <UiBadge v-if="eyebrow" tone="accent" dot pulse>{{ eyebrow }}</UiBadge>
 
       <h1
         class="mx-auto mt-6 max-w-4xl font-display text-4xl font-bold
-          tracking-tight text-fg sm:text-6xl"
+          tracking-tight text-fg drop-shadow-sm sm:text-6xl lg:text-7xl"
       >
         {{ title }}
       </h1>
@@ -46,7 +54,9 @@ defineProps<{
           v-for="feature in features"
           :key="feature"
           class="flex items-center gap-1.5 rounded-full border border-line
-            bg-surface-2 px-3.5 py-1.5 text-xs font-medium text-fg-muted"
+            bg-surface/70 px-3.5 py-1.5 text-xs font-medium text-fg-muted
+            shadow-soft backdrop-blur-xl transition hover:-translate-y-0.5
+            hover:border-accent/40 hover:text-fg"
         >
           <svg
             class="h-3.5 w-3.5 text-positive"

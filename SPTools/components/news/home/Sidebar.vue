@@ -4,11 +4,11 @@
     <!-- Existing Left widget -->
     <section
       class="overflow-hidden rounded-[30px]
-      border border-slate-200 bg-white
+      border border-line bg-surface
       shadow-[0_18px_50px_rgba(15,23,42,0.06)]"
     >
       <header
-        class="border-b border-slate-100
+        class="border-b border-line
         bg-gradient-to-r from-slate-50
         to-indigo-50/60 px-6 py-5"
       >
@@ -21,7 +21,7 @@
               Newsroom
             </p>
 
-            <h2 class="mt-2 text-xl font-bold text-slate-950">
+            <h2 class="mt-2 text-xl font-bold text-fg">
               Discover more
             </h2>
           </div>
@@ -45,7 +45,7 @@
     <!-- AI tool advertisement -->
     <section
       class="relative overflow-hidden rounded-[30px]
-      bg-slate-950 p-7 text-white"
+      bg-accent text-accent-fg p-7 text-white"
     >
       <div
         class="pointer-events-none absolute -right-20 -top-20
@@ -60,7 +60,7 @@
       <div class="relative">
         <div
           class="flex h-11 w-11 items-center justify-center
-          rounded-xl bg-white/10 text-xl"
+          rounded-xl bg-surface/10 text-xl"
         >
           ✦
         </div>
@@ -80,7 +80,7 @@
         </h3>
 
         <p
-          class="mt-3 text-sm leading-7 text-slate-400"
+          class="mt-3 text-sm leading-7 text-fg-subtle"
         >
           Remove image backgrounds and enhance resolution
           using our AI-powered creative tools.
@@ -90,8 +90,8 @@
           <NuxtLink
             to="/tools/bg-remover"
             class="group inline-flex items-center justify-between
-            rounded-xl bg-white px-5 py-3 text-xs font-bold
-            text-slate-950 transition-all hover:bg-indigo-50"
+            rounded-xl bg-surface px-5 py-3 text-xs font-bold
+            text-fg transition-all hover:bg-indigo-50"
           >
             Background Remover
 
@@ -106,9 +106,9 @@
           <NuxtLink
             to="/tools/image-upscaler"
             class="group inline-flex items-center justify-between
-            rounded-xl border border-white/10 bg-white/[0.05]
+            rounded-xl border border-line/10 bg-surface/[0.05]
             px-5 py-3 text-xs font-bold text-white
-            transition-all hover:bg-white/10"
+            transition-all hover:bg-surface/10"
           >
             Image Upscaler
 
@@ -135,11 +135,11 @@
         ✉
       </div>
 
-      <h3 class="mt-5 text-xl font-bold text-slate-950">
+      <h3 class="mt-5 text-xl font-bold text-fg">
         Weekly news brief
       </h3>
 
-      <p class="mt-2 text-sm leading-6 text-slate-500">
+      <p class="mt-2 text-sm leading-6 text-fg-subtle">
         Receive selected AI, technology, and creator stories.
       </p>
 

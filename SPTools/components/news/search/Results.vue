@@ -29,7 +29,7 @@ const emit = defineEmits<{
 
         <div class="flex flex-col
       justify-between gap-4
-      border-b border-slate-200
+      border-b border-line
       pb-7 sm:flex-row
       sm:items-end">
             <div>
@@ -42,11 +42,11 @@ const emit = defineEmits<{
                 <h2 class="mt-3 text-3xl
           font-bold
           tracking-[-0.035em]
-          text-slate-950">
+          text-fg">
                     <template v-if="query.trim()">
                         Results for
 
-                        <span class="text-slate-400">
+                        <span class="text-fg-subtle">
                             “{{ query.trim() }}”
                         </span>
                     </template>
@@ -54,14 +54,14 @@ const emit = defineEmits<{
                     <template v-else>
                         Browse all
 
-                        <span class="text-slate-400">
+                        <span class="text-fg-subtle">
                             available stories
                         </span>
                     </template>
                 </h2>
 
                 <p class="mt-3 text-sm
-          text-slate-500">
+          text-fg-subtle">
                     {{ totalResults }}
 
                     {{
@@ -75,11 +75,11 @@ const emit = defineEmits<{
             <div v-if="
                 totalPages > 1
             " class="rounded-full
-        border border-slate-200
-        bg-white px-4 py-2
+        border border-line
+        bg-surface px-4 py-2
         text-[10px] font-bold
         uppercase tracking-wider
-        text-slate-500">
+        text-fg-subtle">
                 Page {{ currentPage }}
                 of {{ totalPages }}
             </div>
@@ -97,27 +97,27 @@ const emit = defineEmits<{
         <div v-else class="mt-8
       rounded-[30px]
       border border-dashed
-      border-slate-300
-      bg-white px-6 py-20
+      border-line-strong
+      bg-surface px-6 py-20
       text-center">
             <div class="mx-auto flex
         h-16 w-16
         items-center justify-center
         rounded-2xl
-        bg-slate-100
-        text-2xl text-slate-500">
+        bg-surface-2
+        text-2xl text-fg-subtle">
                 ⌕
             </div>
 
             <h3 class="mt-6
         text-2xl font-bold
-        text-slate-950">
+        text-fg">
                 No matching stories
             </h3>
 
             <p class="mx-auto mt-3
         max-w-md text-sm
-        leading-7 text-slate-500">
+        leading-7 text-fg-subtle">
                 Try a broader search
                 term, select another
                 category, change the
@@ -127,7 +127,7 @@ const emit = defineEmits<{
 
             <button type="button" class="mt-7
         rounded-xl
-        bg-slate-950
+        bg-accent text-accent-fg
         px-6 py-3
         text-xs font-bold
         text-white
@@ -150,10 +150,10 @@ const emit = defineEmits<{
         items-center
         justify-center
         rounded-xl border
-        border-slate-200
-        bg-white px-4
+        border-line
+        bg-surface px-4
         text-xs font-semibold
-        text-slate-600
+        text-fg-muted
         transition-all
         hover:border-indigo-200
         hover:text-indigo-600
@@ -174,8 +174,8 @@ const emit = defineEmits<{
         rounded-xl border
         text-xs font-bold
         transition-all" :class="currentPage === page
-            ? 'border-slate-950 bg-slate-950 text-white'
-            : 'border-slate-200 bg-white text-slate-600 hover:border-indigo-300 hover:text-indigo-600'
+            ? 'border-accent bg-accent text-accent-fg'
+            : 'border-line bg-surface text-fg-muted hover:border-indigo-300 hover:text-indigo-600'
             " @click="
                 emit(
                     'changePage',
@@ -189,10 +189,10 @@ const emit = defineEmits<{
         items-center
         justify-center
         rounded-xl border
-        border-slate-200
-        bg-white px-4
+        border-line
+        bg-surface px-4
         text-xs font-semibold
-        text-slate-600
+        text-fg-muted
         transition-all
         hover:border-indigo-200
         hover:text-indigo-600

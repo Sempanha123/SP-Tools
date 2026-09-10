@@ -45,11 +45,11 @@ const remainingMostRead = computed(() => {
     <!-- Related topics -->
 
     <section class="overflow-hidden rounded-[28px]
-      border border-slate-200 bg-white
+      border border-line bg-surface
       shadow-[0_14px_40px_rgba(15,23,42,0.05)]">
       <header class="flex items-start
         justify-between gap-4
-        border-b border-slate-100
+        border-b border-line
         px-6 py-5">
         <div>
           <span class="text-[9px] font-bold
@@ -64,7 +64,7 @@ const remainingMostRead = computed(() => {
           </h2>
 
           <p class="mt-2 text-xs
-            leading-5 text-slate-500">
+            leading-5 text-fg-subtle">
             Topics frequently appearing
             with #{{ currentTag }}.
           </p>
@@ -84,9 +84,9 @@ const remainingMostRead = computed(() => {
           <NuxtLink v-for="tag in relatedTags" :key="tag.name" :to="`/news/tag/${tagToSlug(tag.name)}`" class="group inline-flex
             items-center gap-1.5
             rounded-full border
-            border-slate-200 bg-slate-50
+            border-line bg-surface-2
             px-3.5 py-2 text-[10px]
-            font-semibold text-slate-600
+            font-semibold text-fg-muted
             transition-all
             hover:-translate-y-0.5
             hover:border-indigo-200
@@ -96,9 +96,9 @@ const remainingMostRead = computed(() => {
               #{{ tag.name }}
             </span>
 
-            <span class="rounded-full bg-white
+            <span class="rounded-full bg-surface
               px-1.5 py-0.5 text-[8px]
-              text-slate-400 shadow-sm
+              text-fg-subtle shadow-sm
               group-hover:text-indigo-500">
               {{ tag.count }}
             </span>
@@ -106,16 +106,16 @@ const remainingMostRead = computed(() => {
         </div>
 
         <div v-else class="rounded-2xl border
-          border-dashed border-slate-200
-          bg-slate-50 px-4 py-8
+          border-dashed border-line
+          bg-surface-2 px-4 py-8
           text-center">
           <p class="text-sm font-bold
-            text-slate-700">
+            text-fg-muted">
             No related topics yet
           </p>
 
           <p class="mt-2 text-xs
-            leading-5 text-slate-500">
+            leading-5 text-fg-subtle">
             More related topics will appear
             as additional stories are published.
           </p>
@@ -126,10 +126,10 @@ const remainingMostRead = computed(() => {
     <!-- Most read -->
 
     <section v-if="leadMostRead" class="overflow-hidden rounded-[28px]
-      border border-slate-200 bg-white
+      border border-line bg-surface
       shadow-[0_18px_50px_rgba(15,23,42,0.07)]">
       <header class="relative overflow-hidden
-        bg-slate-950 px-6 py-6
+        bg-accent text-accent-fg px-6 py-6
         text-white">
         <div class="pointer-events-none
           absolute -right-16 -top-16
@@ -161,7 +161,7 @@ const remainingMostRead = computed(() => {
           </h2>
 
           <p class="mt-2 text-xs
-            leading-5 text-slate-400">
+            leading-5 text-fg-subtle">
             Popular stories connected
             to #{{ currentTag }}.
           </p>
@@ -173,7 +173,7 @@ const remainingMostRead = computed(() => {
       <div class="p-4">
         <NuxtLink :to="`/news/posts/${leadMostRead.slug}`" class="group relative block
           min-h-[200px] overflow-hidden
-          rounded-[22px] bg-slate-950">
+          rounded-[22px] bg-accent text-accent-fg">
           <img v-if="leadMostRead?.image" :src="leadMostRead.image" :alt="leadMostRead.title" loading="lazy" class="absolute inset-0
   h-full w-full object-cover
   transition-transform duration-700
@@ -219,7 +219,7 @@ const remainingMostRead = computed(() => {
 
             <div class="mt-3 flex items-center
               gap-2 text-[9px]
-              text-slate-300">
+              text-fg-subtle">
               <span>
                 {{ timeAgo(leadMostRead.publishedAt) }}
               </span>
@@ -237,7 +237,7 @@ const remainingMostRead = computed(() => {
 
       <!-- Remaining popular stories -->
 
-      <div v-if="remainingMostRead.length" class="divide-y divide-slate-100
+      <div v-if="remainingMostRead.length" class="divide-y divide-line
         px-4 pb-4">
         <NuxtLink v-for="(article, index) in remainingMostRead" :key="article.id" :to="`/news/posts/${article.slug}`"
           class="group grid
@@ -245,7 +245,7 @@ const remainingMostRead = computed(() => {
           gap-3 py-4 first:pt-2">
           <div class="relative h-[68px]
             overflow-hidden rounded-2xl
-            bg-slate-100">
+            bg-surface-2">
             <img v-if="article.image" :src="article.image" :alt="article.title" loading="lazy" class="h-full w-full object-cover
   transition-transform duration-500
   group-hover:scale-105" />
@@ -261,7 +261,7 @@ const remainingMostRead = computed(() => {
             <span class="absolute left-1.5 top-1.5
               flex h-6 min-w-6
               items-center justify-center
-              rounded-lg bg-slate-950/85
+              rounded-lg bg-accent text-accent-fg/85
               px-1.5 text-[8px]
               font-bold text-white
               backdrop-blur">
@@ -278,14 +278,14 @@ const remainingMostRead = computed(() => {
 
             <h3 class="sidebar-title mt-1.5
               text-xs font-bold leading-5
-              text-slate-800
+              text-fg
               transition-colors
               group-hover:text-indigo-600">
               {{ article.title }}
             </h3>
 
             <p class="mt-1.5 text-[8px]
-              text-slate-400">
+              text-fg-subtle">
               {{ timeAgo(article.publishedAt) }}
               ·
               {{ formatViews(article.views) }}
@@ -313,7 +313,7 @@ const remainingMostRead = computed(() => {
         <div class="flex h-11 w-11
           items-center justify-center
           rounded-2xl border
-          border-white/10 bg-white/[0.08]
+          border-line/10 bg-surface/[0.08]
           text-indigo-300">
           ✦
         </div>
@@ -331,7 +331,7 @@ const remainingMostRead = computed(() => {
         </h3>
 
         <p class="mt-3 text-xs
-          leading-6 text-slate-400">
+          leading-6 text-fg-subtle">
           Receive selected world news
           and updates connected to topics
           you follow.
@@ -339,9 +339,9 @@ const remainingMostRead = computed(() => {
 
         <a href="#newsletter" class="mt-5 inline-flex
           items-center gap-2 rounded-xl
-          bg-white px-4 py-2.5
+          bg-surface px-4 py-2.5
           text-[10px] font-bold
-          text-slate-950">
+          text-fg">
           Join the briefing
 
           <span>→</span>

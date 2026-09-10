@@ -15,7 +15,7 @@ onMounted(() => {
 
 <template>
   <section
-    class="relative overflow-hidden bg-slate-950
+    class="relative overflow-hidden bg-accent text-accent-fg
     pb-20 pt-32 text-white sm:pb-24 sm:pt-40"
   >
     <div
@@ -57,7 +57,7 @@ onMounted(() => {
       <nav
         aria-label="Breadcrumb"
         class="flex items-center justify-center gap-2
-        text-xs font-medium text-slate-400"
+        text-xs font-medium text-fg-subtle"
       >
         <NuxtLink
           to="/"
@@ -76,7 +76,7 @@ onMounted(() => {
       <div class="mx-auto mt-8 max-w-5xl text-center">
         <div
           class="inline-flex items-center gap-2 rounded-full
-          border border-white/10 bg-white/[0.06]
+          border border-line/10 bg-surface/[0.06]
           px-4 py-2 backdrop-blur-xl"
         >
           <span class="relative flex h-2 w-2">
@@ -93,7 +93,7 @@ onMounted(() => {
 
           <span
             class="text-[10px] font-bold uppercase
-            tracking-[0.2em] text-slate-300"
+            tracking-[0.2em] text-fg-subtle"
           >
             Live Global News Desk
           </span>
@@ -116,7 +116,7 @@ onMounted(() => {
 
         <p
           class="mx-auto mt-7 max-w-2xl
-          text-base leading-8 text-slate-400 sm:text-lg"
+          text-base leading-8 text-fg-subtle sm:text-lg"
         >
           Follow breaking news, world events, business,
           technology, science, climate and regional developments
@@ -130,10 +130,10 @@ onMounted(() => {
           <a
             href="#top-stories"
             class="group inline-flex w-full items-center
-            justify-center gap-2 rounded-2xl bg-white
-            px-7 py-4 text-sm font-bold text-slate-950
+            justify-center gap-2 rounded-2xl bg-surface
+            px-7 py-4 text-sm font-bold text-fg
             transition-all hover:-translate-y-0.5
-            hover:bg-slate-100 sm:w-auto"
+            hover:bg-surface-2 sm:w-auto"
           >
             Read Top Stories
 
@@ -149,9 +149,9 @@ onMounted(() => {
             to="/news/category/world"
             class="inline-flex w-full items-center
             justify-center gap-2 rounded-2xl
-            border border-white/10 bg-white/[0.05]
+            border border-line/10 bg-surface/[0.05]
             px-7 py-4 text-sm font-semibold text-white
-            backdrop-blur transition-all hover:bg-white/10
+            backdrop-blur transition-all hover:bg-surface/10
             sm:w-auto"
           >
             Browse World News
@@ -161,7 +161,7 @@ onMounted(() => {
         <div
           class="mt-11 flex flex-wrap items-center
           justify-center gap-x-8 gap-y-3
-          text-xs font-medium text-slate-500"
+          text-xs font-medium text-fg-subtle"
         >
           <span class="flex items-center gap-2">
             <span class="h-1.5 w-1.5 rounded-full bg-red-400" />
@@ -182,7 +182,7 @@ onMounted(() => {
         <p
           v-if="lastUpdated"
           class="mt-6 text-[10px] uppercase
-          tracking-[0.14em] text-slate-600"
+          tracking-[0.14em] text-fg-muted"
         >
           Last updated {{ lastUpdated }}
         </p>

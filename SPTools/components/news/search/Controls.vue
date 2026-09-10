@@ -81,8 +81,8 @@ const readSelectValue = (
 
 <template>
     <section class="rounded-[28px]
-    border border-slate-200
-    bg-white p-5
+    border border-line
+    bg-surface p-5
     shadow-[0_14px_40px_rgba(15,23,42,0.05)]
     sm:p-6">
         <div class="flex flex-col
@@ -99,21 +99,21 @@ const readSelectValue = (
                     <span class="mb-2 block
             text-[10px] font-bold
             uppercase tracking-[0.14em]
-            text-slate-400">
+            text-fg-subtle">
                         Category
                     </span>
 
                     <select :value="selectedCategory
                         " class="h-12 w-full
             rounded-xl border
-            border-slate-200
-            bg-slate-50 px-4
+            border-line
+            bg-surface-2 px-4
             text-sm font-semibold
-            text-slate-700
+            text-fg-muted
             outline-none
             transition-all
             focus:border-indigo-400
-            focus:bg-white
+            focus:bg-surface
             focus:ring-4
             focus:ring-indigo-500/10" @change="
                 emit(
@@ -135,21 +135,21 @@ const readSelectValue = (
                     <span class="mb-2 block
             text-[10px] font-bold
             uppercase tracking-[0.14em]
-            text-slate-400">
+            text-fg-subtle">
                         Region
                     </span>
 
                     <select :value="selectedRegion
                         " class="h-12 w-full
             rounded-xl border
-            border-slate-200
-            bg-slate-50 px-4
+            border-line
+            bg-surface-2 px-4
             text-sm font-semibold
-            text-slate-700
+            text-fg-muted
             outline-none
             transition-all
             focus:border-indigo-400
-            focus:bg-white
+            focus:bg-surface
             focus:ring-4
             focus:ring-indigo-500/10" @change="
                 emit(
@@ -178,20 +178,20 @@ const readSelectValue = (
                     <span class="mb-2 block
             text-[10px] font-bold
             uppercase tracking-[0.14em]
-            text-slate-400">
+            text-fg-subtle">
                         Date published
                     </span>
 
                     <select :value="dateRange" class="h-12 w-full
             rounded-xl border
-            border-slate-200
-            bg-slate-50 px-4
+            border-line
+            bg-surface-2 px-4
             text-sm font-semibold
-            text-slate-700
+            text-fg-muted
             outline-none
             transition-all
             focus:border-indigo-400
-            focus:bg-white
+            focus:bg-surface
             focus:ring-4
             focus:ring-indigo-500/10" @change="
                 emit(
@@ -226,19 +226,19 @@ const readSelectValue = (
                 <span class="mb-2 block
           text-[10px] font-bold
           uppercase tracking-[0.14em]
-          text-slate-400">
+          text-fg-subtle">
                     Sort results
                 </span>
 
                 <div class="flex rounded-xl
-          border border-slate-200
-          bg-slate-50 p-1">
+          border border-line
+          bg-surface-2 p-1">
                     <button type="button" class="rounded-lg
             px-5 py-2.5
             text-xs font-bold
             transition-all" :class="sortMode === 'latest'
-                    ? 'bg-slate-950 text-white shadow-sm'
-                    : 'text-slate-500 hover:text-slate-950'
+                    ? 'bg-accent text-accent-fg text-white shadow-sm'
+                    : 'text-fg-subtle hover:text-fg'
                 " @click="
                 emit(
                     'update:sortMode',
@@ -252,8 +252,8 @@ const readSelectValue = (
             px-5 py-2.5
             text-xs font-bold
             transition-all" :class="sortMode === 'popular'
-                    ? 'bg-slate-950 text-white shadow-sm'
-                    : 'text-slate-500 hover:text-slate-950'
+                    ? 'bg-accent text-accent-fg text-white shadow-sm'
+                    : 'text-fg-subtle hover:text-fg'
                 " @click="
                 emit(
                     'update:sortMode',
@@ -273,11 +273,11 @@ const readSelectValue = (
         " class="mt-6 flex
       flex-wrap items-center
       gap-2 border-t
-      border-slate-100 pt-5">
+      border-line pt-5">
             <span class="mr-1
         text-[10px] font-bold
         uppercase tracking-[0.14em]
-        text-slate-400">
+        text-fg-subtle">
                 Active filters
             </span>
 
@@ -309,7 +309,7 @@ const readSelectValue = (
 
             <button type="button" class="ml-auto
         text-[10px] font-bold
-        text-slate-400
+        text-fg-subtle
         transition-colors
         hover:text-red-600" @click="
             emit('clearAll')
